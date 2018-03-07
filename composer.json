@@ -1,0 +1,24 @@
+{
+    "name": "sergeynezbritskiy/privatbank-api",
+    "description": "Library for connecting to PrivatBank API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergey Nezbritskiy",
+            "email": "sergey.nezbritskiy@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0",
+        "sergeynezbritskiy/xml-io": "^2.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "SergeyNezbritskiy\\PrivatBank\\": "src/"
+        }
+    }
+}

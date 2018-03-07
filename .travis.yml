@@ -1,0 +1,21 @@
+os:
+- linux
+
+language: php
+
+before_script:
+  - composer install --no-dev
+
+script: phpunit
+
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+  - master
+
+matrix:
+  fast_finish: true
+
+notifications:
+  email: true
