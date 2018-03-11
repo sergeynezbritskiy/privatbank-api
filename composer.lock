@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1420fddaa5bc0dfd2c5aa50b93f1f99a",
+    "content-hash": "e544de8cb2241b08fca37082fb14cf8d",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -239,17 +239,21 @@
         },
         {
             "name": "sergeynezbritskiy/xml-io",
-            "version": "v2.0.1",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sergeynezbritskiy/xml-io.git",
-                "reference": "2752cc98c855ef167d7de56e9be23014c47f5b98"
+                "reference": "f81519feb151b9a493ad247efee89d36a0e4373e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sergeynezbritskiy/xml-io/zipball/2752cc98c855ef167d7de56e9be23014c47f5b98",
-                "reference": "2752cc98c855ef167d7de56e9be23014c47f5b98",
+                "url": "https://api.github.com/repos/sergeynezbritskiy/xml-io/zipball/f81519feb151b9a493ad247efee89d36a0e4373e",
+                "reference": "f81519feb151b9a493ad247efee89d36a0e4373e",
                 "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "php": "^7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.5"
@@ -271,7 +275,7 @@
                 }
             ],
             "description": "Library for parsing and generating XML",
-            "time": "2018-03-06T20:33:04+00:00"
+            "time": "2018-03-10T12:06:27+00:00"
         }
     ],
     "packages-dev": [
