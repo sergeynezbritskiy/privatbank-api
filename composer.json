@@ -11,14 +11,15 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "~6.0",
-        "sergeynezbritskiy/xml-io": "^2.0.0"
+        "sergeynezbritskiy/xml-io": "^4.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"
     },
     "autoload": {
         "psr-4": {
-            "SergeyNezbritskiy\\PrivatBank\\": "src/"
+            "SergeyNezbritskiy\\PrivatBank\\": "src/",
+            "SergeyNezbritskiy\\PrivatBank\\Tests\\": "tests/"
         }
     }
 }
