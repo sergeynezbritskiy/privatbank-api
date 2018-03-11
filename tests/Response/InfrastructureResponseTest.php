@@ -2,13 +2,13 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Response;
 
-use SergeyNezbritskiy\PrivatBank\Response\AtmResponse;
+use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
 /**
- * Class AtmResponseTest
+ * Class InfrastructureResponseTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Response
  */
-class AtmResponseTest extends TestCase
+class InfrastructureResponseTest extends TestCase
 {
 
     /**
@@ -16,7 +16,7 @@ class AtmResponseTest extends TestCase
      */
     protected function getClass(): string
     {
-        return AtmResponse::class;
+        return InfrastructureResponse::class;
     }
 
     //tests

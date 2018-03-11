@@ -5,18 +5,23 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
-use SergeyNezbritskiy\PrivatBank\Response\AtmResponse;
+use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
 /**
- * Class AtmRequest
+ * Class InfrastructureRequest
  * Params:
+ * type - string, required, `atm` or `tso`, see class constants
  * address - string, optional russian language
  * city - string, optional, in russian language
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/atm
+ * @see https://api.privatbank.ua/#p24/terminals
  */
-class AtmRequest extends AbstractRequest
+class InfrastructureRequest extends AbstractRequest
 {
+
+    const TYPE_ATM = 'atm';
+    const TYPE_TERMINAL = 'tso';
 
     /**
      * @return string
@@ -34,10 +39,11 @@ class AtmRequest extends AbstractRequest
     {
         $params = array_merge([
             'city' => '',
-            'address' => ''
+            'address' => '',
+            'type' => '',//`atm` or `tso`
         ], $params);
         return [
-            'atm' => '',
+            $params['type'] => '',
             'city' => $params['city'],
             'address' => $params['address'],
         ];
@@ -49,7 +55,7 @@ class AtmRequest extends AbstractRequest
      */
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
-        return new AtmResponse($httpResponse);
+        return new InfrastructureResponse($httpResponse);
     }
 
 }

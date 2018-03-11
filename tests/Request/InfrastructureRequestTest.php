@@ -3,24 +3,24 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Request\AtmRequest;
-use SergeyNezbritskiy\PrivatBank\Response\AtmResponse;
+use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
+use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
 /**
- * Class AtmRequestTest
+ * Class InfrastructureRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class AtmRequestTest extends TestCase
+class InfrastructureRequestTest extends TestCase
 {
 
     /**
-     * @var AtmRequest
+     * @var InfrastructureRequest
      */
     private $request;
 
     protected function setUp()
     {
-        $this->request = new AtmRequest();
+        $this->request = new InfrastructureRequest();
     }
 
     protected function tearDown()
@@ -34,8 +34,9 @@ class AtmRequestTest extends TestCase
         $result = $this->request->execute([
             'city' => 'Днепропетровск',
             'address' => 'Титова',
+            'type' => InfrastructureRequest::TYPE_ATM,
         ]);
-        $this->assertInstanceOf(AtmResponse::class, $result);
+        $this->assertInstanceOf(InfrastructureResponse::class, $result);
         $data = $result->toArray();
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
