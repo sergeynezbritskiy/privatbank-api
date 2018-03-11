@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
@@ -26,7 +26,6 @@ class ExchangeRatesRequest extends AbstractRequest
      */
     public function getRoute(): string
     {
-        /** @noinspection SpellCheckingInspection */
         return 'pubinfo';
     }
 

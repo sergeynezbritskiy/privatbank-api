@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
@@ -8,7 +8,7 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
 use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
 
 /**
- * Class ExchangeRatesArchiveRequest
+ * Class OfficesRequest
  * Params:
  * address - string, optional russian language
  * city - string, optional, in russian language
@@ -17,10 +17,6 @@ use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
  */
 class OfficesRequest extends AbstractRequest
 {
-
-    const CASH = 5;
-    const NON_CASH = 11;
-    const NATIONAL_BANK_CASH = 3;
 
     /**
      * @return string

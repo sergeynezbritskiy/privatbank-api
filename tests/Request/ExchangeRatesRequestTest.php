@@ -53,6 +53,7 @@ class ExchangeRatesRequestTest extends TestCase
             $this->assertArrayHasKey('base_ccy', $item);
             $this->assertArrayHasKey('buy', $item);
             $this->assertArrayHasKey('sale', $item);
+            break;
         }
     }
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
@@ -16,10 +16,6 @@ use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
  */
 class ExchangeRatesArchiveRequest extends AbstractRequest
 {
-
-    const CASH = 5;
-    const NON_CASH = 11;
-    const NATIONAL_BANK_CASH = 3;
 
     /**
      * @return string

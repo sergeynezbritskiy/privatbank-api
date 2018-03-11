@@ -52,4 +52,5 @@ class ClientTest extends TestCase
         }
         $this->assertGreaterThan(0, count($result));
     }
+
 }

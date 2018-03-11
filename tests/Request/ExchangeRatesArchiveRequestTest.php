@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
-use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
 /**
  * Class ExchangeRatesArchiveRequestTest
@@ -41,6 +40,7 @@ class ExchangeRatesArchiveRequestTest extends TestCase
             $this->assertArrayHasKey('currency', $item);
             $this->assertArrayHasKey('saleRateNB', $item);
             $this->assertArrayHasKey('purchaseRateNB', $item);
+            break;
         }
     }
 

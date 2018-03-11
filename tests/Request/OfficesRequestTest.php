@@ -48,6 +48,7 @@ class OfficesRequestTest extends TestCase
             $this->assertArrayHasKey('phone', $item);
             $this->assertArrayHasKey('email', $item);
             $this->assertArrayHasKey('name', $item);
+            break;
         }
     }
 
