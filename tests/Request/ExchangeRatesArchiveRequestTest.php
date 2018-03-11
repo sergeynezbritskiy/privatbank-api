@@ -31,7 +31,8 @@ class ExchangeRatesArchiveRequestTest extends TestCase
 
     public function testExchangeRatesCash()
     {
-        $result = $this->request->execute(['date' => '01.01.2018']);
+        $month = 60 * 60 * 24 * 30;
+        $result = $this->request->execute(['date' => date('d.m.Y', time() - $month)]);
         $this->assertInstanceOf(ExchangeRatesArchiveResponse::class, $result);
         $data = $result->toArray();
         $this->assertGreaterThan(0, count($data));

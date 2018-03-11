@@ -29,8 +29,7 @@ class OfficesRequestTest extends TestCase
         $this->request = null;
     }
 
-    public function testOffices
-    ()
+    public function testOffices()
     {
         $result = $this->request->execute([
             'city' => 'Днепропетровск',
