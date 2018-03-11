@@ -16,6 +16,7 @@ class ExchangeRatesRequest extends AbstractRequest
 
     const CASH = 5;
     const NON_CASH = 11;
+    const NATIONAL_BANK_CASH = 3;
 
     /**
      * @return string
