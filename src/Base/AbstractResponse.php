@@ -37,6 +37,15 @@ abstract class AbstractResponse implements ResponseInterface
      */
     public function toArray(): array
     {
-        return (new XmlReader())->toArray($this->httpResponse->getBody()->getContents(), $this->getMap());
+        return (new XmlReader())->toArray($this->getContent(), $this->getMap());
     }
+
+    /**
+     * @return string
+     */
+    protected function getContent(): string
+    {
+        return $this->httpResponse->getBody()->getContents();
+    }
+
 }
