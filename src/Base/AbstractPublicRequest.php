@@ -11,7 +11,7 @@ use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
  * Class AbstractRequest
  * @package SergeyNezbritskiy\PrivatBank\Base
  */
-abstract class AbstractRequest implements RequestInterface
+abstract class AbstractPublicRequest implements RequestInterface
 {
 
     /**
