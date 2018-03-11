@@ -39,11 +39,12 @@ class Merchant
     }
 
     /**
+     * @param string $data
      * @return string
      */
-    public function getSignature(): string
+    public function calculateSignature(string $data): string
     {
-        return $this->signature;
+        return sha1(md5($data . $this->signature));
     }
 
 }
