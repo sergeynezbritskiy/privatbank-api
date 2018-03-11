@@ -7,10 +7,10 @@ use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 /**
  * Class Client
  * @package SergeyNezbritskiy\PrivatBank
- * @method RequestInterface exchangeRates(array $params = [])
- * @method RequestInterface exchangeRatesArchive(array $params = [])
- * @method RequestInterface infrastructure(array $params = [])
- * @method RequestInterface offices(array $params = [])
+ * @method RequestInterface exchangeRates()
+ * @method RequestInterface exchangeRatesArchive()
+ * @method RequestInterface infrastructure()
+ * @method RequestInterface offices()
  */
 class Client
 {
