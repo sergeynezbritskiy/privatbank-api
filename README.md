@@ -14,21 +14,23 @@ The easiest way to install module is using Composer
 composer require sergeynezbritskiy/privatbank-api:"dev-master"
 ```
 
+## Notes
+For the full list of supported requests see phpdoc for \SergeyNezbritskiy\PrivatBank\Client class.
+
+For the full list of required/supported params to some request, see description to this request.
+
+All requests classes can be found within \SergeyNezbritskiy\PrivatBank\Request namespace.
+
 ## Simple usage
 Using library is as easy as possible
 ```php
 //create client for connecting with API
-$client = new SergeyNezbritskiy\PrivatBank\Client();
+$client = new \SergeyNezbritskiy\PrivatBank\Client();
 //create request instance
 $request = $client->infrastructure();
 //run the request
 $response = $request->execute([
-    'type' => \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest::TYPE_ATM
+    'type' => \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest::TYPE_ATM,
     'city' => 'Днепропетровск',
 ])->toArray();
 ```
-
-## Notes
-For the full list of supported requests see phpdoc for \SergeyNezbritskiy\PrivatBank\Client class
-For the full list of required/supported params to some request, see description to this request
-All requests classes can be found within \SergeyNezbritskiy\PrivatBank\Request namespace
