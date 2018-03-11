@@ -7,25 +7,24 @@ use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 /**
  * Class Client
  * @package SergeyNezbritskiy\PrivatBank
- * @method RequestInterface exchangeRates(array $params = [])
- * @method RequestInterface exchangeRatesArchive(array $params = [])
- * @method RequestInterface infrastructure(array $params = [])
- * @method RequestInterface offices(array $params = [])
+ * @method RequestInterface exchangeRates()
+ * @method RequestInterface exchangeRatesArchive()
+ * @method RequestInterface infrastructure()
+ * @method RequestInterface offices()
  */
 class Client
 {
 
     /**
      * @param string $name
-     * @param array $arguments
      * @return RequestInterface
      * @throws \ErrorException
      */
-    public function __call($name, $arguments)
+    public function __call($name)
     {
         $class = '\\SergeyNezbritskiy\\PrivatBank\\Request\\' . ucfirst($name) . 'Request';
         if (class_exists($class)) {
-            return new $class(...$arguments);
+            return new $class();
         } else {
             throw new \ErrorException('Method ' . $name . ' not supported');
         }
