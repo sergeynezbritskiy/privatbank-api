@@ -3,38 +3,20 @@
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
-use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 
 /**
- * Class AbstractRequest
+ * Class AbstractPublicRequest
  * @package SergeyNezbritskiy\PrivatBank\Base
  */
-abstract class AbstractPublicRequest implements RequestInterface
+abstract class AbstractPublicRequest extends AbstractRequest
 {
-
-    /**
-     * @var string
-     */
-    protected $url = 'https://api.privatbank.ua/p24api/';
-
-    /**
-     * @return string
-     */
-    abstract protected function getRoute(): string;
 
     /**
      * @param array $params
      * @return array
      */
     abstract protected function getQueryParams(array $params = []): array;
-
-    /**
-     * @param HttpResponseInterface $httpResponse
-     * @return ResponseInterface
-     */
-    abstract protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface;
 
     /**
      * @param array $params
