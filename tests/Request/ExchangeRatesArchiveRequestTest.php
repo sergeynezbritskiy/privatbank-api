@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SergeyNezbritskiy\PrivatBank\tests\Request;
+namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;

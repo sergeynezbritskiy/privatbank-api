@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace SergeyNezbritskiy\PrivatBank\tests\Response;
+namespace SergeyNezbritskiy\PrivatBank\Tests\Response;
 
-use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
 
 /**
@@ -13,39 +10,16 @@ use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
  */
 class ExchangeRatesArchiveResponseTest extends TestCase
 {
+
     /**
-     * @var ExchangeRatesArchiveResponse
+     * @return string
      */
-    private $response;
-    private $content = array();
-
-    protected function setUp()
+    protected function getClass(): string
     {
-        $test = $this;
-        $stream = $this->getMockBuilder(\stdClass::class)
-            ->setMethods(['getContents'])
-            ->getMock();
-        $stream->expects($this->once())
-            ->method('getContents')
-            ->willReturnCallback(function () use ($test) {
-                return $test->content;
-            });
-
-        /** @var Response|MockObject $httpResponse */
-        $httpResponse = $this->getMockBuilder(Response::class)
-            ->setMethods(['getBody'])
-            ->getMock();
-        $httpResponse->expects($this->once())
-            ->method('getBody')
-            ->willReturn($stream);
-        $this->response = new ExchangeRatesArchiveResponse($httpResponse);
+        return ExchangeRatesArchiveResponse::class;
     }
 
-    public function tearDown()
-    {
-        $this->response = null;
-    }
-
+    //tests
     public function testSuccessfulResponse()
     {
         $this->content = <<<XML
@@ -69,4 +43,5 @@ XML;
             'purchaseRateNB' => '13.2107400',
         ]], $result);
     }
+
 }

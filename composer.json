@@ -18,7 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "SergeyNezbritskiy\\PrivatBank\\": "src/"
+            "SergeyNezbritskiy\\PrivatBank\\": "src/",
+            "SergeyNezbritskiy\\PrivatBank\\Tests\\": "tests/"
         }
     }
 }

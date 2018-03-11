@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SergeyNezbritskiy\PrivatBank\tests;
+namespace SergeyNezbritskiy\PrivatBank\Tests;
 
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Merchant;
