@@ -5,16 +5,16 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
-use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
+use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
 
 /**
- * Class ExchangeRatesRequest
+ * Class ExchangeRatesArchiveRequest
  * Params:
- * coursid - int, optional, course type, see class constants
+ * date - required, string, format d.m.Y, e.g. 01.12.2017
  * @package SergeyNezbritskiy\PrivatBank\Request
- * @see https://api.privatbank.ua/#p24/exchange
+ * @see https://api.privatbank.ua/#p24/exchangeArchive
  */
-class ExchangeRatesRequest extends AbstractRequest
+class ExchangeRatesArchiveRequest extends AbstractRequest
 {
 
     const CASH = 5;
@@ -26,8 +26,7 @@ class ExchangeRatesRequest extends AbstractRequest
      */
     public function getRoute(): string
     {
-        /** @noinspection SpellCheckingInspection */
-        return 'pubinfo';
+        return 'exchange_rates';
     }
 
     /**
@@ -37,11 +36,10 @@ class ExchangeRatesRequest extends AbstractRequest
     public function getQueryParams(array $params = []): array
     {
         $params = array_merge([
-            'coursid' => self::CASH,
+            'date' => '',
         ], $params);
         return [
-            'exchange' => '',
-            'coursid' => $params['coursid'],
+            'date' => $params['date'],
         ];
     }
 
@@ -51,7 +49,7 @@ class ExchangeRatesRequest extends AbstractRequest
      */
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
-        return new ExchangeRatesResponse($httpResponse);
+        return new ExchangeRatesArchiveResponse($httpResponse);
     }
 
 }
