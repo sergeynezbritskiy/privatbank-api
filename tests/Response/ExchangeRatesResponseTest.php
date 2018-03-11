@@ -67,13 +67,26 @@ class ExchangeRatesResponseTest extends TestCase
 XML;
 
         $result = $this->response->toArray();
-        $this->assertInternalType('array', $result);
-        foreach ($result as $item) {
-            $this->assertArrayHasKey('ccy', $item);
-            $this->assertArrayHasKey('base_ccy', $item);
-            $this->assertArrayHasKey('buy', $item);
-            $this->assertArrayHasKey('sale', $item);
-        }
-        $this->assertGreaterThan(0, count($result));
+        $this->assertEquals([[
+            'ccy' => 'USD',
+            'base_ccy' => 'UAH',
+            'buy' => 26.0,
+            'sale' => 26.45503,
+        ], [
+            'ccy' => 'EUR',
+            'base_ccy' => 'UAH',
+            'buy' => 32.2,
+            'sale' => 32.78689,
+        ], [
+            'ccy' => 'RUR',
+            'base_ccy' => 'UAH',
+            'buy' => 0.45,
+            'sale' => 0.48008,
+        ], [
+            'ccy' => 'BTC',
+            'base_ccy' => 'USD',
+            'buy' => 8332.906,
+            'sale' => 9210.054,
+        ]], $result);
     }
 }
