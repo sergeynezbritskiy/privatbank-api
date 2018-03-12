@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e544de8cb2241b08fca37082fb14cf8d",
+    "content-hash": "f7d91de5a3fc0dcdaf29b62c2dec6af2",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -239,16 +239,16 @@
         },
         {
             "name": "sergeynezbritskiy/xml-io",
-            "version": "v4.0.0",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sergeynezbritskiy/xml-io.git",
-                "reference": "f81519feb151b9a493ad247efee89d36a0e4373e"
+                "reference": "be95906952f614f5818e50b695769936c26d21ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sergeynezbritskiy/xml-io/zipball/f81519feb151b9a493ad247efee89d36a0e4373e",
-                "reference": "f81519feb151b9a493ad247efee89d36a0e4373e",
+                "url": "https://api.github.com/repos/sergeynezbritskiy/xml-io/zipball/be95906952f614f5818e50b695769936c26d21ef",
+                "reference": "be95906952f614f5818e50b695769936c26d21ef",
                 "shasum": ""
             },
             "require": {
@@ -275,7 +275,7 @@
                 }
             ],
             "description": "Library for parsing and generating XML",
-            "time": "2018-03-10T12:06:27+00:00"
+            "time": "2018-03-12T06:07:55+00:00"
         }
     ],
     "packages-dev": [

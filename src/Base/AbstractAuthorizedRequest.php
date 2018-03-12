@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Merchant;
+use SergeyNezbritskiy\XmlIo\XmlWriter;
 
 /**
  * Class AbstractAuthorizedRequest
@@ -61,15 +62,57 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
      */
     protected function getBody(array $params = []): string
     {
-        //TODO implement method
+        $data = [
+            'oper' => 'cmt',
+            'wait' => 0,
+            'test' => 1,
+            'payment' => [[
+                'name' => 'phone',
+                'value' => '%2B380632285977',
+            ], [
+                'name' => 'amt',
+                'value' => '0.05',
+            ]]
+        ];
+        $xmlWriter = new XmlWriter();
+        $dataXml = $xmlWriter->toXml($data, $this->getBodyMap());
+        $signature = $this->calculateSignature($dataXml);
+
+
+        $bodyMap = $this->getBodyMap();
+        $bodyMap['data']['dataProvider'] = 'data';
+        $childrenMap = array_merge([
+            'merchant' => [
+                'dataProvider' => 'merchant',
+                'children' => ['id', 'signature']
+            ]
+        ], $bodyMap);
+
+        $documentMap = [
+            'request' => [
+                'attributes' => ['version'],
+                'children' => $childrenMap
+            ]
+        ];
+        $documentData = [
+            'version' => '1.0',
+            'merchant' => [
+                'id' => $this->getMerchant()->getId(),
+                'signature' => $signature,
+            ],
+            'data' => $data,
+        ];
+        return $xmlWriter->toXmlString($documentData, $documentMap);
+
     }
 
-    private function calculateSignature($data)
+    private function calculateSignature($xml)
     {
-        $xml = dom_import_simplexml($data);
         $innerXml = '';
-        foreach ($xml->childNodes as $node)
+        foreach ($xml->childNodes as $node) {
             $innerXml .= $node->ownerDocument->saveXML($node, LIBXML_NOEMPTYTAG);
+        }
         return $this->getMerchant()->calculateSignature($innerXml);
     }
+
 }
