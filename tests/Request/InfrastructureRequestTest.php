@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
+use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
 use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
@@ -20,7 +21,7 @@ class InfrastructureRequestTest extends TestCase
 
     protected function setUp()
     {
-        $this->request = new InfrastructureRequest();
+        $this->request = new InfrastructureRequest(new Client());
     }
 
     protected function tearDown()

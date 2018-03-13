@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
+use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
 use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
@@ -21,7 +22,7 @@ class OfficesRequestTest extends TestCase
 
     protected function setUp()
     {
-        $this->request = new OfficesRequest();
+        $this->request = new OfficesRequest(new Client());
     }
 
     protected function tearDown()

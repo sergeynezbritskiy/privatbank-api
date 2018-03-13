@@ -59,11 +59,11 @@ class Client
      * @return RequestInterface
      * @throws \ErrorException
      */
-    public function __call($name, $arguments)
+    public function __call($name, $arguments): RequestInterface
     {
         $class = '\\SergeyNezbritskiy\\PrivatBank\\Request\\' . ucfirst($name) . 'Request';
         if (class_exists($class)) {
-            return new $class(...$arguments);
+            return new $class($this, ...$arguments);
         } else {
             throw new \ErrorException('Method ' . $name . ' not supported');
         }

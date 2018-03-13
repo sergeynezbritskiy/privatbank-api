@@ -20,6 +20,11 @@ abstract class AbstractPublicRequest implements RequestInterface
     protected $url = 'https://api.privatbank.ua/p24api/';
 
     /**
+     * @var \SergeyNezbritskiy\PrivatBank\Client
+     */
+    private $client;
+
+    /**
      * @return string
      */
     abstract protected function getRoute(): string;
@@ -35,6 +40,15 @@ abstract class AbstractPublicRequest implements RequestInterface
      * @return array
      */
     abstract protected function getQueryParams(array $params = []): array;
+
+    /**
+     * AbstractPublicRequest constructor.
+     * @param \SergeyNezbritskiy\PrivatBank\Client $client
+     */
+    public function __construct(\SergeyNezbritskiy\PrivatBank\Client $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @param array $params
