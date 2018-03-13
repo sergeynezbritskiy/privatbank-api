@@ -2,10 +2,10 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
-use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Client;
 
 /**
  * Class AbstractPublicRequest
@@ -15,12 +15,7 @@ abstract class AbstractPublicRequest implements RequestInterface
 {
 
     /**
-     * @var string
-     */
-    protected $url = 'https://api.privatbank.ua/p24api/';
-
-    /**
-     * @var \SergeyNezbritskiy\PrivatBank\Client
+     * @var Client
      */
     private $client;
 
@@ -43,9 +38,9 @@ abstract class AbstractPublicRequest implements RequestInterface
 
     /**
      * AbstractPublicRequest constructor.
-     * @param \SergeyNezbritskiy\PrivatBank\Client $client
+     * @param Client $client
      */
-    public function __construct(\SergeyNezbritskiy\PrivatBank\Client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -56,10 +51,7 @@ abstract class AbstractPublicRequest implements RequestInterface
      */
     public function execute(array $params = array()): ResponseInterface
     {
-        $client = new Client();
-
-        $requestUri = $this->url . $this->getRoute();
-        $response = $client->request('GET', $requestUri, [
+        $response = $this->client->request($this->getRoute(), [
             'query' => $this->getQueryParams($params)
         ]);
         return $this->getResponse($response);
