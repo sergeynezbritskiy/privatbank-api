@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank;
 
 use Psr\Http\Message\ResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 
 /**
@@ -12,6 +13,7 @@ use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
  * @method RequestInterface exchangeRatesArchive()
  * @method RequestInterface infrastructure()
  * @method RequestInterface offices()
+ * @method AuthorizedRequestInterface balance()
  */
 class Client
 {

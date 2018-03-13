@@ -52,9 +52,30 @@ abstract class AbstractPublicRequest implements RequestInterface
     public function execute(array $params = array()): ResponseInterface
     {
         $response = $this->client->request($this->getRoute(), [
-            'query' => $this->getQueryParams($params)
+            'method' => $this->getMethod(),
+            'query' => $this->getQueryParams($params),
+            'body' => $this->getBody($params),
         ]);
         return $this->getResponse($response);
+    }
+
+
+    /**
+     * @param array $params
+     * @return string
+     */
+    protected function getBody(/** @noinspection PhpUnusedParameterInspection */
+        array $params = array()): string
+    {
+        return '';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMethod(): string
+    {
+        return 'GET';
     }
 
 }
