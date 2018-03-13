@@ -3,7 +3,9 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Client;
+use SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
@@ -28,6 +30,21 @@ class ClientTest extends TestCase
     protected function tearDown()
     {
         $this->client = null;
+    }
+
+    public function testRequest()
+    {
+        $response = $this->client->request('pubinfo', [
+            'query' => ['exchange' => '', 'coursid' => 11]
+        ]);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testSend()
+    {
+        $request = new Request('pubinfo', '', ['exchange' => '', 'coursid' => 11]);
+        $response = $this->client->send($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
     public function testGetExchangeRates()
