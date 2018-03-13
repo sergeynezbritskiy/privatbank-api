@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Merchant;
@@ -12,8 +13,25 @@ use SergeyNezbritskiy\XmlIo\XmlWriter;
  * Class AbstractAuthorizedRequest
  * @package SergeyNezbritskiy\PrivatBank\Base
  */
-abstract class AbstractAuthorizedRequest extends AbstractRequest implements AuthorizedRequestInterface
+abstract class AbstractAuthorizedRequest implements AuthorizedRequestInterface
 {
+
+    /**
+     * @var string
+     */
+    protected $url = 'https://api.privatbank.ua/p24api/';
+
+    /**
+     * @return string
+     */
+    abstract protected function getRoute(): string;
+
+    /**
+     * @param HttpResponseInterface $httpResponse
+     * @return ResponseInterface
+     */
+    abstract protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface;
+
 
     protected $merchant;
 
