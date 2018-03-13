@@ -59,7 +59,6 @@ abstract class AbstractPublicRequest implements RequestInterface
         return $this->getResponse($response);
     }
 
-
     /**
      * @param array $params
      * @return string

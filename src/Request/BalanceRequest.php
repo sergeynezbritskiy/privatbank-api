@@ -44,7 +44,7 @@ class BalanceRequest extends AbstractAuthorizedRequest
                                 'dataProvider' => 'payment',
                                 'attributes' => ['name', 'value'],
                             ],
-                        ]
+                        ],
                     ],
                 ],
             ],
