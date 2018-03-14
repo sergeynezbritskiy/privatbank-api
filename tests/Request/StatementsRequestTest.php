@@ -45,7 +45,7 @@ class StatementsRequestTest extends TestCase
         $cardNumber = getenv('cardNumber');
         $startDate = getenv('startDate');
         $endDate = getenv('endDate');
-        if (empty($cardNumber) || empty($merchantId) || empty($merchantSecret)) {
+        if (empty($cardNumber) || empty($merchantId) || empty($merchantSecret) || empty($startDate) || empty($endDate)) {
             $this->markTestSkipped('Merchant data not specified');
         }
 

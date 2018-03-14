@@ -21,4 +21,12 @@
         <log type="coverage-html" target="build/coverage/html" title="phpDox" charset="UTF-8" highlight="true" lowUpperBound="60" highLowerBound="90"/>
     </logging>
 
+    <php>
+        <env name="cardNumber" value=""/>
+        <env name="merchantId" value=""/>
+        <env name="merchantSecret" value=""/>
+        <env name="startDate" value=""/>
+        <env name="endDate" value=""/>
+    </php>
+
 </phpunit>
