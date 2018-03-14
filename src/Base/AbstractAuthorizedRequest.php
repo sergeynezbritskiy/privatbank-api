@@ -68,8 +68,9 @@ abstract class AbstractAuthorizedRequest implements AuthorizedRequestInterface
         $client = new Client();
 
         $requestUri = $this->url . $this->getRoute();
+        $body = $this->getBody($params);
         $response = $client->request('POST', $requestUri, [
-            'body' => $this->getBody($params),
+            'body' => $body,
         ]);
         return $this->getResponse($response);
     }
@@ -80,6 +81,22 @@ abstract class AbstractAuthorizedRequest implements AuthorizedRequestInterface
      */
     protected function getBody(array $params = []): string
     {
+        $cardNumber = $params['cardNumber'];
+        $dataContent = '<oper>cmt</oper><wait>0</wait><test>1</test>' .
+            '<payment id="">' .
+            '<prop name="cardnum" value="' . $cardNumber . '" />' .
+            '<prop name="country" value="UA" />' .
+            '</payment>';
+        $signature = $this->getMerchant()->calculateSignature($dataContent);
+        if (true) return '<request version="1.0">' .
+            '<merchant>' .
+            '<id>' . $this->getMerchant()->getId() . '</id>' .
+            '<signature>' . $signature . '</signature>' .
+            '</merchant>' .
+            '<data>' .
+            $dataContent .
+            '</data>' .
+            '</request>';
         $data = [
             'oper' => 'cmt',
             'wait' => 0,

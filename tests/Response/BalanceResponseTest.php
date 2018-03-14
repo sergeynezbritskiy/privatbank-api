@@ -26,21 +26,21 @@ class BalanceResponseTest extends TestCase
 <?xml version="1.0" encoding="UTF-8"?>
 <response version="1.0">
     <merchant>
-        <id>75482</id>
-        <signature>bff932d0e97877619965283ed0d147c87a78b6c1</signature>
+        <id>111111</id>
+        <signature>546c391f98572a122abab1c0948c87fe7e6ed421</signature>
     </merchant>
     <data>
         <oper>cmt</oper>
         <info>
             <cardbalance>
                 <card>
-                    <account>5168742060221193</account>
-                    <card_number>5168742060221193</card_number>
-                    <acc_name>Карта для Выплат Gold</acc_name>
-                    <acc_type>CC</acc_type>
+                    <account>4111111111111111</account>
+                    <card_number>4111111111111111</card_number>
+                    <acc_name>Карта для выплат</acc_name>
+                    <acc_type>CM</acc_type>
                     <currency>UAH</currency>
-                    <card_type>Карта для Выплат Gold</card_type>
-                    <main_card_number>5168742060221193</main_card_number>
+                    <card_type>Карта для выплат</card_type>
+                    <main_card_number>4111111111111111</main_card_number>
                     <card_stat>NORM</card_stat>
                     <src>M</src>
                 </card>
@@ -59,21 +59,21 @@ XML;
         $result = $this->response->toArray();
         $this->assertEquals([
             'merchant' => [
-                'id' => '75482',
-                'signature' => 'bff932d0e97877619965283ed0d147c87a78b6c1',
+                'id' => '111111',
+                'signature' => '546c391f98572a122abab1c0948c87fe7e6ed421',
             ],
             'data' => [
                 'oper' => 'cmt',
                 'info' => [
                     'cardbalance' => [
                         'card' => [
-                            'account' => '5168742060221193',
-                            'card_number' => '5168742060221193',
-                            'acc_name' => 'Карта для Выплат Gold',
-                            'acc_type' => 'CC',
+                            'account' => '4111111111111111',
+                            'card_number' => '4111111111111111',
+                            'acc_name' => 'Карта для выплат',
+                            'acc_type' => 'CM',
                             'currency' => 'UAH',
-                            'card_type' => 'Карта для Выплат Gold',
-                            'main_card_number' => '5168742060221193',
+                            'card_type' => 'Карта для выплат',
+                            'main_card_number' => '4111111111111111',
                             'card_stat' => 'NORM',
                             'src' => 'M',
                         ],

@@ -31,26 +31,29 @@ class BalanceRequestTest extends TestCase
 
     public function testBalance()
     {
-        $this->markTestSkipped();
+        $merchantId = getenv('merchantId');
+        $merchantSecret = getenv('merchantSecret');
+        $cardNumber = getenv('cardNumber');
         $result = $this->request
-            ->setMerchant(new Merchant('1', 'asdf'))
+            ->setMerchant(new Merchant($merchantId, $merchantSecret))
             ->execute([
-
+                'cardNumber' => $cardNumber
             ]);
         $this->assertInstanceOf(BalanceResponse::class, $result);
         $data = $result->toArray();
-        $this->assertGreaterThan(0, count($data));
-        foreach ($data as $item) {
-            $this->assertArrayHasKey('country', $item);
-            $this->assertArrayHasKey('state', $item);
-            $this->assertArrayHasKey('city', $item);
-            $this->assertArrayHasKey('index', $item);
-            $this->assertArrayHasKey('address', $item);
-            $this->assertArrayHasKey('phone', $item);
-            $this->assertArrayHasKey('email', $item);
-            $this->assertArrayHasKey('name', $item);
-            break;
-        }
+        $this->assertArrayHasKey('merchant', $data);
+        $this->assertArrayHasKey('data', $data);
+        $this->assertArrayHasKey('oper', $data['data']);
+        $this->assertArrayHasKey('info', $data['data']);
+        $this->assertTrue(isset($data['data']['info']['cardbalance']['card']));
+        $this->assertArrayHasKey('av_balance', $data['data']['info']['cardbalance']);
+        $card = $data['data']['info']['cardbalance']['card'];
+        $this->assertArrayHasKey('account', $card);
+        $this->assertArrayHasKey('card_number', $card);
+        $this->assertArrayHasKey('acc_name', $card);
+        $this->assertArrayHasKey('currency', $card);
+
+
     }
 
 }
