@@ -2,9 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
-use GuzzleHttp\Client;
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
-use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 use SergeyNezbritskiy\XmlIo\XmlWriter;
 
@@ -12,13 +10,8 @@ use SergeyNezbritskiy\XmlIo\XmlWriter;
  * Class AbstractAuthorizedRequest
  * @package SergeyNezbritskiy\PrivatBank\Base
  */
-abstract class AbstractAuthorizedRequest extends AbstractPublicRequest implements AuthorizedRequestInterface
+abstract class AbstractAuthorizedRequest extends AbstractRequest implements AuthorizedRequestInterface
 {
-
-    /**
-     * @var string
-     */
-    protected $url = 'https://api.privatbank.ua/p24api/';
 
     protected $merchant;
 
@@ -41,26 +34,9 @@ abstract class AbstractAuthorizedRequest extends AbstractPublicRequest implement
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    abstract protected function getBodyMap(array $params = []): array;
-
-    /**
-     * @param array $params
-     * @return ResponseInterface
-     */
-    public function execute(array $params = array()): ResponseInterface
-    {
-        $client = new Client();
-
-        $requestUri = $this->url . $this->getRoute();
-        $body = $this->getBody($params);
-        $response = $client->request('POST', $requestUri, [
-            'body' => $body,
-        ]);
-        return $this->getResponse($response);
-    }
+    abstract protected function getBodyMap(): array;
 
     /**
      * @param $params
@@ -103,6 +79,22 @@ XML;
 
     }
 
+    /**
+     * @return string
+     */
+    protected function getMethod(): string
+    {
+        return 'POST';
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function getQueryParams(array $params = []): array
+    {
+        return [];
+    }
 
     /**
      * @param \DOMDocument $xml

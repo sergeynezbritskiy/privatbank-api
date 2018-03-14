@@ -68,12 +68,4 @@ class BalanceRequest extends AbstractAuthorizedRequest
         return new BalanceResponse($httpResponse);
     }
 
-    /**
-     * @param array $params
-     * @return array
-     */
-    protected function getQueryParams(array $params = []): array
-    {
-        // TODO: Implement getQueryParams() method.
-    }
 }
