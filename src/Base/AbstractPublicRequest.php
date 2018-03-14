@@ -11,11 +11,11 @@ abstract class AbstractPublicRequest extends AbstractRequest
 
     /**
      * @param array $params
-     * @return string
+     * @return array
      */
-    protected function getBody(array $params = array()): string
+    protected function getBodyParams(array $params = array()): array
     {
-        return '';
+        return [];
     }
 
     /**

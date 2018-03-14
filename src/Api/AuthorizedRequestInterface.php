@@ -13,9 +13,9 @@ interface AuthorizedRequestInterface extends RequestInterface
 
     /**
      * @param Merchant $merchant
-     * @return mixed
+     * @return void
      */
-    public function setMerchant(Merchant $merchant): AuthorizedRequestInterface;
+    public function setMerchant(Merchant $merchant);
 
     /**
      * @return Merchant

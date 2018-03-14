@@ -27,24 +27,19 @@ class BalanceRequest extends AbstractAuthorizedRequest
      *      </payment>
      *  </data>
      * ```
-     * @param array $params
      * @return array
      */
-    protected function getBodyMap(array $params = []): array
+    protected function getBodyMap(): array
     {
         return [
-            'data' => [
+            'oper',
+            'wait',
+            'test',
+            'payment' => [
                 'children' => [
-                    'oper',
-                    'wait',
-                    'test',
-                    'payment' => [
-                        'children' => [
-                            'prop[]' => [
-                                'dataProvider' => 'payment',
-                                'attributes' => ['name', 'value'],
-                            ],
-                        ],
+                    'prop[]' => [
+                        'dataProvider' => 'payment',
+                        'attributes' => ['name', 'value'],
                     ],
                 ],
             ],

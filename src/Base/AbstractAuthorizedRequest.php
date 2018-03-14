@@ -3,7 +3,6 @@
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
-use SergeyNezbritskiy\PrivatBank\Merchant;
 use SergeyNezbritskiy\XmlIo\XmlWriter;
 
 /**
@@ -13,25 +12,7 @@ use SergeyNezbritskiy\XmlIo\XmlWriter;
 abstract class AbstractAuthorizedRequest extends AbstractRequest implements AuthorizedRequestInterface
 {
 
-    protected $merchant;
-
-    /**
-     * @return mixed
-     */
-    public function getMerchant(): Merchant
-    {
-        return $this->merchant;
-    }
-
-    /**
-     * @param mixed $merchant
-     * @return AuthorizedRequestInterface
-     */
-    public function setMerchant(Merchant $merchant): AuthorizedRequestInterface
-    {
-        $this->merchant = $merchant;
-        return $this;
-    }
+    use HasMerchantTrait;
 
     /**
      * @return array
@@ -39,14 +20,12 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     abstract protected function getBodyMap(): array;
 
     /**
-     * @param $params
-     * @return string
+     * @param array $params
+     * @return array
      */
-    protected function getBody(array $params = []): string
+    protected function getBodyParams(array $params = []): array
     {
-        $xmlWriter = new XmlWriter();
-
-        $data = [
+        return [
             'oper' => 'cmt',
             'wait' => 0,
             'test' => 1,
@@ -58,7 +37,33 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
                 'value' => 'UA',
             ]]
         ];
-        $dataXml = $xmlWriter->toXml($data, $this->getBodyMap());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMethod(): string
+    {
+        return 'POST';
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function getQueryParams(array $params = []): array
+    {
+        return [];
+    }
+
+    /**
+     * @param $params
+     * @return string
+     */
+    protected function getBody(array $params = []): string
+    {
+        $xmlWriter = new XmlWriter();
+        $dataXml = $xmlWriter->toXml($params, $this->getBodyMap());
         $dataContent = $this->getDataInnerXmlAsString($dataXml);
         $signature = $this->getMerchant()->calculateSignature($dataContent);
         $merchantId = $this->getMerchant()->getId();
@@ -80,30 +85,13 @@ XML;
     }
 
     /**
-     * @return string
-     */
-    protected function getMethod(): string
-    {
-        return 'POST';
-    }
-
-    /**
-     * @param array $params
-     * @return array
-     */
-    protected function getQueryParams(array $params = []): array
-    {
-        return [];
-    }
-
-    /**
      * @param \DOMDocument $xml
      * @return string
      */
     private function getDataInnerXmlAsString($xml)
     {
         $innerXml = '';
-        $dataNode = $xml->getElementsByTagName('data')[0];
+        $dataNode = $xml;
         foreach ($dataNode->childNodes as $node) {
             $innerXml .= $node->ownerDocument->saveXML($node, LIBXML_NOEMPTYTAG);
         }

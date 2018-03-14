@@ -47,7 +47,8 @@ class BalanceRequestTest extends TestCase
         }
 
         $merchant = new Merchant($merchantId, $merchantSecret);
-        $result = $this->request->setMerchant($merchant)->execute([
+        $this->request->setMerchant($merchant);
+        $result = $this->request->execute([
             'cardNumber' => $cardNumber
         ]);
         $this->assertInstanceOf(BalanceResponse::class, $result);
