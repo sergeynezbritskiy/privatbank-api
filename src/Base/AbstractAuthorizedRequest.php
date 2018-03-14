@@ -20,6 +20,14 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     abstract protected function getBodyMap(): array;
 
     /**
+     * @return string
+     */
+    protected function getMethod(): string
+    {
+        return 'POST';
+    }
+
+    /**
      * @param array $params
      * @return array
      */
@@ -29,22 +37,7 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
             'oper' => 'cmt',
             'wait' => 0,
             'test' => 1,
-            'payment' => [[
-                'name' => 'cardnum',
-                'value' => $params['cardNumber'],
-            ], [
-                'name' => 'country',
-                'value' => 'UA',
-            ]]
         ];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getMethod(): string
-    {
-        return 'POST';
     }
 
     /**
@@ -91,8 +84,7 @@ XML;
     private function getDataInnerXmlAsString($xml)
     {
         $innerXml = '';
-        $dataNode = $xml;
-        foreach ($dataNode->childNodes as $node) {
+        foreach ($xml->childNodes as $node) {
             $innerXml .= $node->ownerDocument->saveXML($node, LIBXML_NOEMPTYTAG);
         }
         return $innerXml;

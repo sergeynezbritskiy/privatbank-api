@@ -71,14 +71,6 @@ abstract class AbstractRequest implements RequestInterface
     }
 
     /**
-     * @return Client
-     */
-    protected function getClient(): Client
-    {
-        return $this->client;
-    }
-
-    /**
      * @param array $params
      * @return string
      */
@@ -86,6 +78,14 @@ abstract class AbstractRequest implements RequestInterface
         array $params = []): string
     {
         return '';
+    }
+
+    /**
+     * @return Client
+     */
+    protected function getClient(): Client
+    {
+        return $this->client;
     }
 
 }

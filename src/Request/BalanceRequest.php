@@ -47,6 +47,23 @@ class BalanceRequest extends AbstractAuthorizedRequest
     }
 
     /**
+     * @param array $params
+     * @return array
+     */
+    protected function getBodyParams(array $params = []): array
+    {
+        return array_merge(parent::getBodyParams($params), [
+            'payment' => [[
+                'name' => 'cardnum',
+                'value' => $params['cardNumber'],
+            ], [
+                'name' => 'country',
+                'value' => 'UA',
+            ]]
+        ]);
+    }
+
+    /**
      * @return string
      */
     protected function getRoute(): string

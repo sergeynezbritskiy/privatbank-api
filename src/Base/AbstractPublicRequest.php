@@ -10,20 +10,20 @@ abstract class AbstractPublicRequest extends AbstractRequest
 {
 
     /**
+     * @return string
+     */
+    protected function getMethod(): string
+    {
+        return 'GET';
+    }
+
+    /**
      * @param array $params
      * @return array
      */
     protected function getBodyParams(array $params = array()): array
     {
         return [];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getMethod(): string
-    {
-        return 'GET';
     }
 
 }
