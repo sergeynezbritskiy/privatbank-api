@@ -22,6 +22,11 @@ abstract class AbstractAuthorizedRequest implements AuthorizedRequestInterface
     protected $url = 'https://api.privatbank.ua/p24api/';
 
     /**
+     * @var \SergeyNezbritskiy\PrivatBank\Client
+     */
+    private $client;
+
+    /**
      * @return string
      */
     abstract protected function getRoute(): string;
@@ -34,6 +39,15 @@ abstract class AbstractAuthorizedRequest implements AuthorizedRequestInterface
 
 
     protected $merchant;
+
+    /**
+     * AbstractPublicRequest constructor.
+     * @param \SergeyNezbritskiy\PrivatBank\Client $client
+     */
+    public function __construct(\SergeyNezbritskiy\PrivatBank\Client $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * @return mixed
@@ -98,22 +112,21 @@ abstract class AbstractAuthorizedRequest implements AuthorizedRequestInterface
         $dataXml = $xmlWriter->toXml($data, $this->getBodyMap());
         $dataContent = $this->getDataInnerXmlAsString($dataXml);
         $signature = $this->getMerchant()->calculateSignature($dataContent);
-
-
         $merchantId = $this->getMerchant()->getId();
+
         $body = <<<XML
-<request version="10"> 
-    <merchant> 
-        <id>$merchantId</id> 
-        <signature>$signature</signature> 
-    </merchant> 
-    <data> 
-        $dataContent 
-    </data> 
+<request version="1.0"> 
+    <merchant>
+        <id>$merchantId</id>
+        <signature>$signature</signature>
+    </merchant>
+    <data>
+        $dataContent
+    </data>
 </request>
 XML;
-        return $body;
 
+        return $body;
 
     }
 
