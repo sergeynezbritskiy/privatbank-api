@@ -24,6 +24,16 @@ class Client
     protected $url = 'https://api.privatbank.ua/p24api/';
 
     /**
+     * @var bool
+     */
+    private $testMode = true;
+
+    /**
+     * @var int
+     */
+    private $waitTimeout = 0;
+
+    /**
      * @param string $request
      * @param array $params
      * @return ResponseInterface
@@ -53,6 +63,42 @@ class Client
             'query' => $request->getQuery(),
             'body' => $request->getBody(),
         ]);
+    }
+
+    /**
+     * @param bool $mode
+     * @return Client
+     */
+    public function setTestMode(bool $mode): Client
+    {
+        $this->testMode = $mode;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTestMode(): bool
+    {
+        return $this->testMode;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWaitTimeout(): int
+    {
+        return $this->waitTimeout;
+    }
+
+    /**
+     * @param int $waitTimeout
+     * @return Client
+     */
+    public function setWaitTimeout(int $waitTimeout): Client
+    {
+        $this->waitTimeout = $waitTimeout;
+        return $this;
     }
 
     /**

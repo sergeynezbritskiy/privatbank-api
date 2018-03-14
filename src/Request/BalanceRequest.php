@@ -9,7 +9,12 @@ use SergeyNezbritskiy\PrivatBank\Response\BalanceResponse;
 
 /**
  * Class BalanceRequest
+ *
+ * Params:
+ * cardNumber - required, integer
+ * country - optional, string
  * @package SergeyNezbritskiy\PrivatBank\Request
+ * @see https://api.privatbank.ua/#p24/balance
  */
 class BalanceRequest extends AbstractAuthorizedRequest
 {
@@ -52,13 +57,18 @@ class BalanceRequest extends AbstractAuthorizedRequest
      */
     protected function getBodyParams(array $params = []): array
     {
+        $params = array_merge([
+            'country' => 'UA',
+            'cardNumber' => '',
+        ], $params);
+
         return array_merge(parent::getBodyParams($params), [
             'payment' => [[
                 'name' => 'cardnum',
                 'value' => $params['cardNumber'],
             ], [
                 'name' => 'country',
-                'value' => 'UA',
+                'value' => $params['country'],
             ]]
         ]);
     }

@@ -9,6 +9,7 @@ use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
 
 /**
  * Class OfficesRequest
+ *
  * Params:
  * address - string, optional russian language
  * city - string, optional, in russian language

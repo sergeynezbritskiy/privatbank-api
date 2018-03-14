@@ -9,6 +9,7 @@ use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
 /**
  * Class InfrastructureRequest
+ *
  * Params:
  * type - string, required, `atm` or `tso`, see class constants
  * address - string, optional russian language

@@ -47,6 +47,19 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
+    public function testMode()
+    {
+        $this->assertTrue($this->client->isTestMode());
+        $this->assertFalse($this->client->setTestMode(false)->isTestMode());
+        $this->assertTrue($this->client->setTestMode(true)->isTestMode());
+    }
+
+    public function testTimeout()
+    {
+        $this->assertEquals(0, $this->client->getWaitTimeout());
+        $this->assertEquals(10, $this->client->setWaitTimeout(10)->getWaitTimeout());
+    }
+
     public function testGetExchangeRates()
     {
         $this->assertInstanceOf(ExchangeRatesRequest::class, $this->client->exchangeRates());

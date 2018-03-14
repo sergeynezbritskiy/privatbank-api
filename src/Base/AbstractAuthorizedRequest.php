@@ -35,8 +35,8 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     {
         return [
             'oper' => 'cmt',
-            'wait' => 0,
-            'test' => 1,
+            'wait' => $this->getClient()->getWaitTimeout(),
+            'test' => $this->getClient()->isTestMode(),
         ];
     }
 

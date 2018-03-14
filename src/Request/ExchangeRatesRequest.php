@@ -9,6 +9,7 @@ use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
 /**
  * Class ExchangeRatesRequest
+ *
  * Params:
  * coursid - int, optional, course type, see class constants
  * @package SergeyNezbritskiy\PrivatBank\Request

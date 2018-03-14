@@ -9,6 +9,7 @@ use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
 
 /**
  * Class ExchangeRatesArchiveRequest
+ *
  * Params:
  * date - required, string, format d.m.Y, e.g. 01.12.2017
  * @package SergeyNezbritskiy\PrivatBank\Request
