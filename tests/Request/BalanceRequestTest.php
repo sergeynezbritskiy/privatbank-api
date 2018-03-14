@@ -53,7 +53,6 @@ class BalanceRequestTest extends TestCase
         $this->assertArrayHasKey('acc_name', $card);
         $this->assertArrayHasKey('currency', $card);
 
-
     }
 
 }
