@@ -13,6 +13,7 @@ class BalanceResponse extends AbstractResponse
 
     /**
      * Response sample
+     * ```xml
      *  <?xml version="1.0" encoding="UTF-8"?>
      *  <response version="1.0">
      *      <merchant>
@@ -44,6 +45,7 @@ class BalanceResponse extends AbstractResponse
      *         </info>
      *     </data>
      *  </response>
+     * ```
      * @return array
      */
     protected function getMap(): array
