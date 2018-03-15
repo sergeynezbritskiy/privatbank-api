@@ -7,7 +7,7 @@ use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 use SergeyNezbritskiy\PrivatBank\Request\BalanceRequest;
 use SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest;
-use SergeyNezbritskiy\PrivatBank\Response\PaymentInternalResponse;
+use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
 
 /**
  * Class PaymentInternalRequestTest
@@ -56,7 +56,7 @@ class PaymentInternalRequestTest extends TestCase
             'details' => 'test%20merch%20not%20active'
         ]);
 
-        $this->assertInstanceOf(PaymentInternalResponse::class, $result);
+        $this->assertInstanceOf(PaymentResponse::class, $result);
 
         $data = $result->toArray();
 

@@ -5,10 +5,10 @@ namespace SergeyNezbritskiy\PrivatBank\Response;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
- * Class PaymentInternalResponse
+ * Class PaymentResponse
  * @package SergeyNezbritskiy\PrivatBank\Response
  */
-class PaymentInternalResponse extends AbstractResponse
+class PaymentResponse extends AbstractResponse
 {
 
     /**

@@ -5,7 +5,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
-use SergeyNezbritskiy\PrivatBank\Response\PaymentInternalResponse;
+use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
 
 /**
  * Class StatementsRequest
@@ -105,7 +105,7 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
-        return new PaymentInternalResponse($httpResponse);
+        return new PaymentResponse($httpResponse);
     }
 
 }
