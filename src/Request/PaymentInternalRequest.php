@@ -5,20 +5,22 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
-use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
+use SergeyNezbritskiy\PrivatBank\Response\PaymentInternalResponse;
 
 /**
  * Class StatementsRequest
  *
  * Params:
- * cardNumber - required, integer
- * startDate - required, string, date format `d.m.Y`
- * endDate - required, string, date format `d.m.Y`
+ * payment - required, integer
+ * b_card_or_acc - required, integer, receiver card number
+ * amt - required, float, amount
+ * ccy - required, string, currency
+ * details - required, string, payment details
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
- * @see https://api.privatbank.ua/#p24/orders
+ * @see https://api.privatbank.ua/#p24/pb
  */
-class StatementsRequest extends AbstractAuthorizedRequest
+class PaymentInternalRequest extends AbstractAuthorizedRequest
 {
 
     /**
@@ -28,10 +30,12 @@ class StatementsRequest extends AbstractAuthorizedRequest
      *      <oper>cmt</oper>
      *      <wait>0</wait>
      *      <test>0</test>
-     *      <payment id="">
-     *          <prop name="sd" value="11.08.2013" />
-     *          <prop name="ed" value="11.09.2013" />
-     *          <prop name="card" value="5168742060221193" />
+     *      <oper>cmt</oper>
+     *      <payment id="1234567">
+     *          <prop name="b_card_or_acc" value="4627081718568608" />
+     *          <prop name="amt" value="1" />
+     *          <prop name="ccy" value="UAH" />
+     *          <prop name="details" value="test%20merch%20not%20active" />
      *      </payment>
      *  </data>
      * ```
@@ -44,6 +48,7 @@ class StatementsRequest extends AbstractAuthorizedRequest
             'wait',
             'test',
             'payment' => [
+//                'attributes' => ['id'],
                 'children' => [
                     'prop[]' => [
                         'dataProvider' => 'payment',
@@ -61,21 +66,27 @@ class StatementsRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(array $params = []): array
     {
         $params = array_merge([
-            'startDate' => '',
-            'endDate' => '',
-            'cardNumber' => '',
+            'payment' => '',
+            'b_card_or_acc' => '',
+            'amt' => '',
+            'ccy' => '',
+            'details' => '',
         ], $params);
 
         return array_merge(parent::getBodyParams($params), [
+            'id' => $params['payment'],
             'payment' => [[
-                'name' => 'sd',
-                'value' => $params['startDate'],
+                'name' => 'b_card_or_acc',
+                'value' => $params['b_card_or_acc'],
             ], [
-                'name' => 'ed',
-                'value' => $params['endDate'],
+                'name' => 'amt',
+                'value' => $params['amt'],
             ], [
-                'name' => 'card',
-                'value' => $params['cardNumber'],
+                'name' => 'ccy',
+                'value' => $params['ccy'],
+            ], [
+                'name' => 'details',
+                'value' => $params['details'],
             ]]
         ]);
     }
@@ -85,7 +96,7 @@ class StatementsRequest extends AbstractAuthorizedRequest
      */
     protected function getRoute(): string
     {
-        return 'rest_fiz';
+        return 'pay_pb';
     }
 
     /**
@@ -94,7 +105,7 @@ class StatementsRequest extends AbstractAuthorizedRequest
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
-        return new StatementsResponse($httpResponse);
+        return new PaymentInternalResponse($httpResponse);
     }
 
 }

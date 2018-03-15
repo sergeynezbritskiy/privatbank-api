@@ -31,13 +31,7 @@ class PaymentInternalResponseTest extends TestCase
     </merchant>
     <data>
         <oper>cmt</oper>
-        <payment id="2657374">
-            <prop name="b_card_or_acc" value="4714466011522341" />
-            <prop name="amt" value="10" />
-            <prop name="ccy"  value="UAH" />
-            <prop name="b_name" value="FIO" />
-            <prop name="details" value="testVisa" />
-        </payment>
+        <payment id="" state="1" message="" ref="P24PKP" amt="1.5" ccy="UAH" comis="0.00" cardinfo="personified"/>
     </data>
 </response>
 XML;
@@ -50,22 +44,16 @@ XML;
             ],
             'data' => [
                 'oper' => 'cmt',
-                'payment' => [[
-                    'name' => 'b_card_or_acc',
-                    'value' => '4714466011522341'
-                ], [
-                    'name' => 'amt',
-                    'value' => '10'
-                ], [
-                    'name' => 'ccy',
-                    'value' => 'UAH'
-                ], [
-                    'name' => 'b_name',
-                    'value' => 'FIO'
-                ], [
-                    'name' => 'details',
-                    'value' => 'testVisa'
-                ]],
+                'payment' => [
+                    'id' => '',
+                    'state' => '1',
+                    'message' => '',
+                    'ref' => 'P24PKP',
+                    'amt' => '1.5',
+                    'ccy' => 'UAH',
+                    'comis' => '0.00',
+                    'cardinfo' => 'personified',
+                ],
             ],
         ], $result);
     }

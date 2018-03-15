@@ -22,13 +22,7 @@ class PaymentInternalResponse extends AbstractResponse
      *      </merchant>
      *      <data>
      *          <oper>cmt</oper>
-     *          <payment id="2657374">
-     *              <prop name="b_card_or_acc" value="4714466011522341" />
-     *              <prop name="amt" value="10" />
-     *              <prop name="ccy"  value="UAH" />
-     *              <prop name="b_name" value="FIO" />
-     *              <prop name="details" value="testVisa" />
-     *          </payment>
+     *          <payment id="" state="1" message="" ref="P24PKP" amt="1.5" ccy="UAH" comis="0.00" cardinfo="personified"/>
      *      </data>
      *  </response>
      * ```
@@ -43,9 +37,15 @@ class PaymentInternalResponse extends AbstractResponse
             ],
             'data' => [
                 'oper' => 'oper',
-                'payment as payment.prop[]' => [
-                    'name' => '@name',
-                    'value' => '@value',
+                'payment' => [
+                    'id' => '@id',
+                    'state' => '@state',
+                    'message' => '@message',
+                    'ref' => '@ref',
+                    'amt' => '@amt',
+                    'ccy' => '@ccy',
+                    'comis' => '@comis',
+                    'cardinfo' => '@cardinfo',
                 ],
             ],
         ];
