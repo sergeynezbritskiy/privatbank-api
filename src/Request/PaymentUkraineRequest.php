@@ -8,19 +8,22 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
 use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
 
 /**
- * Class PaymentInternalRequest
+ * Class PaymentUkraineRequest
  *
  * Params:
  * payment - required, integer
  * b_card_or_acc - required, integer, receiver card number
  * amt - required, float, amount
  * ccy - required, string, currency
+ * b_name - required, string, receiver name
+ * b_crf - required, integer, ОКПО банка получателя
+ * b_bic - required, integet, МФО банка получателя
  * details - required, string, payment details
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
- * @see https://api.privatbank.ua/#p24/pb
+ * @see https://api.privatbank.ua/#p24/ukraine
  */
-class PaymentInternalRequest extends AbstractAuthorizedRequest
+class PaymentUkraineRequest extends AbstractAuthorizedRequest
 {
 
     /**
@@ -35,7 +38,10 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
      *          <prop name="b_card_or_acc" value="4627081718568608" />
      *          <prop name="amt" value="1" />
      *          <prop name="ccy" value="UAH" />
-     *          <prop name="details" value="test%20merch%20not%20active" />
+     *          <prop name="b_name" value="test_test" />
+     *          <prop name="b_crf" value="283123814" />
+     *          <prop name="b_bic" value="336310" />
+     *          <prop name="details" value="testUkr" />
      *      </payment>
      *  </data>
      * ```
@@ -70,6 +76,9 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
             'b_card_or_acc' => '',
             'amt' => '',
             'ccy' => '',
+            'b_name' => '',
+            'b_crf' => '',
+            'b_bic' => '',
             'details' => '',
         ], $params);
 
@@ -85,6 +94,15 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
                 'name' => 'ccy',
                 'value' => $params['ccy'],
             ], [
+                'name' => 'b_crf',
+                'value' => $params['b_crf'],
+            ], [
+                'name' => 'b_name',
+                'value' => $params['b_name'],
+            ], [
+                'name' => 'b_bic',
+                'value' => $params['b_bic'],
+            ], [
                 'name' => 'details',
                 'value' => $params['details'],
             ]]
@@ -96,7 +114,7 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
      */
     protected function getRoute(): string
     {
-        return 'pay_pb';
+        return 'pay_ua';
     }
 
     /**
