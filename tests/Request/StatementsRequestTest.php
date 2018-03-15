@@ -69,6 +69,7 @@ class StatementsRequestTest extends TestCase
         $this->assertTrue(isset($data['data']['info']['statements']));
 
         $statements = $data['data']['info']['statements'];
+        $this->assertGreaterThan(0, count($statements));
         foreach ($statements as $card) {
             $this->assertArrayHasKey('card', $card);
             $this->assertArrayHasKey('appcode', $card);
