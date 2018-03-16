@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests\Base;
 
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Tests\Response\TestCase;
 
 /**
@@ -20,8 +21,21 @@ class AbstractResponseExceptionsTest extends TestCase
         return AbstractResponse::class;
     }
 
+    public function testOkCode()
+    {
+        $this->statusCode = 200;
+        $this->reasonPhrase = 'OK';
+        $this->call('handleErrors');
+    }
+
     public function testNonOkCode()
     {
-        $this->assertTrue(true);
+        $this->statusCode = 500;
+        $this->reasonPhrase = 'Internal Server Error';
+        $this->expectException(PrivatBankApiException::class);
+        $this->expectExceptionCode($this->statusCode);
+        $this->expectExceptionMessage($this->reasonPhrase);
+        $this->call('handleErrors');
     }
+
 }

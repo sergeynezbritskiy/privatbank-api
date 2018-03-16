@@ -26,6 +26,7 @@ abstract class AbstractResponse implements ResponseInterface
     /**
      * AbstractResponse constructor.
      * @param $httpResponse
+     * @throws PrivatBankApiException
      */
     public function __construct(HttpResponseInterface $httpResponse)
     {
@@ -55,8 +56,15 @@ abstract class AbstractResponse implements ResponseInterface
         return $this->content;
     }
 
+    /**
+     * @throws PrivatBankApiException
+     */
     private function handleErrors()
     {
+        $statusCode = $this->httpResponse->getStatusCode();
+        if ($statusCode !== 200) {
+            throw new PrivatBankApiException($this->httpResponse->getReasonPhrase(), $statusCode);
+        }
     }
 
 }
