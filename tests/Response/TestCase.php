@@ -2,9 +2,9 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Response;
 
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
 
 /**
  * Class TestCase
@@ -20,7 +20,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @var string
      */
-    protected $content;
+    protected $content = '';
 
     protected $statusCode = 200;
 
@@ -34,26 +34,22 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $test = $this;
-        $stream = $this->getMockBuilder(\stdClass::class)
-            ->setMethods(['getContents'])
-            ->getMock();
-        $stream->expects($this->once())
-            ->method('getContents')
-            ->willReturnCallback(function () use ($test) {
-                return $test->content;
-            });
 
-        /** @var Response|MockObject $httpResponse */
-        $httpResponse = $this->getMockBuilder(Response::class)
-            ->setMethods(['getBody', 'getStatusCode', 'getReasonPhrase'])
+        /** @var HttpResponse|MockObject $httpResponse */
+        $httpResponse = $this->getMockBuilder(HttpResponse::class)
+            ->setConstructorArgs([$this->content, $this->statusCode, $this->reasonPhrase])
+            ->setMethods(['getContent', 'getStatusCode', 'getReasonPhrase'])
             ->getMock();
-        $httpResponse->expects($this->once())
-            ->method('getBody')
-            ->willReturn($stream);
+
         $httpResponse->expects($this->any())
             ->method('getStatusCode')
             ->willReturnCallback(function () use ($test) {
                 return $test->statusCode;
+            });
+        $httpResponse->expects($this->any())
+            ->method('getContent')
+            ->willReturnCallback(function () use ($test) {
+                return $test->content;
             });
         $httpResponse->expects($this->any())
             ->method('getReasonPhrase')
