@@ -3,7 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request;
 
@@ -36,7 +36,7 @@ class ClientTest extends TestCase
         $response = $this->client->request('pubinfo', [
             'query' => ['exchange' => '', 'coursid' => 11]
         ]);
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
     }
 
     /**
@@ -46,7 +46,7 @@ class ClientTest extends TestCase
     {
         $request = new Request('pubinfo', '', ['exchange' => '', 'coursid' => 11]);
         $response = $this->client->send($request);
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
     }
 
     public function testMode()
