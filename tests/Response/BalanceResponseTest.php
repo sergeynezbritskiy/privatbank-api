@@ -59,34 +59,23 @@ XML;
 
         $result = $this->response->toArray();
         $this->assertEquals([
-            'merchant' => [
-                'id' => '111111',
-                'signature' => '546c391f98572a122abab1c0948c87fe7e6ed421',
+            'card' => [
+                'account' => '4111111111111111',
+                'card_number' => '4111111111111111',
+                'acc_name' => 'Карта для выплат',
+                'acc_type' => 'CM',
+                'currency' => 'UAH',
+                'card_type' => 'Карта для выплат',
+                'main_card_number' => '4111111111111111',
+                'card_stat' => 'NORM',
+                'src' => 'M',
             ],
-            'data' => [
-                'oper' => 'cmt',
-                'info' => [
-                    'cardbalance' => [
-                        'card' => [
-                            'account' => '4111111111111111',
-                            'card_number' => '4111111111111111',
-                            'acc_name' => 'Карта для выплат',
-                            'acc_type' => 'CM',
-                            'currency' => 'UAH',
-                            'card_type' => 'Карта для выплат',
-                            'main_card_number' => '4111111111111111',
-                            'card_stat' => 'NORM',
-                            'src' => 'M',
-                        ],
-                        'av_balance' => '0.95',
-                        'bal_date' => '11.09.13 15:56',
-                        'bal_dyn' => 'E',
-                        'balance' => '0.95',
-                        'fin_limit' => '0.00',
-                        'trade_limit' => '0.00',
-                    ]
-                ]
-            ]
+            'av_balance' => '0.95',
+            'bal_date' => '11.09.13 15:56',
+            'bal_dyn' => 'E',
+            'balance' => '0.95',
+            'fin_limit' => '0.00',
+            'trade_limit' => '0.00',
         ], $result);
     }
 

@@ -56,13 +56,8 @@ class BalanceRequestTest extends TestCase
         ]);
         $this->assertInstanceOf(BalanceResponse::class, $result);
         $data = $result->toArray();
-        $this->assertArrayHasKey('merchant', $data);
-        $this->assertArrayHasKey('data', $data);
-        $this->assertArrayHasKey('oper', $data['data']);
-        $this->assertArrayHasKey('info', $data['data']);
-        $this->assertTrue(isset($data['data']['info']['cardbalance']['card']));
-        $this->assertArrayHasKey('av_balance', $data['data']['info']['cardbalance']);
-        $card = $data['data']['info']['cardbalance']['card'];
+        $this->assertTrue(isset($data['card']));
+        $card = $data['card'];
         $this->assertArrayHasKey('account', $card);
         $this->assertArrayHasKey('card_number', $card);
         $this->assertArrayHasKey('acc_name', $card);

@@ -51,35 +51,37 @@ class BalanceResponse extends AbstractResponse
     protected function getMap(): array
     {
         return [
-            'merchant' => [
-                'id' => 'id',
-                'signature' => 'signature',
-            ],
-            'data' => [
-                'oper' => 'oper',
-                'info' => [
-                    'cardbalance' => [
-                        'card' => [
-                            'account' => 'account',
-                            'card_number' => 'card_number',
-                            'acc_name' => 'acc_name',
-                            'acc_type' => 'acc_type',
-                            'currency' => 'currency',
-                            'card_type' => 'card_type',
-                            'main_card_number' => 'main_card_number',
-                            'card_stat' => 'card_stat',
-                            'src' => 'src',
-                        ],
-                        'av_balance' => 'av_balance',
-                        'bal_date' => 'bal_date',
-                        'bal_dyn' => 'bal_dyn',
-                        'balance' => 'balance',
-                        'fin_limit' => 'fin_limit',
-                        'trade_limit' => 'trade_limit',
-                    ],
+            'cardbalance as data.info.cardbalance' => [
+                'card' => [
+                    'account' => 'account',
+                    'card_number' => 'card_number',
+                    'acc_name' => 'acc_name',
+                    'acc_type' => 'acc_type',
+                    'currency' => 'currency',
+                    'card_type' => 'card_type',
+                    'main_card_number' => 'main_card_number',
+                    'card_stat' => 'card_stat',
+                    'src' => 'src',
                 ],
+                'av_balance' => 'av_balance',
+                'bal_date' => 'bal_date',
+                'bal_dyn' => 'bal_dyn',
+                'balance' => 'balance',
+                'fin_limit' => 'fin_limit',
+                'trade_limit' => 'trade_limit',
             ],
         ];
     }
+
+    /**
+     * TODO implement it via map
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $result = parent::toArray();
+        return $result['cardbalance'];
+    }
+
 
 }
