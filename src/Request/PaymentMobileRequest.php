@@ -5,20 +5,18 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
-use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
+use SergeyNezbritskiy\PrivatBank\Response\PaymentMobileResponse;
 
 /**
  * Class PaymentMobileRequest
  *
  * Params:
  * payment - required, integer
- * b_card_or_acc - required, integer, receiver card number
+ * phone - required, string, receiver phone number
  * amt - required, float, amount
- * ccy - required, string, currency
- * details - required, string, payment details
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
- * @see https://api.privatbank.ua/#p24/pb
+ * @see https://api.privatbank.ua/#p24/mobile
  */
 class PaymentMobileRequest extends AbstractAuthorizedRequest
 {
@@ -32,10 +30,8 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
      *      <test>0</test>
      *      <oper>cmt</oper>
      *      <payment id="1234567">
-     *          <prop name="b_card_or_acc" value="4627081718568608" />
-     *          <prop name="amt" value="1" />
-     *          <prop name="ccy" value="UAH" />
-     *          <prop name="details" value="test%20merch%20not%20active" />
+     *          <prop name="phone" value="%2B380632285977" />
+     *          <prop name="amt" value="0.05" />
      *      </payment>
      *  </data>
      * ```
@@ -66,27 +62,19 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(array $params = []): array
     {
         $params = array_merge([
-            'payment' => '',
-            'b_card_or_acc' => '',
+            'paymentId' => '',
+            'phone' => '',
             'amt' => '',
-            'ccy' => '',
-            'details' => '',
         ], $params);
 
         return array_merge(parent::getBodyParams($params), [
-            'id' => $params['payment'],
+            'id' => $params['paymentId'],
             'payment' => [[
-                'name' => 'b_card_or_acc',
-                'value' => $params['b_card_or_acc'],
+                'name' => 'phone',
+                'value' => $params['phone'],
             ], [
                 'name' => 'amt',
                 'value' => $params['amt'],
-            ], [
-                'name' => 'ccy',
-                'value' => $params['ccy'],
-            ], [
-                'name' => 'details',
-                'value' => $params['details'],
             ]]
         ]);
     }
@@ -96,7 +84,7 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
      */
     protected function getRoute(): string
     {
-        return 'pay_pb';
+        return 'directfill';
     }
 
     /**
@@ -105,7 +93,7 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
-        return new PaymentResponse($httpResponse);
+        return new PaymentMobileResponse($httpResponse);
     }
 
 }
