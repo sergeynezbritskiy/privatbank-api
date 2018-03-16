@@ -14,6 +14,13 @@ use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
  * @method RequestInterface infrastructure()
  * @method RequestInterface offices()
  * @method AuthorizedRequestInterface balance()
+ * @method AuthorizedRequestInterface statements()
+ * @method AuthorizedRequestInterface paymentInternal()
+ * @method AuthorizedRequestInterface paymentMobile()
+ * @method AuthorizedRequestInterface paymentUkraine()
+ * @method AuthorizedRequestInterface paymentVisa()
+ * @method AuthorizedRequestInterface checkPaymentMobile()
+ * @method AuthorizedRequestInterface checkPayment()
  */
 class Client
 {
