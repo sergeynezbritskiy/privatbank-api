@@ -55,6 +55,7 @@ class BalanceResponseTest extends TestCase
     </data>
 </response>
 XML;
+        $this->setContent($this->content);
 
         $result = $this->response->toArray();
         $this->assertEquals([

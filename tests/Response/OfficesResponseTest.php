@@ -29,6 +29,7 @@ class OfficesResponseTest extends TestCase
     <pboffice country="Украина" state="Днепропетровская" city="Днепропетровск" index="49055" address="ул Титова 9" phone="8(056)771-20-83" email="elena.vasikpbank.com.ua" name="ДГРУ, Отделение N41"/>
 </pboffice>
 XML;
+        $this->setContent($this->content);
 
         $result = $this->response->toArray();
         $this->assertEquals([[

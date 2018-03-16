@@ -39,6 +39,7 @@ class ExchangeRatesResponseTest extends TestCase
     </row>
 </exchangerates>
 XML;
+        $this->setContent($this->content);
 
         $result = $this->response->toArray();
         $this->assertEquals([[

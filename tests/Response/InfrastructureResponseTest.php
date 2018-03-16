@@ -42,6 +42,7 @@ class InfrastructureResponseTest extends TestCase
     </device>
 </atm>
 XML;
+        $this->setContent($this->content);
 
         $result = $this->response->toArray();
         $this->assertEquals([[

@@ -13,11 +13,14 @@ use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var ResponseInterface
+     * @var ResponseInterface|MockObject
      */
     protected $response;
 
-    protected $content = array();
+    /**
+     * @var string
+     */
+    protected $content;
 
     /**
      * @return string
@@ -44,13 +47,39 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             ->method('getBody')
             ->willReturn($stream);
         $class = $this->getClass();
-        $this->response = new $class($httpResponse);
+        $this->response = $this->getMockForAbstractClass($class, ['httpResponse' => $httpResponse]);
     }
 
     public function tearDown()
     {
         $this->response = null;
         $this->content = array();
+    }
+
+    /** @noinspection PhpDocMissingThrowsInspection */
+
+    /**
+     * @param string $content
+     */
+    protected function setContent(string $content)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->mockProperty('content', $content);
+    }
+
+    /**
+     * @param string $propertyName
+     * @param $value
+     * @throws \ReflectionException
+     */
+    protected function mockProperty(string $propertyName, $value)
+    {
+        $object = $this->response;
+        $reflectionClass = new \ReflectionClass($object);
+        $property = $reflectionClass->getProperty($propertyName);
+        $property->setAccessible(true);
+        $property->setValue($object, $value);
+        $property->setAccessible(false);
     }
 
 }
