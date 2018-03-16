@@ -152,6 +152,16 @@ class Client
         if ($result->getStatusCode() !== 200) {
             throw new PrivatBankApiException($result->getReasonPhrase(), $result->getStatusCode());
         }
+        $content = $result->getContent();
+        $xml = new \DOMDocument();
+        $xml->loadXML($content);
+        $errors = $xml->getElementsByTagName('error');
+        if ($errors->length > 0) {
+            /** @var \DOMElement $error */
+            $error = $errors[0];
+            $message = $error->textContent ?: $error->getAttributeNode('message')->textContent;
+            throw new PrivatBankApiException($message, 500);
+        }
     }
 
 }
