@@ -5,7 +5,6 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
-use SergeyNezbritskiy\PrivatBank\Request\BalanceRequest;
 use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
 use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
 
@@ -17,7 +16,7 @@ class StatementsRequestTest extends TestCase
 {
 
     /**
-     * @var BalanceRequest
+     * @var StatementsRequest
      */
     private $request;
 

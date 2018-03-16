@@ -5,18 +5,18 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
-use SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest;
-use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
+use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest;
+use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
 
 /**
- * Class PaymentInternalRequestTest
+ * Class CheckPaymentMobileRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class PaymentInternalRequestTest extends TestCase
+class CheckPaymentMobileRequestTest extends TestCase
 {
 
     /**
-     * @var PaymentInternalRequest
+     * @var CheckPaymentMobileRequest
      */
     private $request;
 
@@ -28,7 +28,7 @@ class PaymentInternalRequestTest extends TestCase
     protected function setUp()
     {
         $this->client = new Client();
-        $this->request = new PaymentInternalRequest($this->client);
+        $this->request = new CheckPaymentMobileRequest($this->client);
     }
 
     protected function tearDown()
@@ -48,14 +48,10 @@ class PaymentInternalRequestTest extends TestCase
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->request->setMerchant($merchant);
         $result = $this->request->execute([
-            'payment' => '1234567',
-            'b_card_or_acc' => '4627081718568608',
-            'amt' => '1.50',
-            'ccy' => 'UAH',
-            'details' => 'test%20merch%20not%20active'
+            'paymentId' => '1234567',
         ]);
 
-        $this->assertInstanceOf(PaymentResponse::class, $result);
+        $this->assertInstanceOf(CheckPaymentMobileResponse::class, $result);
 
         $data = $result->toArray();
 
@@ -71,11 +67,6 @@ class PaymentInternalRequestTest extends TestCase
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);
         $this->assertArrayHasKey('message', $payment);
-        $this->assertArrayHasKey('ref', $payment);
-        $this->assertArrayHasKey('amt', $payment);
-        $this->assertArrayHasKey('ccy', $payment);
-        $this->assertArrayHasKey('comis', $payment);
-        $this->assertArrayHasKey('cardinfo', $payment);
 
     }
 

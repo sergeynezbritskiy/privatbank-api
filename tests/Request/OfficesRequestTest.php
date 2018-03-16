@@ -4,7 +4,6 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
 use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
 
@@ -16,7 +15,7 @@ class OfficesRequestTest extends TestCase
 {
 
     /**
-     * @var ExchangeRatesRequest
+     * @var OfficesRequest
      */
     private $request;
 

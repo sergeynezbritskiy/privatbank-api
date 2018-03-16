@@ -7,7 +7,6 @@ use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentRequest;
 use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentResponse;
-use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
 
 /**
  * Class CheckPaymentRequestTest
