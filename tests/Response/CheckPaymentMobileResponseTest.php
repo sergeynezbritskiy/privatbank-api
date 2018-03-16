@@ -2,13 +2,13 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Response;
 
-use SergeyNezbritskiy\PrivatBank\Response\PaymentMobileResponse;
+use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
 
 /**
- * Class PaymentMobileResponseTest
+ * Class CheckPaymentMobileResponseTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Response
  */
-class PaymentMobileResponseTest extends TestCase
+class CheckPaymentMobileResponseTest extends TestCase
 {
 
     /**
@@ -16,7 +16,7 @@ class PaymentMobileResponseTest extends TestCase
      */
     protected function getClass(): string
     {
-        return PaymentMobileResponse::class;
+        return CheckPaymentMobileResponse::class;
     }
 
     //tests
