@@ -2,7 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Client;
@@ -59,6 +59,7 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * @param array $params
      * @return ResponseInterface
+     * @throws PrivatBankApiException
      */
     public function execute(array $params = array()): ResponseInterface
     {
@@ -68,6 +69,7 @@ abstract class AbstractRequest implements RequestInterface
             'body' => $this->getBody($this->getBodyParams($params)),
         ]);
         return $this->getResponse($response);
+
     }
 
     /**

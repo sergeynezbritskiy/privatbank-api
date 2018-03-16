@@ -28,6 +28,9 @@ class ClientTest extends TestCase
         $this->client = null;
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testRequest()
     {
         $response = $this->client->request('pubinfo', [
@@ -36,6 +39,9 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testSend()
     {
         $request = new Request('pubinfo', '', ['exchange' => '', 'coursid' => 11]);

@@ -30,6 +30,9 @@ class ExchangeRatesArchiveRequestTest extends TestCase
         $this->request = null;
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testExchangeRatesCash()
     {
         $month = 60 * 60 * 24 * 30;

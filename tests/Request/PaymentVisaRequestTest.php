@@ -37,6 +37,9 @@ class PaymentVisaRequestTest extends TestCase
         $this->client = null;
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testBalance()
     {
         $merchantId = getenv('merchantId');

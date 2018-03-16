@@ -2,9 +2,11 @@
 
 namespace SergeyNezbritskiy\PrivatBank;
 
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
+use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 
 /**
  * Class Client
@@ -43,9 +45,10 @@ class Client
     /**
      * @param string $request
      * @param array $params
-     * @return ResponseInterface
+     * @return HttpResponse
+     * @throws PrivatBankApiException
      */
-    public function request(string $request, array $params = array()): ResponseInterface
+    public function request(string $request, array $params = array()): HttpResponse
     {
         $params = array_merge([
             'method' => 'GET',
@@ -62,14 +65,30 @@ class Client
         return $this->send($request);
     }
 
-    public function send(Request $request): ResponseInterface
+    /**
+     * @param Request $request
+     * @return HttpResponse
+     * @throws PrivatBankApiException
+     */
+    public function send(Request $request): HttpResponse
     {
         $client = new \GuzzleHttp\Client();
         $uri = $this->url . $request->getRequestUri();
-        return $client->request($request->getMethod(), $uri, [
-            'query' => $request->getQuery(),
-            'body' => $request->getBody(),
-        ]);
+        try {
+            $response = $client->request($request->getMethod(), $uri, [
+                'query' => $request->getQuery(),
+                'body' => $request->getBody(),
+            ]);
+            $result = new HttpResponse(
+                $response->getBody()->getContents(),
+                $response->getStatusCode(),
+                $response->getReasonPhrase()
+            );
+            $this->handleErrors($result);
+            return $result;
+        } catch (RequestException $e) {
+            throw new PrivatBankApiException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**
@@ -121,6 +140,17 @@ class Client
             return new $class($this, ...$arguments);
         } else {
             throw new \ErrorException('Method ' . $name . ' not supported');
+        }
+    }
+
+    /**
+     * @param HttpResponse $result
+     * @throws PrivatBankApiException
+     */
+    protected function handleErrors(HttpResponse $result)
+    {
+        if ($result->getStatusCode() !== 200) {
+            throw new PrivatBankApiException($result->getReasonPhrase(), $result->getStatusCode());
         }
     }
 

@@ -29,6 +29,9 @@ class InfrastructureRequestTest extends TestCase
         $this->request = null;
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testATM()
     {
         $result = $this->request->execute([
@@ -64,6 +67,9 @@ class InfrastructureRequestTest extends TestCase
         }
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testTerminals()
     {
         $result = $this->request->execute([

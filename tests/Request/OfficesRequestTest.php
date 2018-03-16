@@ -29,6 +29,9 @@ class OfficesRequestTest extends TestCase
         $this->request = null;
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testOffices()
     {
         $result = $this->request->execute([
