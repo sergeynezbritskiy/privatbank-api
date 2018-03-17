@@ -43,6 +43,15 @@ class ClientErrorsTest extends TestCase
         ]);
     }
 
+    public function testNotOkResponseCode()
+    {
+        $this->expectExceptionCode(201);
+        $this->expectExceptionMessage('OK');
+        $this->expectException(PrivatBankApiException::class);
+        $response = new HttpResponse('', 201, 'OK');
+        $this->call('handleErrors', ['response' => $response]);
+    }
+
     public function testInvalidResponse()
     {
         $this->expectExceptionMessage('error message');
