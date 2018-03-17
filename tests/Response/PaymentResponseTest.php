@@ -39,23 +39,14 @@ XML;
 
         $result = $this->response->toArray();
         $this->assertEquals([
-            'merchant' => [
-                'id' => '75482',
-                'signature' => '553995c5ccc8c81815b58cf6374f68f00a28bbd7',
-            ],
-            'data' => [
-                'oper' => 'cmt',
-                'payment' => [
-                    'id' => '',
-                    'state' => '1',
-                    'message' => '',
-                    'ref' => 'P24PKP',
-                    'amt' => '1.5',
-                    'ccy' => 'UAH',
-                    'comis' => '0.00',
-                    'cardinfo' => 'personified',
-                ],
-            ],
+            'id' => '',
+            'state' => '1',
+            'message' => '',
+            'ref' => 'P24PKP',
+            'amt' => '1.5',
+            'ccy' => 'UAH',
+            'comis' => '0.00',
+            'cardinfo' => 'personified',
         ], $result);
     }
 

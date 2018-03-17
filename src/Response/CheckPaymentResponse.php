@@ -31,20 +31,22 @@ class CheckPaymentResponse extends AbstractResponse
     protected function getMap(): array
     {
         return [
-            'merchant' => [
-                'id' => 'id',
-                'signature' => 'signature',
-            ],
-            'data' => [
-                'oper' => 'oper',
-                'payment' => [
-                    'id' => '@id',
-                    'status' => '@status',
-                    'message' => '@message',
-                    'ref' => '@ref',
-                ],
+            'payment as data.payment' => [
+                'id' => '@id',
+                'status' => '@status',
+                'message' => '@message',
+                'ref' => '@ref',
             ],
         ];
+    }
+
+    /**
+     * TODO implement it via map
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return parent::toArray()['payment'];
     }
 
 }

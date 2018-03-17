@@ -57,16 +57,7 @@ class CheckPaymentRequestTest extends TestCase
 
         $this->assertInstanceOf(CheckPaymentResponse::class, $result);
 
-        $data = $result->toArray();
-
-        $this->assertArrayHasKey('merchant', $data);
-        $this->assertArrayHasKey('data', $data);
-        $this->assertArrayHasKey('oper', $data['data']);
-        $this->assertArrayHasKey('payment', $data['data']);
-
-        $this->assertTrue(isset($data['data']['payment']));
-
-        $payment = $data['data']['payment'];
+        $payment = $result->toArray();
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('status', $payment);

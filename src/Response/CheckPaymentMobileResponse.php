@@ -31,19 +31,23 @@ class CheckPaymentMobileResponse extends AbstractResponse
     protected function getMap(): array
     {
         return [
-            'merchant' => [
-                'id' => 'id',
-                'signature' => 'signature',
-            ],
-            'data' => [
-                'oper' => 'oper',
-                'payment' => [
-                    'id' => '@id',
-                    'state' => '@state',
-                    'message' => '@message',
-                ],
+            'payment as data.payment' => [
+                'id' => '@id',
+                'state' => '@state',
+                'message' => '@message',
             ],
         ];
     }
+
+    /**
+     * TODO implement it via map
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $result = parent::toArray();
+        return $result['payment'];
+    }
+
 
 }

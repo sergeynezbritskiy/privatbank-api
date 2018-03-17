@@ -108,7 +108,6 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

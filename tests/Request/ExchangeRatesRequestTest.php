@@ -46,6 +46,9 @@ class ExchangeRatesRequestTest extends TestCase
         }
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testExchangeRatesNonCash()
     {
         $result = $this->request->execute(['coursid' => ExchangeRatesRequest::NON_CASH]);

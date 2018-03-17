@@ -58,18 +58,9 @@ class CheckPaymentMobileRequestTest extends TestCase
 
         $data = $result->toArray();
 
-        $this->assertArrayHasKey('merchant', $data);
-        $this->assertArrayHasKey('data', $data);
-        $this->assertArrayHasKey('oper', $data['data']);
-        $this->assertArrayHasKey('payment', $data['data']);
-
-        $this->assertTrue(isset($data['data']['payment']));
-
-        $payment = $data['data']['payment'];
-
-        $this->assertArrayHasKey('id', $payment);
-        $this->assertArrayHasKey('state', $payment);
-        $this->assertArrayHasKey('message', $payment);
+        $this->assertArrayHasKey('id', $data);
+        $this->assertArrayHasKey('state', $data);
+        $this->assertArrayHasKey('message', $data);
 
     }
 

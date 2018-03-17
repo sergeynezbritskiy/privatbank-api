@@ -58,16 +58,7 @@ class PaymentMobileRequestTest extends TestCase
 
         $this->assertInstanceOf(PaymentMobileResponse::class, $result);
 
-        $data = $result->toArray();
-
-        $this->assertArrayHasKey('merchant', $data);
-        $this->assertArrayHasKey('data', $data);
-        $this->assertArrayHasKey('oper', $data['data']);
-        $this->assertArrayHasKey('payment', $data['data']);
-
-        $this->assertTrue(isset($data['data']['payment']));
-
-        $payment = $data['data']['payment'];
+        $payment = $result->toArray();
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);

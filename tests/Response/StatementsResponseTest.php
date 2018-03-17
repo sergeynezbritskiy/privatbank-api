@@ -44,49 +44,34 @@ XML;
         $this->setContent($this->content);
 
         $result = $this->response->toArray();
-        $this->assertEquals([
-            'merchant' => [
-                'id' => '75482',
-                'signature' => '553995c5ccc8c81815b58cf6374f68f00a28bbd7',
-            ],
-            'data' => [
-                'oper' => 'cmt',
-                'info' => [
-                    'statements' => [
-                        [
-                            'card' => '5168742060221193',
-                            'appcode' => '591969',
-                            'trandate' => '2013-09-02',
-                            'amount' => '0.10 UAH',
-                            'cardamount' => '-0.10 UAH',
-                            'rest' => '0.95 UAH',
-                            'terminal' => 'Пополнение мобильного +380139917053 через «Приват24»',
-                            'description' => '',
-                        ],
-                        [
-                            'card' => '5168742060221193',
-                            'appcode' => '991794',
-                            'trandate' => '2013-09-02',
-                            'amount' => '0.10 UAH',
-                            'cardamount' => '-0.10 UAH',
-                            'rest' => '1.05 UAH',
-                            'terminal' => 'Пополнение мобильного +380139917035 через «Приват24»',
-                            'description' => '',
-                        ],
-                        [
-                            'card' => '5168742060221193',
-                            'appcode' => '801111',
-                            'trandate' => '2013-09-02',
-                            'amount' => '0.10 UAH',
-                            'cardamount' => '-0.10 UAH',
-                            'rest' => '1.15 UAH',
-                            'terminal' => 'Пополнение мобильного +380139910008 через «Приват24»',
-                            'description' => '',
-                        ]
-                    ],
-                ],
-            ],
-        ], $result);
+        $this->assertEquals([[
+            'card' => '5168742060221193',
+            'appcode' => '591969',
+            'trandate' => '2013-09-02',
+            'amount' => '0.10 UAH',
+            'cardamount' => '-0.10 UAH',
+            'rest' => '0.95 UAH',
+            'terminal' => 'Пополнение мобильного +380139917053 через «Приват24»',
+            'description' => '',
+        ], [
+            'card' => '5168742060221193',
+            'appcode' => '991794',
+            'trandate' => '2013-09-02',
+            'amount' => '0.10 UAH',
+            'cardamount' => '-0.10 UAH',
+            'rest' => '1.05 UAH',
+            'terminal' => 'Пополнение мобильного +380139917035 через «Приват24»',
+            'description' => '',
+        ], [
+            'card' => '5168742060221193',
+            'appcode' => '801111',
+            'trandate' => '2013-09-02',
+            'amount' => '0.10 UAH',
+            'cardamount' => '-0.10 UAH',
+            'rest' => '1.15 UAH',
+            'terminal' => 'Пополнение мобильного +380139910008 через «Приват24»',
+            'description' => '',
+        ]], $result);
     }
 
 }

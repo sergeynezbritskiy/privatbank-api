@@ -39,24 +39,15 @@ XML;
 
         $result = $this->response->toArray();
         $this->assertEquals([
-            'merchant' => [
-                'id' => '75482',
-                'signature' => '553995c5ccc8c81815b58cf6374f68f00a28bbd7',
-            ],
-            'data' => [
-                'oper' => 'cmt',
-                'payment' => [
-                    'id' => 'SIVN1392995003.855',
-                    'state' => '1',
-                    'auto_id' => '144266960',
-                    'message' => 'test message',
-                    'ref' => 'refref',
-                    'amt' => '0.06',
-                    'ccy' => 'UAH',
-                    'comis' => '0.0',
-                    'code' => 'somecode',
-                ],
-            ],
+            'id' => 'SIVN1392995003.855',
+            'state' => '1',
+            'auto_id' => '144266960',
+            'message' => 'test message',
+            'ref' => 'refref',
+            'amt' => '0.06',
+            'ccy' => 'UAH',
+            'comis' => '0.0',
+            'code' => 'somecode',
         ], $result);
     }
 

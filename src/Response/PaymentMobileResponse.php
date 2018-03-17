@@ -31,24 +31,28 @@ class PaymentMobileResponse extends AbstractResponse
     protected function getMap(): array
     {
         return [
-            'merchant' => [
-                'id' => 'id',
-                'signature' => 'signature',
-            ],
-            'data' => [
-                'oper' => 'oper',
-                'payment' => [
-                    'id' => '@id',
-                    'state' => '@state',
-                    'auto_id' => '@auto_id',
-                    'message' => '@message',
-                    'ref' => '@ref',
-                    'amt' => '@amt',
-                    'ccy' => '@ccy',
-                    'comis' => '@comis',
-                    'code' => '@code',
-                ],
+            'payment as data.payment' => [
+                'id' => '@id',
+                'state' => '@state',
+                'auto_id' => '@auto_id',
+                'message' => '@message',
+                'ref' => '@ref',
+                'amt' => '@amt',
+                'ccy' => '@ccy',
+                'comis' => '@comis',
+                'code' => '@code',
             ],
         ];
     }
+
+    /**
+     * TODO implement it via map
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return parent::toArray()['payment'];
+    }
+
+
 }

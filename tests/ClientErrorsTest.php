@@ -29,28 +29,28 @@ class ClientErrorsTest extends TestCase
         $this->client = null;
     }
 
-//    /**
-//     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
-//     */
-//    public function testNotExistingRoute()
-//    {
-//        $this->expectException(PrivatBankApiException::class);
-//        $this->expectExceptionCode(404);
-//        $this->client->request('not_existing_route', [
-//            'query' => [],
-//            'body' => '',
-//            'method' => 'GET',
-//        ]);
-//    }
-//
-//    public function testInvalidResponse()
-//    {
-//        $this->expectExceptionMessage('error message');
-//        $this->expectException(PrivatBankApiException::class);
-//        $this->expectExceptionCode(500);
-//        $response = new HttpResponse('<error>error message</error>', 200, 'OK');
-//        $this->call('handleErrors', ['response' => $response]);
-//    }
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
+    public function testNotExistingRoute()
+    {
+        $this->expectException(PrivatBankApiException::class);
+        $this->expectExceptionCode(404);
+        $this->client->request('not_existing_route', [
+            'query' => [],
+            'body' => '',
+            'method' => 'GET',
+        ]);
+    }
+
+    public function testInvalidResponse()
+    {
+        $this->expectExceptionMessage('error message');
+        $this->expectException(PrivatBankApiException::class);
+        $this->expectExceptionCode(500);
+        $response = new HttpResponse('<error>error message</error>', 200, 'OK');
+        $this->call('handleErrors', ['response' => $response]);
+    }
 
     public function testErrorFromAuthorizedMethods()
     {

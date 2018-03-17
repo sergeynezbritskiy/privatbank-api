@@ -37,24 +37,15 @@ class StatementsResponse extends AbstractResponse
     protected function getMap(): array
     {
         return [
-            'merchant' => [
-                'id' => 'id',
-                'signature' => 'signature',
-            ],
-            'data' => [
-                'oper' => 'oper',
-                'info' => [
-                    'statements as statements.statement[]' => [
-                        'card' => '@card',
-                        'appcode' => '@appcode',
-                        'trandate' => '@trandate',
-                        'amount' => '@amount',
-                        'cardamount' => '@cardamount',
-                        'rest' => '@rest',
-                        'terminal' => '@terminal',
-                        'description' => '@description',
-                    ],
-                ],
+            '{list} as data.info.statements.statement[]' => [
+                'card' => '@card',
+                'appcode' => '@appcode',
+                'trandate' => '@trandate',
+                'amount' => '@amount',
+                'cardamount' => '@cardamount',
+                'rest' => '@rest',
+                'terminal' => '@terminal',
+                'description' => '@description',
             ],
         ];
     }

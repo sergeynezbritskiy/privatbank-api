@@ -30,8 +30,9 @@ class ExchangeRatesArchiveResponse extends AbstractResponse
                 'currency' => '@currency',
                 'saleRateNB' => '@saleRateNB',
                 'purchaseRateNB' => '@purchaseRateNB',
-//                'saleRate' => '@saleRate',
-//                'purchaseRate' => '@purchaseRate'
+                //TODO implement optional params
+                //'saleRate' => '@saleRate',
+                //'purchaseRate' => '@purchaseRate'
             ]
         ];
     }
