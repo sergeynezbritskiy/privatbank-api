@@ -2,7 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\XmlIo\XmlReader;
 
@@ -16,7 +16,12 @@ abstract class AbstractResponse implements ResponseInterface
     /**
      * @var HttpResponseInterface
      */
-    private $httpResponse;
+    protected $httpResponse;
+
+    /**
+     * @var string
+     */
+    protected $content;
 
     /**
      * AbstractResponse constructor.
@@ -25,6 +30,7 @@ abstract class AbstractResponse implements ResponseInterface
     public function __construct(HttpResponseInterface $httpResponse)
     {
         $this->httpResponse = $httpResponse;
+        $this->content = $httpResponse->getContent();
     }
 
     /**
@@ -45,7 +51,7 @@ abstract class AbstractResponse implements ResponseInterface
      */
     protected function getContent(): string
     {
-        return $this->httpResponse->getBody()->getContents();
+        return $this->content;
     }
 
 }

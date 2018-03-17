@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
+use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
@@ -20,7 +21,7 @@ class ExchangeRatesRequestTest extends TestCase
 
     protected function setUp()
     {
-        $this->request = new ExchangeRatesRequest();
+        $this->request = new ExchangeRatesRequest(new Client());
     }
 
     protected function tearDown()
@@ -28,6 +29,9 @@ class ExchangeRatesRequestTest extends TestCase
         $this->request = null;
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testExchangeRatesCash()
     {
         $result = $this->request->execute(['coursid' => ExchangeRatesRequest::CASH]);
@@ -42,6 +46,9 @@ class ExchangeRatesRequestTest extends TestCase
         }
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testExchangeRatesNonCash()
     {
         $result = $this->request->execute(['coursid' => ExchangeRatesRequest::NON_CASH]);

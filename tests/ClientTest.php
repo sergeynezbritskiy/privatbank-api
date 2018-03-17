@@ -3,11 +3,9 @@
 namespace SergeyNezbritskiy\PrivatBank\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Client;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
-use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
-use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
+use SergeyNezbritskiy\PrivatBank\Request;
 
 /**
  * Class ClientTest
@@ -30,24 +28,98 @@ class ClientTest extends TestCase
         $this->client = null;
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
+    public function testRequest()
+    {
+        $response = $this->client->request('pubinfo', [
+            'query' => ['exchange' => '', 'coursid' => 11]
+        ]);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
+    }
+
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
+    public function testSend()
+    {
+        $request = new Request('pubinfo', '', ['exchange' => '', 'coursid' => 11]);
+        $response = $this->client->send($request);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
+    }
+
+    public function testMode()
+    {
+        $this->assertTrue($this->client->isTestMode());
+        $this->assertFalse($this->client->setTestMode(false)->isTestMode());
+        $this->assertTrue($this->client->setTestMode(true)->isTestMode());
+    }
+
+    public function testTimeout()
+    {
+        $this->assertEquals(0, $this->client->getWaitTimeout());
+        $this->assertEquals(10, $this->client->setWaitTimeout(10)->getWaitTimeout());
+    }
+
     public function testGetExchangeRates()
     {
-        $this->assertInstanceOf(ExchangeRatesRequest::class, $this->client->exchangeRates());
+        $this->assertInstanceOf(Request\ExchangeRatesRequest::class, $this->client->exchangeRates());
     }
 
     public function testGetExchangeRatesArchive()
     {
-        $this->assertInstanceOf(ExchangeRatesArchiveRequest::class, $this->client->exchangeRatesArchive());
+        $this->assertInstanceOf(Request\ExchangeRatesArchiveRequest::class, $this->client->exchangeRatesArchive());
     }
 
     public function testGetOffices()
     {
-        $this->assertInstanceOf(OfficesRequest::class, $this->client->offices());
+        $this->assertInstanceOf(Request\OfficesRequest::class, $this->client->offices());
     }
 
     public function testTerminals()
     {
-        $this->assertInstanceOf(InfrastructureRequest::class, $this->client->infrastructure());
+        $this->assertInstanceOf(Request\InfrastructureRequest::class, $this->client->infrastructure());
+    }
+
+    public function testBalance()
+    {
+        $this->assertInstanceOf(Request\BalanceRequest::class, $this->client->balance());
+    }
+
+    public function testStatements()
+    {
+        $this->assertInstanceOf(Request\StatementsRequest::class, $this->client->statements());
+    }
+
+    public function testPaymentInternal()
+    {
+        $this->assertInstanceOf(Request\PaymentInternalRequest::class, $this->client->paymentInternal());
+    }
+
+    public function testPaymentUkraine()
+    {
+        $this->assertInstanceOf(Request\PaymentUkraineRequest::class, $this->client->paymentUkraine());
+    }
+
+    public function testPaymentVisa()
+    {
+        $this->assertInstanceOf(Request\PaymentVisaRequest::class, $this->client->paymentVisa());
+    }
+
+    public function testPaymentMobile()
+    {
+        $this->assertInstanceOf(Request\PaymentMobileRequest::class, $this->client->paymentMobile());
+    }
+
+    public function testCheckPaymentMobile()
+    {
+        $this->assertInstanceOf(Request\CheckPaymentMobileRequest::class, $this->client->checkPaymentMobile());
+    }
+
+    public function testCheckPayment()
+    {
+        $this->assertInstanceOf(Request\CheckPaymentRequest::class, $this->client->checkPayment());
     }
 
     public function testNotSupportedMethod()

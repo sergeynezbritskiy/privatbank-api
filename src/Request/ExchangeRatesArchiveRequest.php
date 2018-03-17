@@ -2,19 +2,20 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
-use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
+use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
 
 /**
  * Class ExchangeRatesArchiveRequest
+ *
  * Params:
  * date - required, string, format d.m.Y, e.g. 01.12.2017
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/exchangeArchive
  */
-class ExchangeRatesArchiveRequest extends AbstractRequest
+class ExchangeRatesArchiveRequest extends AbstractPublicRequest
 {
 
     /**

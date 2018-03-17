@@ -2,13 +2,14 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
-use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
+use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
 use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
 /**
  * Class InfrastructureRequest
+ *
  * Params:
  * type - string, required, `atm` or `tso`, see class constants
  * address - string, optional russian language
@@ -17,7 +18,7 @@ use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
  * @see https://api.privatbank.ua/#p24/atm
  * @see https://api.privatbank.ua/#p24/terminals
  */
-class InfrastructureRequest extends AbstractRequest
+class InfrastructureRequest extends AbstractPublicRequest
 {
 
     const TYPE_ATM = 'atm';

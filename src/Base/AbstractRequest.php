@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
-use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Client;
 
 /**
  * Class AbstractRequest
@@ -15,20 +15,14 @@ abstract class AbstractRequest implements RequestInterface
 {
 
     /**
-     * @var string
+     * @return string
      */
-    protected $url = 'https://api.privatbank.ua/p24api/';
+    abstract protected function getMethod(): string;
 
     /**
      * @return string
      */
     abstract protected function getRoute(): string;
-
-    /**
-     * @param array $params
-     * @return array
-     */
-    abstract protected function getQueryParams(array $params = []): array;
 
     /**
      * @param HttpResponseInterface $httpResponse
@@ -38,17 +32,62 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * @param array $params
+     * @return array
+     */
+    abstract protected function getQueryParams(array $params = []): array;
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    abstract protected function getBodyParams(array $params = []): array;
+
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * AbstractPublicRequest constructor.
+     * @param Client $client
+     */
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
+    /**
+     * @param array $params
      * @return ResponseInterface
+     * @throws PrivatBankApiException
      */
     public function execute(array $params = array()): ResponseInterface
     {
-        $client = new Client();
-
-        $requestUri = $this->url . $this->getRoute();
-        $response = $client->request('GET', $requestUri, [
-            'query' => $this->getQueryParams($params)
+        $response = $this->client->request($this->getRoute(), [
+            'method' => $this->getMethod(),
+            'query' => $this->getQueryParams($params),
+            'body' => $this->getBody($this->getBodyParams($params)),
         ]);
         return $this->getResponse($response);
+
+    }
+
+    /**
+     * @param array $params
+     * @return string
+     */
+    protected function getBody(/** @noinspection PhpUnusedParameterInspection */
+        array $params = []): string
+    {
+        return '';
+    }
+
+    /**
+     * @return Client
+     */
+    protected function getClient(): Client
+    {
+        return $this->client;
     }
 
 }

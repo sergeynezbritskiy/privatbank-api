@@ -2,19 +2,20 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
-use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
+use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
 /**
  * Class ExchangeRatesRequest
+ *
  * Params:
  * coursid - int, optional, course type, see class constants
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/exchange
  */
-class ExchangeRatesRequest extends AbstractRequest
+class ExchangeRatesRequest extends AbstractPublicRequest
 {
 
     const CASH = 5;

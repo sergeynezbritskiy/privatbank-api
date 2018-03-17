@@ -11,7 +11,7 @@ Library for connecting your PHP application with PrivatBank API
 ## Installation
 The easiest way to install module is using Composer
 ```
-composer require sergeynezbritskiy/privatbank-api:"dev-master"
+composer require sergeynezbritskiy/privatbank-api:"^1.0.0"
 ```
 
 ## Notes
