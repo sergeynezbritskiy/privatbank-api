@@ -24,9 +24,9 @@ class StatementsResponse extends AbstractResponse
      *         <oper>cmt</oper>
      *         <info>
      *             <statements status="excellent" credit="0.0" debet="0.3"  >
-     *                 <statement card="5168742060221193" appcode="591969" trandate="2013-09-02" amount="0.10 UAH" cardamount="-0.10 UAH" rest="0.95 UAH" terminal="Пополнение мобильного +380139917053 через «Приват24»" description="" />
-     *                 <statement card="5168742060221193" appcode="991794" trandate="2013-09-02" amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.05 UAH" terminal="Пополнение мобильного +380139917035 через «Приват24»" description="" />
-     *                 <statement card="5168742060221193" appcode="801111" trandate="2013-09-02" amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.15 UAH" terminal="Пополнение мобильного +380139910008 через «Приват24»" description="" />
+     *                 <statement card="5168742060221193" appcode="591969" trandate="2013-09-02" trantime="13:29:00" amount="0.10 UAH" cardamount="-0.10 UAH" rest="0.95 UAH" terminal="Пополнение мобильного +380139917053 через «Приват24»" description="" />
+     *                 <statement card="5168742060221193" appcode="991794" trandate="2013-09-02" trantime="08:50:00" amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.05 UAH" terminal="Пополнение мобильного +380139917035 через «Приват24»" description="" />
+     *                 <statement card="5168742060221193" appcode="801111" trandate="2013-09-02" trantime="13:17:00" amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.15 UAH" terminal="Пополнение мобильного +380139910008 через «Приват24»" description="" />
      *             </statements>
      *         </info>
      *      </data>
@@ -41,6 +41,7 @@ class StatementsResponse extends AbstractResponse
                 'card' => '@card',
                 'appcode' => '@appcode',
                 'trandate' => '@trandate',
+                'trantime' => '@trantime',
                 'amount' => '@amount',
                 'cardamount' => '@cardamount',
                 'rest' => '@rest',
