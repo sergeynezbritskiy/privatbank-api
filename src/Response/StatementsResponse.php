@@ -2,14 +2,38 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
  * Class StatementsResponse
  * @package SergeyNezbritskiy\PrivatBank\Response
  */
-class StatementsResponse extends AbstractResponse
+class StatementsResponse extends AbstractResponse implements ResponseInterface
 {
+    public function toArray(): array
+    {
+        $content = $this->getContent();
+        $xml = new \DOMDocument();
+        $xml->loadXML($content);
+        $statements = $xml->getElementsByTagName('statement');
+        $result = [];
+        /** @var \DOMElement $statementXml */
+        foreach ($statements as $statementXml) {
+            $result[] = [
+                'card' => $statementXml->getAttribute('card'),
+                'appcode' => $statementXml->getAttribute('appcode'),
+                'trandate' => $statementXml->getAttribute('trandate'),
+                'trantime' => $statementXml->getAttribute('trantime'),
+                'amount' => $statementXml->getAttribute('amount'),
+                'cardamount' => $statementXml->getAttribute('cardamount'),
+                'rest' => $statementXml->getAttribute('rest'),
+                'terminal' => $statementXml->getAttribute('terminal'),
+                'description' => $statementXml->getAttribute('description'),
+            ];
+        }
+        return $result;
+    }
 
     /**
      * Response sample

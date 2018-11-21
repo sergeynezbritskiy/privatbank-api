@@ -69,6 +69,7 @@ class StatementsRequestTest extends TestCase
             $this->assertArrayHasKey('card', $card);
             $this->assertArrayHasKey('appcode', $card);
             $this->assertArrayHasKey('trandate', $card);
+            $this->assertArrayHasKey('trantime', $card);
             $this->assertArrayHasKey('amount', $card);
             $this->assertArrayHasKey('cardamount', $card);
             $this->assertArrayHasKey('rest', $card);
