@@ -37,11 +37,15 @@ XML;
             'currency' => 'AUD',
             'saleRateNB' => '12.8319250',
             'purchaseRateNB' => '12.8319250',
+            'saleRate' => '',
+            'purchaseRate' => '',
         ], [
             'baseCurrency' => 'UAH',
             'currency' => 'CAD',
             'saleRateNB' => '13.2107400',
             'purchaseRateNB' => '13.2107400',
+            'saleRate' => '15.0000000',
+            'purchaseRate' => '13.0000000',
         ]], $result);
     }
 
