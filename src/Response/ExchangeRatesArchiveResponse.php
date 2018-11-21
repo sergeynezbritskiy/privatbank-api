@@ -2,14 +2,39 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
  * Class ExchangeRatesArchiveResponse
  * @package SergeyNezbritskiy\PrivatBank\Response
  */
-class ExchangeRatesArchiveResponse extends AbstractResponse
+class ExchangeRatesArchiveResponse extends AbstractResponse implements ResponseInterface
 {
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $content = $this->getContent();
+        $xml = new \DOMDocument();
+        $xml->loadXML($content);
+        $exchangeRates = $xml->getElementsByTagName('exchangerate');
+        $result = [];
+        /** @var \DOMElement $rateXml */
+        foreach ($exchangeRates as $rateXml) {
+            $result[] = [
+                'baseCurrency' => $rateXml->getAttribute('baseCurrency'),
+                'currency' => $rateXml->getAttribute('currency'),
+                'saleRateNB' => $rateXml->getAttribute('saleRateNB'),
+                'purchaseRateNB' => $rateXml->getAttribute('purchaseRateNB'),
+                'saleRate' => $rateXml->getAttribute('saleRate'),
+                'purchaseRate' => $rateXml->getAttribute('purchaseRate'),
+            ];
+        }
+        return $result;
+    }
 
     /**
      * Response Sample

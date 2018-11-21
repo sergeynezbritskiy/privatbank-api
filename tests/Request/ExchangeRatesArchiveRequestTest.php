@@ -45,6 +45,8 @@ class ExchangeRatesArchiveRequestTest extends TestCase
             $this->assertArrayHasKey('currency', $item);
             $this->assertArrayHasKey('saleRateNB', $item);
             $this->assertArrayHasKey('purchaseRateNB', $item);
+            $this->assertArrayHasKey('saleRate', $item);
+            $this->assertArrayHasKey('purchaseRate', $item);
             break;
         }
     }
