@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
+use SergeyNezbritskiy\PrivatBank\Merchant;
 use SergeyNezbritskiy\XmlIo\XmlWriter;
 
 /**
@@ -12,12 +13,32 @@ use SergeyNezbritskiy\XmlIo\XmlWriter;
 abstract class AbstractAuthorizedRequest extends AbstractRequest implements AuthorizedRequestInterface
 {
 
-    use HasMerchantTrait;
+    /**
+     * @var Merchant
+     */
+    private $merchant;
 
     /**
      * @return array
      */
     abstract protected function getBodyMap(): array;
+
+    /**
+     * @return mixed
+     */
+    private function getMerchant(): Merchant
+    {
+        return $this->merchant;
+    }
+
+    /**
+     * @param mixed $merchant
+     * @return void
+     */
+    public function setMerchant(Merchant $merchant)
+    {
+        $this->merchant = $merchant;
+    }
 
     /**
      * @return string
