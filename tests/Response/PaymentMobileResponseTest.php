@@ -37,7 +37,7 @@ class PaymentMobileResponseTest extends TestCase
 XML;
         $this->setContent($this->content);
 
-        $result = $this->response->toArray();
+        $result = $this->response->getData();
         $this->assertEquals([
             'id' => 'SIVN1392995003.855',
             'state' => '1',

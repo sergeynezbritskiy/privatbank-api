@@ -48,9 +48,9 @@ class PaymentResponse extends AbstractResponse
      * TODO implement it via map
      * @return array
      */
-    public function toArray(): array
+    public function getData(): array
     {
-        return parent::toArray()['payment'];
+        return parent::getData()['payment'];
     }
 
 

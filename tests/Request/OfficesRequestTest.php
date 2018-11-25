@@ -39,7 +39,7 @@ class OfficesRequestTest extends TestCase
             'address' => 'Титова',
         ]);
         $this->assertInstanceOf(OfficesResponse::class, $result);
-        $data = $result->toArray();
+        $data = $result->getData();
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('country', $item);

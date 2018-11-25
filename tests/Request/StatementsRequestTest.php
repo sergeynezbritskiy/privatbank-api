@@ -61,7 +61,7 @@ class StatementsRequestTest extends TestCase
 
         $this->assertInstanceOf(StatementsResponse::class, $result);
 
-        $statements = $result->toArray();
+        $statements = $result->getData();
 
         $this->assertGreaterThan(0, count($statements));
 

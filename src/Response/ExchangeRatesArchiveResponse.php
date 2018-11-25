@@ -15,7 +15,7 @@ class ExchangeRatesArchiveResponse extends AbstractResponse implements ResponseI
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getData(): array
     {
         $content = $this->getContent();
         $xml = new \DOMDocument();

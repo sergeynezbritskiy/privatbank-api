@@ -57,7 +57,7 @@ class BalanceResponseTest extends TestCase
 XML;
         $this->setContent($this->content);
 
-        $result = $this->response->toArray();
+        $result = $this->response->getData();
         $this->assertEquals([
             'card' => [
                 'account' => '4111111111111111',

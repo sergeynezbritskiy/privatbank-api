@@ -36,7 +36,7 @@ class ExchangeRatesRequestTest extends TestCase
     {
         $result = $this->request->execute(['coursid' => ExchangeRatesRequest::CASH]);
         $this->assertInstanceOf(ExchangeRatesResponse::class, $result);
-        $data = $result->toArray();
+        $data = $result->getData();
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);
@@ -53,7 +53,7 @@ class ExchangeRatesRequestTest extends TestCase
     {
         $result = $this->request->execute(['coursid' => ExchangeRatesRequest::NON_CASH]);
         $this->assertInstanceOf(ExchangeRatesResponse::class, $result);
-        $data = $result->toArray();
+        $data = $result->getData();
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);

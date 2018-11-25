@@ -32,5 +32,5 @@ $request = $client->infrastructure();
 $response = $request->execute([
     'type' => \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest::TYPE_ATM,
     'city' => 'Днепропетровск',
-])->toArray();
+])->getData();
 ```

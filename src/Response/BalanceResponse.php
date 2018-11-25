@@ -77,9 +77,9 @@ class BalanceResponse extends AbstractResponse
      * TODO implement it via map
      * @return array
      */
-    public function toArray(): array
+    public function getData(): array
     {
-        $result = parent::toArray();
+        $result = parent::getData();
         return $result['cardbalance'];
     }
 

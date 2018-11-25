@@ -11,7 +11,7 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class StatementsResponse extends AbstractResponse implements ResponseInterface
 {
-    public function toArray(): array
+    public function getData(): array
     {
         $content = $this->getContent();
         $xml = new \DOMDocument();

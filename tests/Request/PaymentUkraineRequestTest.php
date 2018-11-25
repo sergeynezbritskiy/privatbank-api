@@ -63,7 +63,7 @@ class PaymentUkraineRequestTest extends TestCase
 
         $this->assertInstanceOf(PaymentResponse::class, $result);
 
-        $payment = $result->toArray();
+        $payment = $result->getData();
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);

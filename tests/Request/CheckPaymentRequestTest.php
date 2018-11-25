@@ -57,7 +57,7 @@ class CheckPaymentRequestTest extends TestCase
 
         $this->assertInstanceOf(CheckPaymentResponse::class, $result);
 
-        $payment = $result->toArray();
+        $payment = $result->getData();
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('status', $payment);

@@ -56,7 +56,7 @@ class CheckPaymentMobileRequestTest extends TestCase
 
         $this->assertInstanceOf(CheckPaymentMobileResponse::class, $result);
 
-        $data = $result->toArray();
+        $data = $result->getData();
 
         $this->assertArrayHasKey('id', $data);
         $this->assertArrayHasKey('state', $data);

@@ -40,7 +40,7 @@ class InfrastructureRequestTest extends TestCase
             'type' => InfrastructureRequest::TYPE_ATM,
         ]);
         $this->assertInstanceOf(InfrastructureResponse::class, $result);
-        $data = $result->toArray();
+        $data = $result->getData();
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);
@@ -78,7 +78,7 @@ class InfrastructureRequestTest extends TestCase
             'type' => InfrastructureRequest::TYPE_TERMINAL,
         ]);
         $this->assertInstanceOf(InfrastructureResponse::class, $result);
-        $data = $result->toArray();
+        $data = $result->getData();
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);

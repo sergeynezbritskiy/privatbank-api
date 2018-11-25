@@ -38,7 +38,7 @@ class ExchangeRatesArchiveRequestTest extends TestCase
         $month = 60 * 60 * 24 * 30;
         $result = $this->request->execute(['date' => date('d.m.Y', time() - $month)]);
         $this->assertInstanceOf(ExchangeRatesArchiveResponse::class, $result);
-        $data = $result->toArray();
+        $data = $result->getData();
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('baseCurrency', $item);
