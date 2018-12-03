@@ -12,7 +12,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 class StatementsResponse extends AbstractResponse implements ResponseInterface
 {
 
-
     /**
      * Response sample
      * ```xml

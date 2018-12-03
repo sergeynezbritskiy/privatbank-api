@@ -45,6 +45,4 @@ class PaymentMobileResponse extends AbstractResponse
             'code' => $payment->getAttribute('code'),
         ];
     }
-
-
 }

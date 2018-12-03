@@ -22,20 +22,28 @@ class OfficesResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
-        return [
-            '{list} as pboffice[]' => [
-                'country' => '@country',
-                'state' => '@state',
-                'city' => '@city',
-                'index' => '@index',
-                'address' => '@address',
-                'phone' => '@phone',
-                'email' => '@email',
-                'name' => '@name',
-            ]
-        ];
+        $xml = $this->getXmlContent();
+        /** @var \DOMNodeList $offices */
+        $offices = $xml->getElementsByTagName('pboffice');
+        $result = [];
+        /** @var \DOMElement $office */
+        foreach ($offices as $office) {
+            if ($office->getNodePath() === '/pboffice') {
+                continue;
+            }
+            $result[] = [
+                'country' => $office->getAttribute('country'),
+                'state' => $office->getAttribute('state'),
+                'city' => $office->getAttribute('city'),
+                'index' => $office->getAttribute('index'),
+                'address' => $office->getAttribute('address'),
+                'phone' => $office->getAttribute('phone'),
+                'email' => $office->getAttribute('email'),
+                'name' => $office->getAttribute('name'),
+            ];
+        }
+        return $result;
     }
-
 }

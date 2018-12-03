@@ -32,33 +32,41 @@ class InfrastructureResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
-        return [
-            '{list} as device[]' => [
-                'type' => '@type',
-                'cityRU' => '@cityRU',
-                'cityUA' => '@cityUA',
-                'cityEN' => '@cityEN',
-                'fullAddressRu' => '@fullAddressRu',
-                'fullAddressUa' => '@fullAddressUa',
-                'fullAddressEn' => '@fullAddressEn',
-                'placeRu' => '@placeRu',
-                'placeUa' => '@placeUa',
-                'latitude' => '@latitude',
-                'longitude' => '@longitude',
-                'working_time as tw' => [
-                    'mon' => 'mon',
-                    'tue' => 'tue',
-                    'wed' => 'wed',
-                    'thu' => 'thu',
-                    'fri' => 'fri',
-                    'sat' => 'sat',
-                    'sun' => 'sun',
-                    'hol' => 'hol',
-                ]
-            ]
-        ];
-    }
+        $xml = $this->getXmlContent();
+        /** @var \DOMNodeList $devices */
+        $devices = $xml->getElementsByTagName('device');
+        $result = [];
+        /** @var \DOMElement $deviceXml */
+        foreach ($devices as $deviceXml) {
+            /** @var \DOMElement $workingTimeXml */
+            $workingTimeXml = $deviceXml->getElementsByTagName('tw')[0];
+            $children = $workingTimeXml->childNodes;
+            $workingTime = [];
+            /** @var \DOMElement $dayOfWeek */
+            foreach ($children as $dayOfWeek) {
+                if($dayOfWeek instanceof \DOMText){
+                    continue;
+                }
+                $workingTime[$dayOfWeek->tagName] = $dayOfWeek->textContent;
+            }
 
+            $result[] = [
+                'type' => $deviceXml->getAttribute('type'),
+                'cityRU' => $deviceXml->getAttribute('cityRU'),
+                'cityUA' => $deviceXml->getAttribute('cityUA'),
+                'cityEN' => $deviceXml->getAttribute('cityEN'),
+                'fullAddressRu' => $deviceXml->getAttribute('fullAddressRu'),
+                'fullAddressUa' => $deviceXml->getAttribute('fullAddressUa'),
+                'fullAddressEn' => $deviceXml->getAttribute('fullAddressEn'),
+                'placeRu' => $deviceXml->getAttribute('placeRu'),
+                'placeUa' => $deviceXml->getAttribute('placeUa'),
+                'latitude' => $deviceXml->getAttribute('latitude'),
+                'longitude' => $deviceXml->getAttribute('longitude'),
+                'working_time' => $workingTime,
+            ];
+        }
+        return $result;
+    }
 }
