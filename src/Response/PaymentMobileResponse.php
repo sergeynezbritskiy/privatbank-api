@@ -28,30 +28,22 @@ class PaymentMobileResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
-    {
-        return [
-            'payment as data.payment' => [
-                'id' => '@id',
-                'state' => '@state',
-                'auto_id' => '@auto_id',
-                'message' => '@message',
-                'ref' => '@ref',
-                'amt' => '@amt',
-                'ccy' => '@ccy',
-                'comis' => '@comis',
-                'code' => '@code',
-            ],
-        ];
-    }
-
-    /**
-     * TODO implement it via map
-     * @return array
-     */
     public function getData(): array
     {
-        return parent::getData()['payment'];
+        $xml = $this->getXmlContent();
+        /** @var \DOMElement $payment */
+        $payment = $xml->getElementsByTagName('payment')[0];
+        return [
+            'id' => $payment->getAttribute('id'),
+            'state' => $payment->getAttribute('state'),
+            'auto_id' => $payment->getAttribute('auto_id'),
+            'message' => $payment->getAttribute('message'),
+            'ref' => $payment->getAttribute('ref'),
+            'amt' => $payment->getAttribute('amt'),
+            'ccy' => $payment->getAttribute('ccy'),
+            'comis' => $payment->getAttribute('comis'),
+            'code' => $payment->getAttribute('code'),
+        ];
     }
 
 

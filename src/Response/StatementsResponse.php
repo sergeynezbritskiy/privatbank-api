@@ -11,29 +11,7 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class StatementsResponse extends AbstractResponse implements ResponseInterface
 {
-    public function getData(): array
-    {
-        $content = $this->getContent();
-        $xml = new \DOMDocument();
-        $xml->loadXML($content);
-        $statements = $xml->getElementsByTagName('statement');
-        $result = [];
-        /** @var \DOMElement $statementXml */
-        foreach ($statements as $statementXml) {
-            $result[] = [
-                'card' => $statementXml->getAttribute('card'),
-                'appcode' => $statementXml->getAttribute('appcode'),
-                'trandate' => $statementXml->getAttribute('trandate'),
-                'trantime' => $statementXml->getAttribute('trantime'),
-                'amount' => $statementXml->getAttribute('amount'),
-                'cardamount' => $statementXml->getAttribute('cardamount'),
-                'rest' => $statementXml->getAttribute('rest'),
-                'terminal' => $statementXml->getAttribute('terminal'),
-                'description' => $statementXml->getAttribute('description'),
-            ];
-        }
-        return $result;
-    }
+
 
     /**
      * Response sample
@@ -58,20 +36,25 @@ class StatementsResponse extends AbstractResponse implements ResponseInterface
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
-        return [
-            '{list} as data.info.statements.statement[]' => [
-                'card' => '@card',
-                'appcode' => '@appcode',
-                'trandate' => '@trandate',
-                'trantime' => '@trantime',
-                'amount' => '@amount',
-                'cardamount' => '@cardamount',
-                'rest' => '@rest',
-                'terminal' => '@terminal',
-                'description' => '@description',
-            ],
-        ];
+        $xml = $this->getXmlContent();
+        $statements = $xml->getElementsByTagName('statement');
+        $result = [];
+        /** @var \DOMElement $statementXml */
+        foreach ($statements as $statementXml) {
+            $result[] = [
+                'card' => $statementXml->getAttribute('card'),
+                'appcode' => $statementXml->getAttribute('appcode'),
+                'trandate' => $statementXml->getAttribute('trandate'),
+                'trantime' => $statementXml->getAttribute('trantime'),
+                'amount' => $statementXml->getAttribute('amount'),
+                'cardamount' => $statementXml->getAttribute('cardamount'),
+                'rest' => $statementXml->getAttribute('rest'),
+                'terminal' => $statementXml->getAttribute('terminal'),
+                'description' => $statementXml->getAttribute('description'),
+            ];
+        }
+        return $result;
     }
 }

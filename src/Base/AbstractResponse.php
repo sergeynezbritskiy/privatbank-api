@@ -42,9 +42,13 @@ abstract class AbstractResponse implements ResponseInterface
     }
 
     /**
+     * @deprecated
      * @return array
      */
-    abstract protected function getMap(): array;
+    protected function getMap(): array
+    {
+        return [];
+    }
 
     /**
      * @return array

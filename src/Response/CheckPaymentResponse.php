@@ -28,25 +28,17 @@ class CheckPaymentResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
-    {
-        return [
-            'payment as data.payment' => [
-                'id' => '@id',
-                'status' => '@status',
-                'message' => '@message',
-                'ref' => '@ref',
-            ],
-        ];
-    }
-
-    /**
-     * TODO implement it via map
-     * @return array
-     */
     public function getData(): array
     {
-        return parent::getData()['payment'];
+        $xml = $this->getXmlContent();
+        /** @var \DOMElement $payment */
+        $payment = $xml->getElementsByTagName('payment')[0];
+        return [
+            'id' => $payment->getAttribute('id'),
+            'status' => $payment->getAttribute('status'),
+            'message' => $payment->getAttribute('message'),
+            'ref' => $payment->getAttribute('ref'),
+        ];
     }
 
 }

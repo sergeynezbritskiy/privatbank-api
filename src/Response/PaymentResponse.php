@@ -28,30 +28,20 @@ class PaymentResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
-    {
-        return [
-            'payment as data.payment' => [
-                'id' => '@id',
-                'state' => '@state',
-                'message' => '@message',
-                'ref' => '@ref',
-                'amt' => '@amt',
-                'ccy' => '@ccy',
-                'comis' => '@comis',
-                'cardinfo' => '@cardinfo',
-            ],
-        ];
-    }
-
-    /**
-     * TODO implement it via map
-     * @return array
-     */
     public function getData(): array
     {
-        return parent::getData()['payment'];
+        $xml = $this->getXmlContent();
+        /** @var \DOMElement $payment */
+        $payment = $xml->getElementsByTagName('payment')[0];
+        return [
+            'id' => $payment->getAttribute('id'),
+            'state' => $payment->getAttribute('state'),
+            'message' => $payment->getAttribute('message'),
+            'ref' => $payment->getAttribute('ref'),
+            'amt' => $payment->getAttribute('amt'),
+            'ccy' => $payment->getAttribute('ccy'),
+            'comis' => $payment->getAttribute('comis'),
+            'cardinfo' => $payment->getAttribute('cardinfo'),
+        ];
     }
-
-
 }
