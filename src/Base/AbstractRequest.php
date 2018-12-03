@@ -76,9 +76,10 @@ abstract class AbstractRequest implements RequestInterface
      * @param array $params
      * @return string
      */
-    protected function getBody(/** @noinspection PhpUnusedParameterInspection */
-        array $params = []): string
-    {
+    protected function getBody(
+        /** @noinspection PhpUnusedParameterInspection */
+        array $params = []
+    ): string {
         return '';
     }
 

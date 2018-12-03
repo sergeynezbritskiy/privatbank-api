@@ -41,7 +41,7 @@ class StatementsResponseTest extends TestCase
     </data>
 </response>
 XML;
-        $this->setContent($this->content);
+        $this->buildResponseMock();
 
         $result = $this->response->getData();
         $this->assertEquals([[

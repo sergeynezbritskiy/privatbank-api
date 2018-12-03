@@ -29,7 +29,7 @@ class ExchangeRatesArchiveResponseTest extends TestCase
     <exchangerate baseCurrency="UAH" currency="CAD" saleRateNB="13.2107400" purchaseRateNB="13.2107400" saleRate="15.0000000" purchaseRate="13.0000000"/>
 </exchangerates>
 XML;
-        $this->setContent($this->content);
+        $this->buildResponseMock();
 
         $result = $this->response->getData();
         $this->assertEquals([[

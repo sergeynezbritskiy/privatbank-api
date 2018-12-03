@@ -36,12 +36,12 @@ class Request
      * @param array|null $query
      * @param string|null $body
      */
-    public function __construct(string $requestUri, string $method = null, array $query = null, string $body = null)
+    public function __construct(string $requestUri, string $method = 'GET', array $query = [], string $body = '')
     {
         $this->requestUri = $requestUri;
-        $this->method = $method ?: 'GET';
-        $this->query = $query ?: [];
-        $this->body = $body ?: '';
+        $this->method = $method;
+        $this->query = $query;
+        $this->body = $body;
     }
 
     /**

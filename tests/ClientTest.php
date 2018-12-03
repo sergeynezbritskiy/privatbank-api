@@ -44,7 +44,7 @@ class ClientTest extends TestCase
      */
     public function testSend()
     {
-        $request = new Request('pubinfo', '', ['exchange' => '', 'coursid' => 11]);
+        $request = new Request('pubinfo', 'GET', ['exchange' => '', 'coursid' => 11]);
         $response = $this->client->send($request);
         $this->assertInstanceOf(HttpResponseInterface::class, $response);
     }

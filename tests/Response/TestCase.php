@@ -31,7 +31,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     abstract protected function getClass(): string;
 
-    protected function setUp()
+    protected function buildResponseMock()
     {
         $test = $this;
 
@@ -64,32 +64,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $this->response = null;
         $this->content = array();
-    }
-
-    /** @noinspection PhpDocMissingThrowsInspection */
-
-    /**
-     * @param string $content
-     */
-    protected function setContent(string $content)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $this->mockProperty('content', $content);
-    }
-
-    /**
-     * @param string $propertyName
-     * @param $value
-     * @throws \ReflectionException
-     */
-    protected function mockProperty(string $propertyName, $value)
-    {
-        $object = $this->response;
-        $reflectionClass = new \ReflectionClass($object);
-        $property = $reflectionClass->getProperty($propertyName);
-        $property->setAccessible(true);
-        $property->setValue($object, $value);
-        $property->setAccessible(false);
     }
 
     /** @noinspection PhpDocMissingThrowsInspection */

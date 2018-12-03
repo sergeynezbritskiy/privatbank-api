@@ -2,7 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank;
 
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\GuzzleException;
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
@@ -84,9 +84,8 @@ class Client
                 $response->getStatusCode(),
                 $response->getReasonPhrase()
             );
-            $this->handleErrors($result);
             return $result;
-        } catch (RequestException $e) {
+        } catch (GuzzleException $e) {
             throw new PrivatBankApiException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -140,27 +139,6 @@ class Client
             return new $class($this, ...$arguments);
         } else {
             throw new \ErrorException('Method ' . $name . ' not supported');
-        }
-    }
-
-    /**
-     * @param HttpResponse $result
-     * @throws PrivatBankApiException
-     */
-    protected function handleErrors(HttpResponse $result)
-    {
-        if ($result->getStatusCode() !== 200) {
-            throw new PrivatBankApiException($result->getReasonPhrase(), $result->getStatusCode());
-        }
-        $content = $result->getContent();
-        $xml = new \DOMDocument();
-        $xml->loadXML($content);
-        $errors = $xml->getElementsByTagName('error');
-        if ($errors->length > 0) {
-            /** @var \DOMElement $error */
-            $error = $errors[0];
-            $message = $error->textContent ?: $error->getAttributeNode('message')->textContent;
-            throw new PrivatBankApiException($message, 500);
         }
     }
 
