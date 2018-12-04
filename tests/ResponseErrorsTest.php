@@ -29,42 +29,6 @@ class ResponseErrorsTest extends TestCase
         $this->client = null;
     }
 
-    //    public function testNotOkResponseCode()
-//    {
-//        $this->expectExceptionCode(201);
-//        $this->expectExceptionMessage('OK');
-//        $this->expectException(PrivatBankApiException::class);
-//        $response = new HttpResponse('', 201, 'OK');
-//        $this->call('handleErrors', ['response' => $response]);
-//    }
-
-//    public function testInvalidResponse()
-//    {
-//        $this->expectExceptionMessage('error message');
-//        $this->expectException(PrivatBankApiException::class);
-//        $this->expectExceptionCode(500);
-//        $response = new HttpResponse('<error>error message</error>', 200, 'OK');
-//        $this->call('handleErrors', ['response' => $response]);
-//    }
-
-//    public function testErrorFromAuthorizedMethods()
-//    {
-//        $content = <<<XML
-//<?xml version="1.0" encoding="UTF-8"
-//<response version="1.0">
-//    <data>
-//        <error message ="invalid signature" />
-//    </data>
-//</response>
-//XML;
-//
-//        $this->expectExceptionMessage('invalid signature');
-//        $this->expectException(PrivatBankApiException::class);
-//        $this->expectExceptionCode(500);
-//        $response = new HttpResponse($content, 200, 'OK');
-//        $this->call('handleErrors', ['response' => $response]);
-//    }
-
     /**
      * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
