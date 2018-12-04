@@ -10,7 +10,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class PaymentMobileResponse extends AbstractResponse
 {
-
     /**
      * Response sample
      * ```xml
