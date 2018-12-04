@@ -107,5 +107,4 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
     {
         return new PaymentResponse($httpResponse);
     }
-
 }

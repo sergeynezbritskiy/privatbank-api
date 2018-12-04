@@ -95,5 +95,4 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     {
         return new PaymentMobileResponse($httpResponse);
     }
-
 }

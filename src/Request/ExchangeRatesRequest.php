@@ -53,5 +53,4 @@ class ExchangeRatesRequest extends AbstractPublicRequest
     {
         return new ExchangeRatesResponse($httpResponse);
     }
-
 }

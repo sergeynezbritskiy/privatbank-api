@@ -49,5 +49,4 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     {
         return new ExchangeRatesArchiveResponse($httpResponse);
     }
-
 }

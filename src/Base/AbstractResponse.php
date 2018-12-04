@@ -98,5 +98,4 @@ abstract class AbstractResponse implements ResponseInterface
         }
         return $this->xmlContent;
     }
-
 }

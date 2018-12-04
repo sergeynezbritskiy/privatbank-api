@@ -51,5 +51,4 @@ class OfficesRequest extends AbstractPublicRequest
     {
         return new OfficesResponse($httpResponse);
     }
-
 }

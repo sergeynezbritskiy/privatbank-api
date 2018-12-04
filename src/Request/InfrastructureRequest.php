@@ -58,5 +58,4 @@ class InfrastructureRequest extends AbstractPublicRequest
     {
         return new InfrastructureResponse($httpResponse);
     }
-
 }

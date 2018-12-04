@@ -96,5 +96,4 @@ class StatementsRequest extends AbstractAuthorizedRequest
     {
         return new StatementsResponse($httpResponse);
     }
-
 }

@@ -113,5 +113,4 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     {
         return new PaymentResponse($httpResponse);
     }
-
 }

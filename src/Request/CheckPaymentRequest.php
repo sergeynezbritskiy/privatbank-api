@@ -93,5 +93,4 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     {
         return new CheckPaymentResponse($httpResponse);
     }
-
 }

@@ -13,5 +13,4 @@ interface ResponseInterface
      * @return array
      */
     public function getData(): array;
-
 }
