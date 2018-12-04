@@ -4,9 +4,9 @@ os:
 language: php
 
 before_script:
-  - composer install --no-dev
+  - composer install
 
-script: phpunit
+script: travis.sh
 
 php:
   - 7.0
