@@ -9,7 +9,7 @@ before_script:
 jobs:
   include:
   - script: ./vendor/bin/phpcs --standard="./vendor/squizlabs/php_codesniffer/src/Standards/PSR12/ruleset.xml" ./src
-  - script: ./vendor/bin/phpmd ./src text cleancode,codesize,controversial,design,naming,unusedcode
+  - script: ./vendor/bin/phpmd ./src text ./phpmd.xml
   - script: ./vendor/bin/phpunit
 
 php:
