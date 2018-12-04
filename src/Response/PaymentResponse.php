@@ -22,7 +22,8 @@ class PaymentResponse extends AbstractResponse
      *      </merchant>
      *      <data>
      *          <oper>cmt</oper>
-     *          <payment id="" state="1" message="" ref="P24PKP" amt="1.5" ccy="UAH" comis="0.00" cardinfo="personified"/>
+     *          <payment id="" state="1" message="" ref="P24PKP"
+     *                   amt="1.5" ccy="UAH" comis="0.00" cardinfo="personified"/>
      *      </data>
      *  </response>
      * ```

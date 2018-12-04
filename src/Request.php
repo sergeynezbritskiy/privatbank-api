@@ -105,5 +105,4 @@ class Request
         $this->body = $body;
         return $this;
     }
-
 }

@@ -17,5 +17,4 @@ interface RequestInterface
      * @throws PrivatBankApiException
      */
     public function execute(array $params = array()): ResponseInterface;
-
 }

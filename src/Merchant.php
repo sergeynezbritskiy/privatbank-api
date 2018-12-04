@@ -46,5 +46,4 @@ class Merchant
     {
         return sha1(md5($data . $this->signature));
     }
-
 }

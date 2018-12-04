@@ -38,6 +38,12 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * @param array $params
+     * @return string
+     */
+    abstract protected function getBody(array $params = []): string;
+
+    /**
+     * @param array $params
      * @return array
      */
     abstract protected function getBodyParams(array $params = []): array;
@@ -69,18 +75,6 @@ abstract class AbstractRequest implements RequestInterface
             'body' => $this->getBody($this->getBodyParams($params)),
         ]);
         return $this->getResponse($response);
-
-    }
-
-    /**
-     * @param array $params
-     * @return string
-     */
-    protected function getBody(
-        /** @noinspection PhpUnusedParameterInspection */
-        array $params = []
-    ): string {
-        return '';
     }
 
     /**
@@ -90,5 +84,4 @@ abstract class AbstractRequest implements RequestInterface
     {
         return $this->client;
     }
-
 }

@@ -125,5 +125,4 @@ class PaymentUkraineRequest extends AbstractAuthorizedRequest
     {
         return new PaymentResponse($httpResponse);
     }
-
 }

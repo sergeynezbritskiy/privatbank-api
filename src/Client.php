@@ -141,5 +141,4 @@ class Client
             throw new \ErrorException('Method ' . $name . ' not supported');
         }
     }
-
 }

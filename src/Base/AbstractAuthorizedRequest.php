@@ -95,7 +95,6 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
 XML;
 
         return $body;
-
     }
 
     /**
@@ -110,5 +109,4 @@ XML;
         }
         return $innerXml;
     }
-
 }

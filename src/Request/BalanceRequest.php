@@ -63,13 +63,16 @@ class BalanceRequest extends AbstractAuthorizedRequest
         ], $params);
 
         return array_merge(parent::getBodyParams($params), [
-            'payment' => [[
-                'name' => 'cardnum',
-                'value' => $params['cardNumber'],
-            ], [
-                'name' => 'country',
-                'value' => $params['country'],
-            ]]
+            'payment' => [
+                [
+                    'name' => 'cardnum',
+                    'value' => $params['cardNumber'],
+                ],
+                [
+                    'name' => 'country',
+                    'value' => $params['country'],
+                ]
+            ]
         ]);
     }
 
@@ -84,10 +87,10 @@ class BalanceRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new BalanceResponse($httpResponse);
     }
-
 }

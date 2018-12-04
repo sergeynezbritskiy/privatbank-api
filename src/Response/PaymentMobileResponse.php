@@ -21,7 +21,8 @@ class PaymentMobileResponse extends AbstractResponse
      *      </merchant>
      *      <data>
      *          <oper>cmt</oper>
-     *          <payment id="SIVN1392995003.855" state="1" auto_id="144266960" message="" ref="" amt="0.06" ccy="UAH" comis="0.0" code="" />
+     *          <payment id="SIVN1392995003.855" state="1" auto_id="144266960"
+     *                  message="" ref="" amt="0.06" ccy="UAH" comis="0.0" code="" />
      *      </data>
      *  </response>
      * ```

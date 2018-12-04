@@ -88,5 +88,4 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     {
         return new CheckPaymentMobileResponse($httpResponse);
     }
-
 }
