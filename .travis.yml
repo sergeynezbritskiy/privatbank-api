@@ -6,7 +6,7 @@ language: php
 before_script:
   - composer install
 
-script: travis.sh
+script: ./travis.sh
 
 php:
   - 7.0
