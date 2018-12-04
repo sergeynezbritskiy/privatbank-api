@@ -10,7 +10,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class ExchangeRatesResponse extends AbstractResponse
 {
-
     /**
      * Response Sample
      * ```xml
@@ -32,16 +31,21 @@ class ExchangeRatesResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
-        return [
-            '{list} as row[]' => [
-                'ccy' => 'exchangerate.@ccy',
-                'base_ccy' => 'exchangerate.@base_ccy',
-                'buy' => 'exchangerate.@buy',
-                'sale' => 'exchangerate.@sale'
-            ]
-        ];
+        $xml = $this->getXmlContent();
+        /** @var \DOMNodeList $devices */
+        $rates = $xml->getElementsByTagName('exchangerate');
+        $result = [];
+        /** @var \DOMElement $rate */
+        foreach ($rates as $rate) {
+            $result[] = [
+                'ccy' => $rate->getAttribute('ccy'),
+                'base_ccy' => $rate->getAttribute('base_ccy'),
+                'buy' => $rate->getAttribute('buy'),
+                'sale' => $rate->getAttribute('sale'),
+            ];
+        }
+        return $result;
     }
-
 }

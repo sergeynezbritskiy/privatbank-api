@@ -40,5 +40,4 @@ class CheckPaymentResponse extends AbstractResponse
             'ref' => $payment->getAttribute('ref'),
         ];
     }
-
 }

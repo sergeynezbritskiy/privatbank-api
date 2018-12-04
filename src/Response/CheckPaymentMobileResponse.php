@@ -28,26 +28,15 @@ class CheckPaymentMobileResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
-    {
-        return [
-            'payment as data.payment' => [
-                'id' => '@id',
-                'state' => '@state',
-                'message' => '@message',
-            ],
-        ];
-    }
-
-    /**
-     * TODO implement it via map
-     * @return array
-     */
     public function getData(): array
     {
-        $result = parent::getData();
-        return $result['payment'];
+        $xml = $this->getXmlContent();
+        /** @var \DOMElement $payment */
+        $payment = $xml->getElementsByTagName('payment')[0];
+        return [
+            'id' => $payment->getAttribute('id'),
+            'state' => $payment->getAttribute('state'),
+            'message' => $payment->getAttribute('message'),
+        ];
     }
-
-
 }

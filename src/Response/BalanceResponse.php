@@ -48,40 +48,33 @@ class BalanceResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
-        return [
-            'cardbalance as data.info.cardbalance' => [
-                'card' => [
-                    'account' => 'account',
-                    'card_number' => 'card_number',
-                    'acc_name' => 'acc_name',
-                    'acc_type' => 'acc_type',
-                    'currency' => 'currency',
-                    'card_type' => 'card_type',
-                    'main_card_number' => 'main_card_number',
-                    'card_stat' => 'card_stat',
-                    'src' => 'src',
-                ],
-                'av_balance' => 'av_balance',
-                'bal_date' => 'bal_date',
-                'bal_dyn' => 'bal_dyn',
-                'balance' => 'balance',
-                'fin_limit' => 'fin_limit',
-                'trade_limit' => 'trade_limit',
-            ],
-        ];
+        $content = $this->getContent();
+        $xml = new \DOMDocument();
+        $xml->loadXML($content);
+        /** @var \DOMElement $cardBalanceXml */
+        $cardBalanceXml = $xml->getElementsByTagName('cardbalance')[0];
+        $cardBalanceNodes = $cardBalanceXml->childNodes;
+        return $this->xmlNodeToArray($cardBalanceNodes);
     }
 
     /**
-     * TODO implement it via map
+     * @param \DOMNodeList $cardBalanceNodes
      * @return array
      */
-    public function getData(): array
+    private function xmlNodeToArray(\DOMNodeList $cardBalanceNodes): array
     {
-        $result = parent::getData();
-        return $result['cardbalance'];
+        $result = [];
+        /** @var \DOMElement $cardBalanceNode */
+        foreach ($cardBalanceNodes as $cardBalanceNode) {
+            if ($cardBalanceNode instanceof \DOMText) {
+            } elseif ($cardBalanceNode->tagName === 'card') {
+                $result[$cardBalanceNode->tagName] = $this->xmlNodeToArray($cardBalanceNode->childNodes);
+            } else {
+                $result[$cardBalanceNode->tagName] = $cardBalanceNode->textContent;
+            }
+        }
+        return $result;
     }
-
-
 }
