@@ -80,7 +80,7 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
         $dataXml = $xmlWriter->toXml($params, $this->getBodyMap());
         $dataContent = $this->getDataInnerXmlAsString($dataXml);
         $signature = $this->getMerchant()->calculateSignature($dataContent);
-        $merchantId = $this->getMerchant()->getId();
+        $merchantId = $this->getMerchant()->getMerchantId();
 
         $body = <<<XML
 <request version="1.0"> 

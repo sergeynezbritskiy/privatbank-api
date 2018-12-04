@@ -137,8 +137,7 @@ class Client
         $class = '\\SergeyNezbritskiy\\PrivatBank\\Request\\' . ucfirst($name) . 'Request';
         if (class_exists($class)) {
             return new $class($this, ...$arguments);
-        } else {
-            throw new \ErrorException('Method ' . $name . ' not supported');
         }
+        throw new \ErrorException('Method ' . $name . ' not supported');
     }
 }

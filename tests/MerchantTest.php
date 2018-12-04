@@ -17,7 +17,7 @@ class MerchantTest extends TestCase
         $id = '12345';
         $signature = md5('my_custom_string');
         $merchant = new Merchant($id, $signature);
-        $this->assertEquals($id, $merchant->getId());
+        $this->assertEquals($id, $merchant->getMerchantId());
     }
 
     public function testSignatureCalculation()
@@ -27,7 +27,7 @@ class MerchantTest extends TestCase
         $dataString = 'another_custom_string';
         $expectedSignature = sha1(md5($dataString . $signature));
         $merchant = new Merchant($id, $signature);
-        $this->assertEquals($id, $merchant->getId());
+        $this->assertEquals($id, $merchant->getMerchantId());
         $this->assertEquals($expectedSignature, $merchant->calculateSignature($dataString));
     }
 }

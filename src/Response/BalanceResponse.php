@@ -62,6 +62,7 @@ class BalanceResponse extends AbstractResponse
     /**
      * @param \DOMNodeList $cardBalanceNodes
      * @return array
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     private function xmlNodeToArray(\DOMNodeList $cardBalanceNodes): array
     {

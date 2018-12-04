@@ -20,6 +20,7 @@ abstract class AbstractPublicRequest extends AbstractRequest
     /**
      * @param array $params
      * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function getBody(array $params = []): string
     {
@@ -29,6 +30,7 @@ abstract class AbstractPublicRequest extends AbstractRequest
     /**
      * @param array $params
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function getBodyParams(array $params = array()): array
     {
