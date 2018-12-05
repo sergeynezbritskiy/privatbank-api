@@ -56,18 +56,18 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
+        $params = $this->getParams();
         $params = array_merge([
             'paymentId' => '',
             'phone' => '',
             'amt' => '',
         ], $params);
 
-        return array_merge(parent::getBodyParams($params), [
+        return array_merge(parent::getBodyParams(), [
             'id' => $params['paymentId'],
             'payment' => [[
                 'name' => 'phone',
@@ -90,6 +90,7 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

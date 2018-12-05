@@ -62,11 +62,11 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
+        $params = $this->getParams();
         $params = array_merge([
             'payment' => '',
             'b_card_or_acc' => '',
@@ -76,7 +76,7 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
             'details' => '',
         ], $params);
 
-        return array_merge(parent::getBodyParams($params), [
+        return array_merge(parent::getBodyParams(), [
             'id' => $params['payment'],
             'payment' => [[
                 'name' => 'b_card_or_acc',
@@ -108,6 +108,7 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

@@ -46,10 +46,9 @@ abstract class AbstractRequest implements RequestInterface
     abstract protected function getBody(array $params = []): string;
 
     /**
-     * @param array $params
      * @return array
      */
-    abstract protected function getBodyParams(array $params = []): array;
+    abstract protected function getBodyParams(): array;
 
     /**
      * @param HttpResponseInterface $httpResponse
@@ -77,7 +76,7 @@ abstract class AbstractRequest implements RequestInterface
         $response = $this->client->request($this->getRoute(), [
             'method' => $this->getMethod(),
             'query' => $this->getQuery(),
-            'body' => $this->getBody($this->getBodyParams($params)),
+            'body' => $this->getBody($this->getBodyParams()),
         ]);
         return $this->getResponse($response);
     }

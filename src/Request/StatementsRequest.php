@@ -55,18 +55,18 @@ class StatementsRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
+        $params = $this->getParams();
         $params = array_merge([
             'startDate' => '',
             'endDate' => '',
             'cardNumber' => '',
         ], $params);
 
-        return array_merge(parent::getBodyParams($params), [
+        return array_merge(parent::getBodyParams(), [
             'payment' => [[
                 'name' => 'sd',
                 'value' => $params['startDate'],
@@ -91,6 +91,7 @@ class StatementsRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

@@ -52,25 +52,21 @@ class BalanceRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'country' => 'UA',
-            'cardNumber' => '',
-        ], $params);
+        $params = $this->getParams();
 
-        return array_merge(parent::getBodyParams($params), [
+        return array_merge(parent::getBodyParams(), [
             'payment' => [
                 [
                     'name' => 'cardnum',
-                    'value' => $params['cardNumber'],
+                    'value' => $params['cardNumber'] ?? '',
                 ],
                 [
                     'name' => 'country',
-                    'value' => $params['country'],
+                    'value' => $params['country'] ?? '',
                 ]
             ]
         ]);

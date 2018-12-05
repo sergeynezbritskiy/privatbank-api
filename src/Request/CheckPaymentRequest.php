@@ -55,25 +55,25 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'payment' => '',
-            'ref' => '',
-        ], $params);
-
-        return array_merge(parent::getBodyParams($params), [
-            'id' => $params['payment'],
-            'payment' => [[
-                'name' => 'id',
-                'value' => $params['payment'],
-            ], [
-                'name' => 'ref',
-                'value' => $params['ref'],
-            ]]
+        $params = $this->getParams();
+        $payment = $params['payment'] ?? '';
+        $ref = $params['ref'] ?? '';
+        return array_merge(parent::getBodyParams(), [
+            'id' => $payment,
+            'payment' => [
+                [
+                    'name' => 'id',
+                    'value' => $payment,
+                ],
+                [
+                    'name' => 'ref',
+                    'value' => $ref,
+                ]
+            ]
         ]);
     }
 
@@ -88,6 +88,7 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

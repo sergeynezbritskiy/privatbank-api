@@ -53,17 +53,17 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
+        $params = $this->getParams();
         $params = array_merge([
             'payment' => '',
             'ref' => '',
         ], $params);
 
-        return array_merge(parent::getBodyParams($params), [
+        return array_merge(parent::getBodyParams(), [
             'id' => $params['paymentId'],
             'payment' => [[
                 'name' => 'id',
