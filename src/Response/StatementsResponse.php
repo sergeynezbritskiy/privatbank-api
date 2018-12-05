@@ -64,6 +64,9 @@ class StatementsResponse extends AbstractResponse implements ResponseInterface
         return $result;
     }
 
+    /**
+     * @throws PrivatBankApiException
+     */
     protected function handleErrors()
     {
         parent::handleErrors();
@@ -72,7 +75,7 @@ class StatementsResponse extends AbstractResponse implements ResponseInterface
         $info = $xmlContent->getElementsByTagName('info');
         foreach ($info as $item) {
             if (substr($item->textContent, 0, 5) === 'error') {
-                throw new PrivatBankApiException($item->textContent);
+                throw new PrivatBankApiException($item->textContent, 500);
             }
         }
     }
