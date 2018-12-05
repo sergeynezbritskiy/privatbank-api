@@ -65,16 +65,16 @@ class StatementsRequestTest extends TestCase
 
         $this->assertGreaterThan(0, count($statements));
 
-        foreach ($statements as $card) {
-            $this->assertArrayHasKey('card', $card);
-            $this->assertArrayHasKey('appcode', $card);
-            $this->assertArrayHasKey('trandate', $card);
-            $this->assertArrayHasKey('trantime', $card);
-            $this->assertArrayHasKey('amount', $card);
-            $this->assertArrayHasKey('cardamount', $card);
-            $this->assertArrayHasKey('rest', $card);
-            $this->assertArrayHasKey('terminal', $card);
-            $this->assertArrayHasKey('description', $card);
+        foreach ($statements as $cardData) {
+            $this->assertArrayHasKey('card', $cardData);
+            $this->assertArrayHasKey('appcode', $cardData);
+            $this->assertArrayHasKey('trandate', $cardData);
+            $this->assertArrayHasKey('trantime', $cardData);
+            $this->assertArrayHasKey('amount', $cardData);
+            $this->assertArrayHasKey('cardamount', $cardData);
+            $this->assertArrayHasKey('rest', $cardData);
+            $this->assertArrayHasKey('terminal', $cardData);
+            $this->assertArrayHasKey('description', $cardData);
             break;
         }
     }

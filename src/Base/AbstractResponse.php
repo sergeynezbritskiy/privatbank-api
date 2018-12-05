@@ -42,23 +42,6 @@ abstract class AbstractResponse implements ResponseInterface
     }
 
     /**
-     * @deprecated
-     * @return array
-     */
-    protected function getMap(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return (new XmlReader())->toArray($this->getContent(), $this->getMap());
-    }
-
-    /**
      * @throws PrivatBankApiException
      */
     protected function handleErrors()
@@ -67,9 +50,7 @@ abstract class AbstractResponse implements ResponseInterface
         if ($response->getStatusCode() !== 200) {
             throw new PrivatBankApiException($response->getReasonPhrase(), $response->getStatusCode());
         }
-        $content = $response->getContent();
         $xml = $this->getXmlContent();
-        $xml->loadXML($content);
         $errors = $xml->getElementsByTagName('error');
         if ($errors->length > 0) {
             /** @var \DOMElement $error */
