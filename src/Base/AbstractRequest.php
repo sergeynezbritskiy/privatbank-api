@@ -15,9 +15,14 @@ abstract class AbstractRequest implements RequestInterface
 {
 
     /**
-     * @return string
+     * @var Client
      */
-    abstract protected function getMethod(): string;
+    private $client;
+
+    /**
+     * @var array
+     */
+    private $params;
 
     /**
      * @return string
@@ -25,16 +30,14 @@ abstract class AbstractRequest implements RequestInterface
     abstract protected function getRoute(): string;
 
     /**
-     * @param HttpResponseInterface $httpResponse
-     * @return ResponseInterface
+     * @return string
      */
-    abstract protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface;
+    abstract protected function getMethod(): string;
 
     /**
-     * @param array $params
      * @return array
      */
-    abstract protected function getQueryParams(array $params = []): array;
+    abstract protected function getQuery(): array;
 
     /**
      * @param array $params
@@ -49,9 +52,10 @@ abstract class AbstractRequest implements RequestInterface
     abstract protected function getBodyParams(array $params = []): array;
 
     /**
-     * @var Client
+     * @param HttpResponseInterface $httpResponse
+     * @return ResponseInterface
      */
-    private $client;
+    abstract protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface;
 
     /**
      * AbstractPublicRequest constructor.
@@ -69,9 +73,10 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function execute(array $params = array()): ResponseInterface
     {
+        $this->params = $params;
         $response = $this->client->request($this->getRoute(), [
             'method' => $this->getMethod(),
-            'query' => $this->getQueryParams($params),
+            'query' => $this->getQuery(),
             'body' => $this->getBody($this->getBodyParams($params)),
         ]);
         return $this->getResponse($response);
@@ -83,5 +88,13 @@ abstract class AbstractRequest implements RequestInterface
     protected function getClient(): Client
     {
         return $this->client;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getParams(): array
+    {
+        return $this->params;
     }
 }

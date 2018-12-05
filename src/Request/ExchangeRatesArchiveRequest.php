@@ -27,11 +27,11 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    public function getQueryParams(array $params = []): array
+    public function getQuery(): array
     {
+        $params = $this->getParams();
         $params = array_merge([
             'date' => '',
         ], $params);

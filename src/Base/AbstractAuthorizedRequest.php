@@ -62,10 +62,9 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getQueryParams(array $params = []): array
+    protected function getQuery(): array
     {
         return [];
     }
