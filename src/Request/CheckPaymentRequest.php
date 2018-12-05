@@ -60,18 +60,16 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-        $payment = $params['payment'] ?? '';
-        $ref = $params['ref'] ?? '';
         return array_merge(parent::getBodyParams(), [
-            'id' => $payment,
+            'id' => $params['payment'],
             'payment' => [
                 [
                     'name' => 'id',
-                    'value' => $payment,
+                    'value' => $params['payment'],
                 ],
                 [
                     'name' => 'ref',
-                    'value' => $ref,
+                    'value' => $params['ref'],
                 ]
             ]
         ]);

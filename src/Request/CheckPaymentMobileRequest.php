@@ -41,7 +41,6 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
             'wait',
             'test',
             'payment' => [
-                'attributes' => ['id'],
                 'children' => [
                     'prop[]' => [
                         'dataProvider' => 'payment',
@@ -58,17 +57,14 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'payment' => '',
-            'ref' => '',
-        ], $params);
 
         return array_merge(parent::getBodyParams(), [
-            'id' => $params['paymentId'],
-            'payment' => [[
-                'name' => 'id',
-                'value' => $params['paymentId'],
-            ]]
+            'payment' => [
+                [
+                    'name' => 'id',
+                    'value' => $params['paymentId'] ?? '',
+                ]
+            ]
         ]);
     }
 

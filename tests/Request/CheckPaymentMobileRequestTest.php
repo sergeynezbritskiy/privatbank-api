@@ -61,7 +61,5 @@ class CheckPaymentMobileRequestTest extends TestCase
         $this->assertArrayHasKey('id', $data);
         $this->assertArrayHasKey('state', $data);
         $this->assertArrayHasKey('message', $data);
-
     }
-
 }

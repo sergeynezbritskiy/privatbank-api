@@ -3,26 +3,37 @@
 namespace SergeyNezbritskiy\PrivatBank;
 
 use GuzzleHttp\Exception\GuzzleException;
-use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
 use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
+use SergeyNezbritskiy\PrivatBank\Request\BalanceRequest;
+use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest;
+use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentRequest;
+use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;
+use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
+use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
+use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
+use SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest;
+use SergeyNezbritskiy\PrivatBank\Request\PaymentMobileRequest;
+use SergeyNezbritskiy\PrivatBank\Request\PaymentUkraineRequest;
+use SergeyNezbritskiy\PrivatBank\Request\PaymentVisaRequest;
+use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
 
 /**
  * Class Client
  * @package SergeyNezbritskiy\PrivatBank
- * @method RequestInterface exchangeRates()
- * @method RequestInterface exchangeRatesArchive()
- * @method RequestInterface infrastructure()
- * @method RequestInterface offices()
- * @method AuthorizedRequestInterface balance()
- * @method AuthorizedRequestInterface statements()
- * @method AuthorizedRequestInterface paymentInternal()
- * @method AuthorizedRequestInterface paymentMobile()
- * @method AuthorizedRequestInterface paymentUkraine()
- * @method AuthorizedRequestInterface paymentVisa()
- * @method AuthorizedRequestInterface checkPaymentMobile()
- * @method AuthorizedRequestInterface checkPayment()
+ * @method ExchangeRatesRequest exchangeRates()
+ * @method ExchangeRatesArchiveRequest exchangeRatesArchive()
+ * @method InfrastructureRequest infrastructure()
+ * @method OfficesRequest offices()
+ * @method BalanceRequest balance()
+ * @method StatementsRequest statements()
+ * @method PaymentInternalRequest paymentInternal()
+ * @method PaymentMobileRequest paymentMobile()
+ * @method PaymentUkraineRequest paymentUkraine()
+ * @method PaymentVisaRequest paymentVisa()
+ * @method CheckPaymentMobileRequest checkPaymentMobile()
+ * @method CheckPaymentRequest checkPayment()
  */
 class Client
 {
