@@ -44,17 +44,17 @@ class StatementsRequestTest extends TestCase
     {
         $merchantId = getenv('merchantId');
         $merchantSecret = getenv('merchantSecret');
-        $cardNumber = getenv('cardNumber');
+        $card = getenv('cardNumber');
         $startDate = getenv('startDate');
         $endDate = getenv('endDate');
-        if (empty($cardNumber) || empty($merchantId) || empty($merchantSecret) || empty($startDate) || empty($endDate)) {
+        if (empty($card) || empty($merchantId) || empty($merchantSecret) || empty($startDate) || empty($endDate)) {
             $this->markTestSkipped('Merchant data not specified');
         }
 
-        $merchant = new Merchant($merchantId, $merchantSecret);
-        $this->request->setMerchant($merchant);
+        $merchantId = new Merchant($merchantId, $merchantSecret);
+        $this->request->setMerchant($merchantId);
         $result = $this->request->execute([
-            'cardNumber' => $cardNumber,
+            'cardNumber' => $card,
             'startDate' => $startDate,
             'endDate' => $endDate,
         ]);
@@ -77,7 +77,5 @@ class StatementsRequestTest extends TestCase
             $this->assertArrayHasKey('description', $card);
             break;
         }
-
     }
-
 }
