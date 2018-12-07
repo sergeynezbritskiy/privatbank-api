@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -60,23 +61,21 @@ class StatementsRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'startDate' => '',
-            'endDate' => '',
-            'cardNumber' => '',
-        ], $params);
-
         return array_merge(parent::getBodyParams(), [
-            'payment' => [[
-                'name' => 'sd',
-                'value' => $params['startDate'],
-            ], [
-                'name' => 'ed',
-                'value' => $params['endDate'],
-            ], [
-                'name' => 'card',
-                'value' => $params['cardNumber'],
-            ]]
+            'payment' => [
+                [
+                    'name' => 'sd',
+                    'value' => $params['startDate'],
+                ],
+                [
+                    'name' => 'ed',
+                    'value' => $params['endDate'],
+                ],
+                [
+                    'name' => 'card',
+                    'value' => $params['cardNumber'],
+                ]
+            ]
         ]);
     }
 
@@ -96,5 +95,23 @@ class StatementsRequest extends AbstractAuthorizedRequest
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new StatementsResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['cardNumber'])) {
+            throw new InvalidArgumentException('Argument cardNumber is required');
+        }
+        if (empty($params['startDate'])) {
+            throw new InvalidArgumentException('Argument startDate is required');
+        }
+        if (empty($params['endDate'])) {
+            throw new InvalidArgumentException('endDate');
+        }
+        return $params;
     }
 }

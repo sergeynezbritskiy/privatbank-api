@@ -51,7 +51,7 @@ class CheckPaymentRequestTest extends TestCase
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->request->setMerchant($merchant);
         $result = $this->request->execute([
-            'payment' => '1234567',
+            'id' => '1234567',
             'ref' => 'P24A02509023364480'
         ]);
 
@@ -63,7 +63,5 @@ class CheckPaymentRequestTest extends TestCase
         $this->assertArrayHasKey('status', $payment);
         $this->assertArrayHasKey('message', $payment);
         $this->assertArrayHasKey('ref', $payment);
-
     }
-
 }

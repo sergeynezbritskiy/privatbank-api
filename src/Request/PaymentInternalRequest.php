@@ -65,29 +65,27 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'payment' => '',
-            'b_card_or_acc' => '',
-            'amt' => '',
-            'ccy' => '',
-            'details' => '',
-        ], $params);
 
         return array_merge(parent::getBodyParams(), [
             'id' => $params['payment'],
-            'payment' => [[
-                'name' => 'b_card_or_acc',
-                'value' => $params['b_card_or_acc'],
-            ], [
-                'name' => 'amt',
-                'value' => $params['amt'],
-            ], [
-                'name' => 'ccy',
-                'value' => $params['ccy'],
-            ], [
-                'name' => 'details',
-                'value' => $params['details'],
-            ]]
+            'payment' => [
+                [
+                    'name' => 'b_card_or_acc',
+                    'value' => $params['b_card_or_acc'],
+                ],
+                [
+                    'name' => 'amt',
+                    'value' => $params['amt'],
+                ],
+                [
+                    'name' => 'ccy',
+                    'value' => $params['ccy'],
+                ],
+                [
+                    'name' => 'details',
+                    'value' => $params['details'],
+                ]
+            ]
         ]);
     }
 
@@ -107,5 +105,23 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new PaymentResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['payment'])) {
+            throw new \InvalidArgumentException('Argument `payment` is required.');
+        }
+        $params = array_merge([
+            'b_card_or_acc' => '',
+            'amt' => '',
+            'ccy' => '',
+            'details' => '',
+        ], $params);
+        return $params;
     }
 }

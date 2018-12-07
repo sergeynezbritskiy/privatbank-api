@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -71,41 +72,38 @@ class PaymentUkraineRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'payment' => '',
-            'b_card_or_acc' => '',
-            'amt' => '',
-            'ccy' => '',
-            'b_name' => '',
-            'b_crf' => '',
-            'b_bic' => '',
-            'details' => '',
-        ], $params);
-
         return array_merge(parent::getBodyParams(), [
             'id' => $params['payment'],
-            'payment' => [[
-                'name' => 'b_card_or_acc',
-                'value' => $params['b_card_or_acc'],
-            ], [
-                'name' => 'amt',
-                'value' => $params['amt'],
-            ], [
-                'name' => 'ccy',
-                'value' => $params['ccy'],
-            ], [
-                'name' => 'b_crf',
-                'value' => $params['b_crf'],
-            ], [
-                'name' => 'b_name',
-                'value' => $params['b_name'],
-            ], [
-                'name' => 'b_bic',
-                'value' => $params['b_bic'],
-            ], [
-                'name' => 'details',
-                'value' => $params['details'],
-            ]]
+            'payment' => [
+                [
+                    'name' => 'b_card_or_acc',
+                    'value' => $params['b_card_or_acc'],
+                ],
+                [
+                    'name' => 'amt',
+                    'value' => $params['amt'],
+                ],
+                [
+                    'name' => 'ccy',
+                    'value' => $params['ccy'],
+                ],
+                [
+                    'name' => 'b_crf',
+                    'value' => $params['b_crf'],
+                ],
+                [
+                    'name' => 'b_name',
+                    'value' => $params['b_name'],
+                ],
+                [
+                    'name' => 'b_bic',
+                    'value' => $params['b_bic'],
+                ],
+                [
+                    'name' => 'details',
+                    'value' => $params['details'],
+                ]
+            ]
         ]);
     }
 
@@ -120,9 +118,34 @@ class PaymentUkraineRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new PaymentResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        $requiredParams = [
+            'payment',
+            'b_card_or_acc',
+            'amt',
+            'ccy',
+            'b_name',
+            'b_crf',
+            'b_bic',
+            'details',
+        ];
+        foreach ($requiredParams as $paramName) {
+            if (empty($params[$paramName])) {
+                throw new InvalidArgumentException('Argument ' . $paramName . ' is required');
+            }
+        }
+        return $params;
     }
 }

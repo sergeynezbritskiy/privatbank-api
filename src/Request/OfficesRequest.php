@@ -6,6 +6,7 @@ use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
 use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
 /**
  * Class OfficesRequest
@@ -33,10 +34,6 @@ class OfficesRequest extends AbstractPublicRequest
     public function getQuery(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'city' => '',
-            'address' => ''
-        ], $params);
         return [
             'city' => $params['city'],
             'address' => $params['address'],
@@ -51,5 +48,18 @@ class OfficesRequest extends AbstractPublicRequest
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new OfficesResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        $params = array_merge([
+            'city' => '',
+            'address' => ''
+        ], $params);
+        return $params;
     }
 }

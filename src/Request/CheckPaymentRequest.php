@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -11,7 +12,7 @@ use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentResponse;
  * Class CheckPaymentRequest
  *
  * Params:
- * payment - required, integer
+ * id - required, integer
  * ref - required|optional, string, payment reference
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
@@ -61,11 +62,11 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     {
         $params = $this->getParams();
         return array_merge(parent::getBodyParams(), [
-            'id' => $params['payment'],
+            'id' => $params['id'],
             'payment' => [
                 [
                     'name' => 'id',
-                    'value' => $params['payment'],
+                    'value' => $params['id'],
                 ],
                 [
                     'name' => 'ref',
@@ -91,5 +92,17 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new CheckPaymentResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['id']) && empty($params['ref'])) {
+            throw new InvalidArgumentException('Either id or ref should be passed');
+        }
+        return $params;
     }
 }

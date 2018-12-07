@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -11,7 +12,7 @@ use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
  * Class CheckPaymentMobileRequest
  *
  * Params:
- * paymentId - required, integer
+ * id - required, integer
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/mobile
@@ -57,12 +58,11 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-
         return array_merge(parent::getBodyParams(), [
             'payment' => [
                 [
                     'name' => 'id',
-                    'value' => $params['paymentId'] ?? '',
+                    'value' => $params['id'],
                 ]
             ]
         ]);
@@ -84,5 +84,17 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new CheckPaymentMobileResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['id'])) {
+            throw new InvalidArgumentException('Argument id is required');
+        }
+        return $params;
     }
 }

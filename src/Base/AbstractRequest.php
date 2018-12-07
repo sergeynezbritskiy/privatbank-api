@@ -40,15 +40,21 @@ abstract class AbstractRequest implements RequestInterface
     abstract protected function getQuery(): array;
 
     /**
+     * @return array
+     */
+    abstract protected function getBodyParams(): array;
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    abstract protected function initParams(array $params): array;
+
+    /**
      * @param array $params
      * @return string
      */
     abstract protected function getBody(array $params = []): string;
-
-    /**
-     * @return array
-     */
-    abstract protected function getBodyParams(): array;
 
     /**
      * @param HttpResponseInterface $httpResponse
@@ -70,9 +76,9 @@ abstract class AbstractRequest implements RequestInterface
      * @return ResponseInterface
      * @throws PrivatBankApiException
      */
-    public function execute(array $params = array()): ResponseInterface
+    public function execute(array $params = []): ResponseInterface
     {
-        $this->params = $params;
+        $this->params = $this->initParams($params);
         $response = $this->client->request($this->getRoute(), [
             'method' => $this->getMethod(),
             'query' => $this->getQuery(),

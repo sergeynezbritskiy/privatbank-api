@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -62,14 +63,26 @@ class BalanceRequest extends AbstractAuthorizedRequest
             'payment' => [
                 [
                     'name' => 'cardnum',
-                    'value' => $params['cardNumber'] ?? '',
+                    'value' => $params['cardNumber'],
                 ],
                 [
                     'name' => 'country',
-                    'value' => $params['country'] ?? '',
+                    'value' => $params['country'],
                 ]
             ]
         ]);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['cardNumber'])) {
+            throw new InvalidArgumentException('Argument cardNumber is required');
+        }
+        return array_merge(['country' => ''], $params);
     }
 
     /**

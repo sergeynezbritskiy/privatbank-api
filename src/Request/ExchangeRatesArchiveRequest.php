@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use DateTime;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
@@ -32,9 +33,6 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     public function getQuery(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'date' => '',
-        ], $params);
         return [
             'date' => $params['date'],
         ];
@@ -48,5 +46,22 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new ExchangeRatesArchiveResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['date'])) {
+            throw new \InvalidArgumentException('Argument date is required');
+        }
+        $dateInput = $params['date'];
+        $date = DateTime::createFromFormat('d.m.Y', $params['date']);
+        if (($date === false) || ($date->format('d.m.Y') !== $dateInput)) {
+            throw new \InvalidArgumentException('Argument date must conform format d.M.Y., e.g. 01.12.2018');
+        }
+        return $params;
     }
 }

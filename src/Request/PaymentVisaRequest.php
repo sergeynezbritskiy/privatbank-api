@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -67,33 +68,31 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'payment' => '',
-            'b_card_or_acc' => '',
-            'amt' => '',
-            'ccy' => '',
-            'b_name' => '',
-            'details' => '',
-        ], $params);
 
         return array_merge(parent::getBodyParams(), [
             'id' => $params['payment'],
-            'payment' => [[
-                'name' => 'b_card_or_acc',
-                'value' => $params['b_card_or_acc'],
-            ], [
-                'name' => 'amt',
-                'value' => $params['amt'],
-            ], [
-                'name' => 'ccy',
-                'value' => $params['ccy'],
-            ], [
-                'name' => 'b_name',
-                'value' => $params['b_name'],
-            ], [
-                'name' => 'details',
-                'value' => $params['details'],
-            ]]
+            'payment' => [
+                [
+                    'name' => 'b_card_or_acc',
+                    'value' => $params['b_card_or_acc'],
+                ],
+                [
+                    'name' => 'amt',
+                    'value' => $params['amt'],
+                ],
+                [
+                    'name' => 'ccy',
+                    'value' => $params['ccy'],
+                ],
+                [
+                    'name' => 'b_name',
+                    'value' => $params['b_name'],
+                ],
+                [
+                    'name' => 'details',
+                    'value' => $params['details'],
+                ]
+            ]
         ]);
     }
 
@@ -113,5 +112,32 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new PaymentResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['payment'])) {
+            throw new InvalidArgumentException('Argument payment is required');
+        }
+        if (empty($params['b_card_or_acc'])) {
+            throw new InvalidArgumentException('Argument b_card_or_acc is required');
+        }
+        if (empty($params['amt'])) {
+            throw new InvalidArgumentException('Argument amt is required');
+        }
+        if (empty($params['ccy'])) {
+            throw new InvalidArgumentException('Argument ccy is required');
+        }
+        if (empty($params['b_name'])) {
+            throw new InvalidArgumentException('Argument b_name is required');
+        }
+        if (empty($params['details'])) {
+            throw new InvalidArgumentException('Argument details is required');
+        }
+        return $params;
     }
 }

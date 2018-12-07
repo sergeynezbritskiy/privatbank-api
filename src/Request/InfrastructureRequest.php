@@ -38,11 +38,6 @@ class InfrastructureRequest extends AbstractPublicRequest
     public function getQuery(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'city' => '',
-            'address' => '',
-            'type' => '',//`atm` or `tso`
-        ], $params);
         return [
             $params['type'] => '',
             'city' => $params['city'],
@@ -58,5 +53,19 @@ class InfrastructureRequest extends AbstractPublicRequest
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new InfrastructureResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        $params = array_merge([
+            'city' => '',
+            'address' => '',
+            'type' => '',//`atm` or `tso`
+        ], $params);
+        return $params;
     }
 }

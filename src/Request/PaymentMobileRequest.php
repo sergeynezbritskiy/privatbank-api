@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -61,21 +62,19 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getBodyParams(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'paymentId' => '',
-            'phone' => '',
-            'amt' => '',
-        ], $params);
 
         return array_merge(parent::getBodyParams(), [
             'id' => $params['paymentId'],
-            'payment' => [[
-                'name' => 'phone',
-                'value' => $params['phone'],
-            ], [
-                'name' => 'amt',
-                'value' => $params['amt'],
-            ]]
+            'payment' => [
+                [
+                    'name' => 'phone',
+                    'value' => $params['phone'],
+                ],
+                [
+                    'name' => 'amt',
+                    'value' => $params['amt'],
+                ]
+            ]
         ]);
     }
 
@@ -95,5 +94,23 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new PaymentMobileResponse($httpResponse);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        if (empty($params['paymentId'])) {
+            throw new InvalidArgumentException('Argument paymentId is required');
+        }
+        if (empty($params['phone'])) {
+            throw new InvalidArgumentException('Argument amt is required');
+        }
+        if (empty($params['amt'])) {
+            throw new InvalidArgumentException('Argument amt is required');
+        }
+        return $params;
     }
 }

@@ -54,4 +54,16 @@ class ExchangeRatesRequest extends AbstractPublicRequest
     {
         return new ExchangeRatesResponse($httpResponse);
     }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function initParams(array $params): array
+    {
+        $params = array_merge([
+            'coursid' => self::CASH,
+        ], $params);
+        return $params;
+    }
 }

@@ -51,7 +51,7 @@ class CheckPaymentMobileRequestTest extends TestCase
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->request->setMerchant($merchant);
         $result = $this->request->execute([
-            'paymentId' => '1234567',
+            'id' => '1234567',
         ]);
 
         $this->assertInstanceOf(CheckPaymentMobileResponse::class, $result);
