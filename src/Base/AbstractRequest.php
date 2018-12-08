@@ -25,11 +25,6 @@ abstract class AbstractRequest implements RequestInterface
     private $params;
 
     /**
-     * @var Validator
-     */
-    private $validator;
-
-    /**
      * @return string
      */
     abstract protected function getRoute(): string;
@@ -73,7 +68,6 @@ abstract class AbstractRequest implements RequestInterface
     public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->validator = new Validator();
     }
 
     /**
@@ -114,6 +108,6 @@ abstract class AbstractRequest implements RequestInterface
      */
     private function validateParams(array $params): array
     {
-        return $this->validator->validate($params, $this->getValidationRules());
+        return (new Validator())->validate($params, $this->getValidationRules());
     }
 }
