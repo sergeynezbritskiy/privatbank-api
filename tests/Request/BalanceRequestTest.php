@@ -8,7 +8,7 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  * Class BalanceRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class BalanceRequestTest extends TestCase
+class BalanceRequestTest extends TestCaseAuthorized
 {
 
     /**

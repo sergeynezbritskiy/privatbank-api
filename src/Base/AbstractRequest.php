@@ -5,7 +5,6 @@ namespace SergeyNezbritskiy\PrivatBank\Base;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
-use SergeyNezbritskiy\PrivatBank\Client;
 
 /**
  * Class AbstractRequest

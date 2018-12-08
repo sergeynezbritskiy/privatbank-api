@@ -2,17 +2,17 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use SergeyNezbritskiy\PrivatBank\Client;
+use SergeyNezbritskiy\PrivatBank\PublicClient;
 
 /**
- * Class TestCase
+ * Class TestCasePublic
  * @package SergeyNezbritskiy\PrivatBank\Tests\Response
  */
-abstract class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCasePublic extends \PHPUnit\Framework\TestCase
 {
 
     /**
-     * @var Client
+     * @var PublicClient
      */
     protected $client;
 
@@ -21,7 +21,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function setUp()
     {
-        $this->client = new Client();
+        $this->client = new PublicClient();
     }
 
     /**

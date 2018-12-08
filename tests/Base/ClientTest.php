@@ -4,7 +4,7 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Base;
 
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
-use SergeyNezbritskiy\PrivatBank\Client;
+use SergeyNezbritskiy\PrivatBank\Base\Client;
 use SergeyNezbritskiy\PrivatBank\Request;
 
 /**

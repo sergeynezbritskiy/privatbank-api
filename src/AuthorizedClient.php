@@ -3,16 +3,11 @@
 namespace SergeyNezbritskiy\PrivatBank;
 
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
-use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Base\Client as BaseClient;
 use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Request\BalanceRequest;
 use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest;
 use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentRequest;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
-use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
-use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
 use SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest;
 use SergeyNezbritskiy\PrivatBank\Request\PaymentMobileRequest;
 use SergeyNezbritskiy\PrivatBank\Request\PaymentUkraineRequest;
@@ -20,12 +15,10 @@ use SergeyNezbritskiy\PrivatBank\Request\PaymentVisaRequest;
 use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
 
 /**
- * Class Client
+ * Class AuthorizedClient
  * @package SergeyNezbritskiy\PrivatBank
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Client extends BaseClient
+class AuthorizedClient extends BaseClient
 {
 
     /**
@@ -72,60 +65,6 @@ class Client extends BaseClient
     public function checkPaymentMobile(string $paymentId): array
     {
         return $this->call(CheckPaymentMobileRequest::class, ['payment_id' => $paymentId]);
-    }
-
-    /**
-     * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest
-     * @param int $course
-     * @return array
-     * @throws PrivatBankApiException
-     */
-    public function exchangeRates(int $course = ExchangeRatesRequest::CASH): array
-    {
-        return $this->call(ExchangeRatesRequest::class, ['course' => $course]);
-    }
-
-    /**
-     * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest
-     * @param string $date format d.m.Y, e.g. 01.12.2017
-     * @return array
-     * @throws PrivatBankApiException
-     */
-    public function exchangeRatesArchive(string $date): array
-    {
-        return $this->call(ExchangeRatesArchiveRequest::class, ['date' => $date]);
-    }
-
-    /**
-     * @see \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest
-     * @param string $type
-     * @param string $city
-     * @param string $address
-     * @return array
-     * @throws PrivatBankApiException
-     */
-    public function infrastructure(string $type, string $city, string $address): array
-    {
-        return $this->call(InfrastructureRequest::class, [
-            'type' => $type,
-            'city' => $city,
-            'address' => $address,
-        ]);
-    }
-
-    /**
-     * @see \SergeyNezbritskiy\PrivatBank\Request\OfficesRequest
-     * @param string $city
-     * @param string $address
-     * @return array
-     * @throws PrivatBankApiException
-     */
-    public function offices(string $city = '', string $address = ''): array
-    {
-        return $this->call(OfficesRequest::class, [
-            'city' => $city,
-            'address' => $address,
-        ]);
     }
 
     /**
@@ -254,9 +193,9 @@ class Client extends BaseClient
 
     /**
      * @param Merchant $merchant
-     * @return Client
+     * @return AuthorizedClient
      */
-    public function setMerchant(Merchant $merchant): Client
+    public function setMerchant(Merchant $merchant): AuthorizedClient
     {
         $this->merchant = $merchant;
         return $this;
@@ -270,24 +209,22 @@ class Client extends BaseClient
      */
     private function call(string $class, array $arguments): array
     {
-        /** @var RequestInterface $request */
+        /** @var AuthorizedRequestInterface $request */
         $request = new $class($this);
         $this->ensureMerchant($request);
         return $request->execute($arguments)->getData();
     }
 
     /**
-     * @param RequestInterface $request
+     * @param AuthorizedRequestInterface $request
      * @return void
      * @throws PrivatBankApiException
      */
-    private function ensureMerchant(RequestInterface $request)
+    private function ensureMerchant(AuthorizedRequestInterface $request)
     {
-        if ($request instanceof AuthorizedRequestInterface) {
-            if (!($this->merchant instanceof Merchant)) {
-                throw new PrivatBankApiException('Merchant is required for authorized requests');
-            }
-            $request->setMerchant($this->merchant);
+        if (!($this->merchant instanceof Merchant)) {
+            throw new PrivatBankApiException('Merchant is required for authorized requests');
         }
+        $request->setMerchant($this->merchant);
     }
 }

@@ -8,7 +8,7 @@ use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
  * Class ExchangeRatesRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class ExchangeRatesRequestTest extends TestCase
+class ExchangeRatesRequestTest extends TestCasePublic
 {
 
     /**

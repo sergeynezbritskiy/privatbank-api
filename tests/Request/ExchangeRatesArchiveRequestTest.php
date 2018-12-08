@@ -6,7 +6,7 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
  * Class ExchangeRatesArchiveRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class ExchangeRatesArchiveRequestTest extends TestCase
+class ExchangeRatesArchiveRequestTest extends TestCasePublic
 {
 
     /**

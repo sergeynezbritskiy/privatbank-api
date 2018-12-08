@@ -8,7 +8,7 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  * Class PaymentInternalRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class PaymentInternalRequestTest extends TestCase
+class PaymentInternalRequestTest extends TestCaseAuthorized
 {
 
     /**
@@ -24,7 +24,13 @@ class PaymentInternalRequestTest extends TestCase
 
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $payment = $this->client->paymentInternal('1234567', '4627081718568608', 1.50, 'UAH', 'test%20merch%20not%20active');
+        $payment = $this->client->paymentInternal(
+            '1234567',
+            '4627081718568608',
+            1.50,
+            'UAH',
+            'test%20merch%20not%20active'
+        );
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);

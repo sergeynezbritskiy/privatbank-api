@@ -8,7 +8,7 @@ use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
  * Class InfrastructureRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class InfrastructureRequestTest extends TestCase
+class InfrastructureRequestTest extends TestCasePublic
 {
 
     /**

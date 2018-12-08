@@ -6,7 +6,7 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
  * Class OfficeRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class OfficesRequestTest extends TestCase
+class OfficesRequestTest extends TestCasePublic
 {
 
     /**

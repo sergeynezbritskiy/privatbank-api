@@ -8,7 +8,7 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  * Class PaymentMobileRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class PaymentMobileRequestTest extends TestCase
+class PaymentMobileRequestTest extends TestCaseAuthorized
 {
 
     /**
