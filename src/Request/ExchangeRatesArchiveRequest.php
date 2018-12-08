@@ -2,9 +2,11 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use DateTime;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
 
 /**
@@ -27,14 +29,11 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    public function getQueryParams(array $params = []): array
+    public function getQuery(): array
     {
-        $params = array_merge([
-            'date' => '',
-        ], $params);
+        $params = $this->getParams();
         return [
             'date' => $params['date'],
         ];
@@ -48,5 +47,23 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new ExchangeRatesArchiveResponse($httpResponse);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        $callback = function ($params) {
+            $dateInput = $params['date'];
+            $date = DateTime::createFromFormat('d.m.Y', $params['date']);
+            if (($date === false) || ($date->format('d.m.Y') !== $dateInput)) {
+                throw new \InvalidArgumentException('Argument date must conform format d.M.Y., e.g. 01.12.2018');
+            }
+        };
+        return [
+            ['date', Validator::TYPE_REQUIRED],
+            ['date', $callback],
+        ];
     }
 }

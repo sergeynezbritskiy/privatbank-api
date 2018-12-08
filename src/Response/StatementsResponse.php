@@ -4,6 +4,7 @@ namespace SergeyNezbritskiy\PrivatBank\Response;
 
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 
 /**
  * Class StatementsResponse
@@ -61,5 +62,21 @@ class StatementsResponse extends AbstractResponse implements ResponseInterface
             ];
         }
         return $result;
+    }
+
+    /**
+     * @throws PrivatBankApiException
+     */
+    protected function handleErrors()
+    {
+        parent::handleErrors();
+        $xmlContent = $this->getXmlContent();
+        /** @var \DOMNodeList $info */
+        $info = $xmlContent->getElementsByTagName('info');
+        foreach ($info as $item) {
+            if (substr($item->textContent, 0, 5) === 'error') {
+                throw new PrivatBankApiException($item->textContent, 500);
+            }
+        }
     }
 }

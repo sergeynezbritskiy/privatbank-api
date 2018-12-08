@@ -2,40 +2,14 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
-use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
-use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
 
 /**
  * Class StatementsRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class StatementsRequestTest extends TestCase
+class StatementsRequestTest extends TestCaseAuthorized
 {
-
-    /**
-     * @var StatementsRequest
-     */
-    private $request;
-
-    /**
-     * @var Client
-     */
-    private $client;
-
-    protected function setUp()
-    {
-        $this->client = new Client();
-        $this->request = new StatementsRequest($this->client);
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-        $this->client = null;
-    }
 
     /**
      * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
@@ -44,40 +18,29 @@ class StatementsRequestTest extends TestCase
     {
         $merchantId = getenv('merchantId');
         $merchantSecret = getenv('merchantSecret');
-        $cardNumber = getenv('cardNumber');
+        $card = getenv('cardNumber');
         $startDate = getenv('startDate');
         $endDate = getenv('endDate');
-        if (empty($cardNumber) || empty($merchantId) || empty($merchantSecret) || empty($startDate) || empty($endDate)) {
+        if (empty($card) || empty($merchantId) || empty($merchantSecret) || empty($startDate) || empty($endDate)) {
             $this->markTestSkipped('Merchant data not specified');
         }
-
-        $merchant = new Merchant($merchantId, $merchantSecret);
-        $this->request->setMerchant($merchant);
-        $result = $this->request->execute([
-            'cardNumber' => $cardNumber,
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-        ]);
-
-        $this->assertInstanceOf(StatementsResponse::class, $result);
-
-        $statements = $result->getData();
+        $merchantId = new Merchant($merchantId, $merchantSecret);
+        $this->client->setMerchant($merchantId);
+        $statements = $this->client->statements($card, $startDate, $endDate);
 
         $this->assertGreaterThan(0, count($statements));
 
-        foreach ($statements as $card) {
-            $this->assertArrayHasKey('card', $card);
-            $this->assertArrayHasKey('appcode', $card);
-            $this->assertArrayHasKey('trandate', $card);
-            $this->assertArrayHasKey('trantime', $card);
-            $this->assertArrayHasKey('amount', $card);
-            $this->assertArrayHasKey('cardamount', $card);
-            $this->assertArrayHasKey('rest', $card);
-            $this->assertArrayHasKey('terminal', $card);
-            $this->assertArrayHasKey('description', $card);
+        foreach ($statements as $cardData) {
+            $this->assertArrayHasKey('card', $cardData);
+            $this->assertArrayHasKey('appcode', $cardData);
+            $this->assertArrayHasKey('trandate', $cardData);
+            $this->assertArrayHasKey('trantime', $cardData);
+            $this->assertArrayHasKey('amount', $cardData);
+            $this->assertArrayHasKey('cardamount', $cardData);
+            $this->assertArrayHasKey('rest', $cardData);
+            $this->assertArrayHasKey('terminal', $cardData);
+            $this->assertArrayHasKey('description', $cardData);
             break;
         }
-
     }
-
 }

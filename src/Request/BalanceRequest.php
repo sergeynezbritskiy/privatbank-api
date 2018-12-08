@@ -5,13 +5,14 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\BalanceResponse;
 
 /**
  * Class BalanceRequest
  *
  * Params:
- * cardNumber - required, integer
+ * cardnum - required, integer
  * country - optional, string
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/balance
@@ -52,21 +53,17 @@ class BalanceRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'country' => 'UA',
-            'cardNumber' => '',
-        ], $params);
+        $params = $this->getParams();
 
-        return array_merge(parent::getBodyParams($params), [
+        return array_merge(parent::getBodyParams(), [
             'payment' => [
                 [
                     'name' => 'cardnum',
-                    'value' => $params['cardNumber'],
+                    'value' => $params['cardnum'],
                 ],
                 [
                     'name' => 'country',
@@ -74,6 +71,17 @@ class BalanceRequest extends AbstractAuthorizedRequest
                 ]
             ]
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        return [
+            ['cardnum', Validator::TYPE_REQUIRED],
+            ['country', Validator::TYPE_DEFAULT, 'value' => '']
+        ];
     }
 
     /**

@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use DOMDocument;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
-use SergeyNezbritskiy\XmlIo\XmlReader;
 
 /**
  * Class AbstractResponse
@@ -13,7 +12,6 @@ use SergeyNezbritskiy\XmlIo\XmlReader;
  */
 abstract class AbstractResponse implements ResponseInterface
 {
-
     /**
      * @var HttpResponseInterface
      */
@@ -42,23 +40,7 @@ abstract class AbstractResponse implements ResponseInterface
     }
 
     /**
-     * @deprecated
-     * @return array
-     */
-    protected function getMap(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return (new XmlReader())->toArray($this->getContent(), $this->getMap());
-    }
-
-    /**
+     * @return void
      * @throws PrivatBankApiException
      */
     protected function handleErrors()
@@ -67,13 +49,11 @@ abstract class AbstractResponse implements ResponseInterface
         if ($response->getStatusCode() !== 200) {
             throw new PrivatBankApiException($response->getReasonPhrase(), $response->getStatusCode());
         }
-        $content = $response->getContent();
         $xml = $this->getXmlContent();
-        $xml->loadXML($content);
+        /** @var \DOMNodeList $errors */
         $errors = $xml->getElementsByTagName('error');
-        if ($errors->length > 0) {
-            /** @var \DOMElement $error */
-            $error = $errors[0];
+        /** @var \DOMElement $error */
+        foreach ($errors as $error) {
             $message = $error->textContent ?: $error->getAttributeNode('message')->textContent;
             throw new PrivatBankApiException($message, 500);
         }

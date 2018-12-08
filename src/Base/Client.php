@@ -1,29 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace SergeyNezbritskiy\PrivatBank;
+namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use GuzzleHttp\Exception\GuzzleException;
-use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
-use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
-use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
-use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
+use SergeyNezbritskiy\PrivatBank\Request;
 
-/**
- * Class Client
- * @package SergeyNezbritskiy\PrivatBank
- * @method RequestInterface exchangeRates()
- * @method RequestInterface exchangeRatesArchive()
- * @method RequestInterface infrastructure()
- * @method RequestInterface offices()
- * @method AuthorizedRequestInterface balance()
- * @method AuthorizedRequestInterface statements()
- * @method AuthorizedRequestInterface paymentInternal()
- * @method AuthorizedRequestInterface paymentMobile()
- * @method AuthorizedRequestInterface paymentUkraine()
- * @method AuthorizedRequestInterface paymentVisa()
- * @method AuthorizedRequestInterface checkPaymentMobile()
- * @method AuthorizedRequestInterface checkPayment()
- */
 class Client
 {
 
@@ -124,20 +105,5 @@ class Client
     {
         $this->waitTimeout = $waitTimeout;
         return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param array $arguments
-     * @return RequestInterface
-     * @throws \ErrorException
-     */
-    public function __call($name, $arguments): RequestInterface
-    {
-        $class = '\\SergeyNezbritskiy\\PrivatBank\\Request\\' . ucfirst($name) . 'Request';
-        if (class_exists($class)) {
-            return new $class($this, ...$arguments);
-        }
-        throw new \ErrorException('Method ' . $name . ' not supported');
     }
 }

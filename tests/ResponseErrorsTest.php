@@ -5,7 +5,7 @@ namespace SergeyNezbritskiy\PrivatBank\Tests;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
 use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
-use SergeyNezbritskiy\PrivatBank\Client;
+use SergeyNezbritskiy\PrivatBank\PublicClient;
 
 /**
  * Class ResponseErrorsTest
@@ -15,13 +15,13 @@ class ResponseErrorsTest extends TestCase
 {
 
     /**
-     * @var Client
+     * @var PublicClient
      */
     private $client;
 
     protected function setUp()
     {
-        $this->client = new Client();
+        $this->client = new PublicClient();
     }
 
     protected function tearDown()

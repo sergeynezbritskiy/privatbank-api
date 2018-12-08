@@ -5,7 +5,6 @@ namespace SergeyNezbritskiy\PrivatBank\Base;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
-use SergeyNezbritskiy\PrivatBank\Client;
 
 /**
  * Class AbstractRequest
@@ -15,9 +14,14 @@ abstract class AbstractRequest implements RequestInterface
 {
 
     /**
-     * @return string
+     * @var Client
      */
-    abstract protected function getMethod(): string;
+    private $client;
+
+    /**
+     * @var array
+     */
+    private $params;
 
     /**
      * @return string
@@ -25,16 +29,19 @@ abstract class AbstractRequest implements RequestInterface
     abstract protected function getRoute(): string;
 
     /**
-     * @param HttpResponseInterface $httpResponse
-     * @return ResponseInterface
+     * @return string
      */
-    abstract protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface;
+    abstract protected function getMethod(): string;
 
     /**
-     * @param array $params
      * @return array
      */
-    abstract protected function getQueryParams(array $params = []): array;
+    abstract protected function getQuery(): array;
+
+    /**
+     * @return array
+     */
+    abstract protected function getBodyParams(): array;
 
     /**
      * @param array $params
@@ -43,15 +50,15 @@ abstract class AbstractRequest implements RequestInterface
     abstract protected function getBody(array $params = []): string;
 
     /**
-     * @param array $params
-     * @return array
+     * @param HttpResponseInterface $httpResponse
+     * @return ResponseInterface
      */
-    abstract protected function getBodyParams(array $params = []): array;
+    abstract protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface;
 
     /**
-     * @var Client
+     * @return array
      */
-    private $client;
+    abstract protected function getValidationRules(): array;
 
     /**
      * AbstractPublicRequest constructor.
@@ -67,12 +74,13 @@ abstract class AbstractRequest implements RequestInterface
      * @return ResponseInterface
      * @throws PrivatBankApiException
      */
-    public function execute(array $params = array()): ResponseInterface
+    public function execute(array $params = []): ResponseInterface
     {
+        $this->params = $this->validateParams($params);
         $response = $this->client->request($this->getRoute(), [
             'method' => $this->getMethod(),
-            'query' => $this->getQueryParams($params),
-            'body' => $this->getBody($this->getBodyParams($params)),
+            'query' => $this->getQuery(),
+            'body' => $this->getBody($this->getBodyParams()),
         ]);
         return $this->getResponse($response);
     }
@@ -83,5 +91,22 @@ abstract class AbstractRequest implements RequestInterface
     protected function getClient(): Client
     {
         return $this->client;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getParams(): array
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    private function validateParams(array $params): array
+    {
+        return (new Validator())->validate($params, $this->getValidationRules());
     }
 }
