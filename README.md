@@ -24,13 +24,16 @@ All requests classes can be found within \SergeyNezbritskiy\PrivatBank\Request n
 ## Simple usage
 Using library is as easy as possible
 ```php
-//create client for connecting with API
-$client = new \SergeyNezbritskiy\PrivatBank\Client();
-//create request instance
-$request = $client->infrastructure();
+//create public client for connecting with API
+$client = new \SergeyNezbritskiy\PrivatBank\PublicClient();
 //run the request
-$response = $request->execute([
-    'type' => \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest::TYPE_ATM,
-    'city' => 'Днепропетровск',
-])->getData();
+$result = $request->infrastructure(\SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest::TYPE_ATM, 'Днепропетровск');
+
+//create authorized client for connecting with API
+$client = new \SergeyNezbritskiy\PrivatBank\AuthorizedClient();
+//create merchant
+$merchant = new Merchant('<your_merchant_id>', '<your_merchant_secret>');
+$client->setMerchant($merchant);
+//run the request
+$result = $client->balance('4111111111111111');
 ```
