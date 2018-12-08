@@ -49,5 +49,4 @@ XML;
             'cardinfo' => 'personified',
         ], $result);
     }
-
 }

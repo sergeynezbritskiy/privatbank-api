@@ -24,7 +24,14 @@ class PaymentVisaRequestTest extends TestCaseAuthorized
 
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $payment = $this->client->paymentVisa('1234567', '4714466011522341', 1.50, 'Sergey Nez', 'UAH', 'test%20merch%20not%20active');
+        $payment = $this->client->paymentVisa(
+            '1234567',
+            '4714466011522341',
+            1.50,
+            'Sergey Nez',
+            'UAH',
+            'test%20merch%20not%20active'
+        );
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);

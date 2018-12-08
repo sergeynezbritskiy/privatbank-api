@@ -42,24 +42,4 @@ class ClientErrorsTest extends TestCase
             'method' => 'GET',
         ]);
     }
-
-    /** @noinspection PhpDocMissingThrowsInspection */
-
-    /**
-     * Call protected/private method of a class.
-     *
-     * @param string $methodName Method name to call
-     * @param array $params Array of parameters to pass into method.
-     *
-     * @return mixed Method return.
-     */
-    protected function call($methodName, array $params = [])
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $reflection = new \ReflectionClass(get_class($this->client));
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
-        return $method->invokeArgs($this->client, $params);
-    }
-
 }

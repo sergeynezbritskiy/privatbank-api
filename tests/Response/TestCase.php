@@ -84,5 +84,4 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $method->setAccessible(true);
         return $method->invokeArgs($this->response, $params);
     }
-
 }

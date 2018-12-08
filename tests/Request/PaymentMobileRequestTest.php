@@ -35,6 +35,5 @@ class PaymentMobileRequestTest extends TestCaseAuthorized
         $this->assertArrayHasKey('ccy', $payment);
         $this->assertArrayHasKey('comis', $payment);
         $this->assertArrayHasKey('code', $payment);
-
     }
 }

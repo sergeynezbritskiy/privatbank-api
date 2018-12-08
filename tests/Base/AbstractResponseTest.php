@@ -86,5 +86,4 @@ XML;
         $method->setAccessible(true);
         return $method->invokeArgs($this->response, $params);
     }
-
 }

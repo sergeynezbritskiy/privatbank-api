@@ -31,7 +31,8 @@ class PaymentMobileResponseTest extends TestCase
     </merchant>
     <data>
         <oper>cmt</oper>
-        <payment id="SIVN1392995003.855" state="1" auto_id="144266960" message="test message" ref="refref" amt="0.06" ccy="UAH" comis="0.0" code="somecode" />
+        <payment id="SIVN1392995003.855" state="1" auto_id="144266960" message="test message" 
+        ref="refref" amt="0.06" ccy="UAH" comis="0.0" code="somecode" />
     </data>
 </response>
 XML;
@@ -50,5 +51,4 @@ XML;
             'code' => 'somecode',
         ], $result);
     }
-
 }

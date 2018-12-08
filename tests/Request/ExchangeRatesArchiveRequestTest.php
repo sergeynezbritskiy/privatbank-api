@@ -27,4 +27,14 @@ class ExchangeRatesArchiveRequestTest extends TestCasePublic
             break;
         }
     }
+
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
+    public function testExchangeRatesInvalidDateFormat()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument date must conform format d.M.Y., e.g. 01.12.2018');
+        $this->client->exchangeRatesArchive(date('d-m-Y'));
+    }
 }

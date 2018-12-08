@@ -61,5 +61,4 @@ class ResponseErrorsTest extends TestCase
         $method->setAccessible(true);
         return $method->invokeArgs($this->client, $params);
     }
-
 }

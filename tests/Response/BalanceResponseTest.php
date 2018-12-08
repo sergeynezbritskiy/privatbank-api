@@ -77,5 +77,4 @@ XML;
             'trade_limit' => '0.00',
         ], $result);
     }
-
 }
