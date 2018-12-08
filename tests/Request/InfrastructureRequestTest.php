@@ -2,8 +2,6 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
 
 /**
@@ -13,28 +11,7 @@ use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
 class InfrastructureRequestTest extends TestCase
 {
 
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @inheritdoc
-     */
-    protected function setUp()
-    {
-        $this->client = new Client();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function tearDown()
-    {
-        $this->client = null;
-    }
-
-    public function testATM()
+    public function testAtm()
     {
         $data = $this->client->infrastructure([
             'city' => 'Днепропетровск',

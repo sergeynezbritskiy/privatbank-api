@@ -157,6 +157,16 @@ class Client
     }
 
     /**
+     * @param Merchant $merchant
+     * @return Client
+     */
+    public function setMerchant(Merchant $merchant): Client
+    {
+        $this->merchant = $merchant;
+        return $this;
+    }
+
+    /**
      * @param string $name
      * @param array $arguments
      * @return array
@@ -173,16 +183,6 @@ class Client
             return $request->execute($arguments[0])->getData();
         }
         throw new ErrorException('Method ' . $name . ' not supported');
-    }
-
-    /**
-     * @param Merchant $merchant
-     * @return Client
-     */
-    public function setMerchant(Merchant $merchant): Client
-    {
-        $this->merchant = $merchant;
-        return $this;
     }
 
     /**

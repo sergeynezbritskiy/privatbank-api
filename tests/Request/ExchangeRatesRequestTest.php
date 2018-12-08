@@ -2,8 +2,6 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 
 /**
@@ -12,27 +10,6 @@ use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
  */
 class ExchangeRatesRequestTest extends TestCase
 {
-
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @inheritdoc
-     */
-    protected function setUp()
-    {
-        $this->client = new Client();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function tearDown()
-    {
-        $this->client = null;
-    }
 
     public function testExchangeRatesCash()
     {

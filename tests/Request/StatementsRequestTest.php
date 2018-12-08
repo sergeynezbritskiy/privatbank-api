@@ -2,8 +2,6 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 
 /**
@@ -12,27 +10,6 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  */
 class StatementsRequestTest extends TestCase
 {
-
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @inheritdoc
-     */
-    protected function setUp()
-    {
-        $this->client = new Client();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function tearDown()
-    {
-        $this->client = null;
-    }
 
     public function testBalance()
     {
@@ -44,7 +21,6 @@ class StatementsRequestTest extends TestCase
         if (empty($card) || empty($merchantId) || empty($merchantSecret) || empty($startDate) || empty($endDate)) {
             $this->markTestSkipped('Merchant data not specified');
         }
-
         $merchantId = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchantId);
         $statements = $this->client->statements([

@@ -2,11 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
-use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest;
-use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
 
 /**
  * Class CheckPaymentMobileRequestTest
@@ -14,27 +10,6 @@ use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
  */
 class CheckPaymentMobileRequestTest extends TestCase
 {
-
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @inheritdoc
-     */
-    protected function setUp()
-    {
-        $this->client = new Client();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function tearDown()
-    {
-        $this->client = null;
-    }
 
     public function testBalance()
     {
