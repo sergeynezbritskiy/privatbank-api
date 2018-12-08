@@ -5,6 +5,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
 /**
@@ -56,16 +57,12 @@ class InfrastructureRequest extends AbstractPublicRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        $params = array_merge([
-            'city' => '',
-            'address' => '',
-            'type' => '',//`atm` or `tso`
-        ], $params);
-        return $params;
+        return [
+            [['city', 'address', 'type'], Validator::TYPE_DEFAULT, 'value' => ''],
+        ];
     }
 }

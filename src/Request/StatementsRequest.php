@@ -2,10 +2,10 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
 
 /**
@@ -98,20 +98,12 @@ class StatementsRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        if (empty($params['cardNumber'])) {
-            throw new InvalidArgumentException('Argument cardNumber is required');
-        }
-        if (empty($params['startDate'])) {
-            throw new InvalidArgumentException('Argument startDate is required');
-        }
-        if (empty($params['endDate'])) {
-            throw new InvalidArgumentException('endDate');
-        }
-        return $params;
+        return [
+            [['cardNumber', 'startDate', 'endDate'], Validator::TYPE_REQUIRED],
+        ];
     }
 }

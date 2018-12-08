@@ -5,6 +5,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
 
 /**
@@ -108,20 +109,13 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        if (empty($params['payment'])) {
-            throw new \InvalidArgumentException('Argument `payment` is required.');
-        }
-        $params = array_merge([
-            'b_card_or_acc' => '',
-            'amt' => '',
-            'ccy' => '',
-            'details' => '',
-        ], $params);
-        return $params;
+        return [
+            [['payment'], Validator::TYPE_REQUIRED],
+            [['b_card_or_acc', 'amt', 'ccy', 'details'], Validator::TYPE_DEFAULT, 'value' => ''],
+        ];
     }
 }

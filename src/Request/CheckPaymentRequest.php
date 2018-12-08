@@ -95,14 +95,17 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        if (empty($params['id']) && empty($params['ref'])) {
-            throw new InvalidArgumentException('Either id or ref should be passed');
-        }
-        return $params;
+        $callback = function ($params) {
+            if (empty($params['id']) && empty($params['ref'])) {
+                throw new InvalidArgumentException('Either id or ref should be passed');
+            }
+        };
+        return [
+            ['id', $callback],
+        ];
     }
 }

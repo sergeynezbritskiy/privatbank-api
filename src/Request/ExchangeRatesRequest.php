@@ -5,6 +5,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
 /**
@@ -56,14 +57,12 @@ class ExchangeRatesRequest extends AbstractPublicRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        $params = array_merge([
-            'coursid' => self::CASH,
-        ], $params);
-        return $params;
+        return [
+            ['coursid' , Validator::TYPE_DEFAULT, 'value' => self::CASH],
+        ];
     }
 }

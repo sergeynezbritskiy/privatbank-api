@@ -2,10 +2,10 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
 
 /**
@@ -87,14 +87,12 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        if (empty($params['id'])) {
-            throw new InvalidArgumentException('Argument id is required');
-        }
-        return $params;
+        return [
+            ['id', Validator::TYPE_REQUIRED],
+        ];
     }
 }

@@ -5,8 +5,8 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
 /**
  * Class OfficesRequest
@@ -51,15 +51,12 @@ class OfficesRequest extends AbstractPublicRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        $params = array_merge([
-            'city' => '',
-            'address' => ''
-        ], $params);
-        return $params;
+        return [
+            [['city', 'address'], Validator::TYPE_DEFAULT, 'value' => ''],
+        ];
     }
 }

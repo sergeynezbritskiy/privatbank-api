@@ -25,6 +25,11 @@ abstract class AbstractRequest implements RequestInterface
     private $params;
 
     /**
+     * @var Validator
+     */
+    private $validator;
+
+    /**
      * @return string
      */
     abstract protected function getRoute(): string;
@@ -46,12 +51,6 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * @param array $params
-     * @return array
-     */
-    abstract protected function initParams(array $params): array;
-
-    /**
-     * @param array $params
      * @return string
      */
     abstract protected function getBody(array $params = []): string;
@@ -69,6 +68,7 @@ abstract class AbstractRequest implements RequestInterface
     public function __construct(Client $client)
     {
         $this->client = $client;
+        $this->validator = new Validator();
     }
 
     /**
@@ -78,13 +78,21 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function execute(array $params = []): ResponseInterface
     {
-        $this->params = $this->initParams($params);
+        $this->params = $this->validateParams($params);
         $response = $this->client->request($this->getRoute(), [
             'method' => $this->getMethod(),
             'query' => $this->getQuery(),
             'body' => $this->getBody($this->getBodyParams()),
         ]);
         return $this->getResponse($response);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        return [];
     }
 
     /**
@@ -101,5 +109,14 @@ abstract class AbstractRequest implements RequestInterface
     protected function getParams(): array
     {
         return $this->params;
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    private function validateParams(array $params): array
+    {
+        return $this->validator->validate($params, $this->getValidationRules());
     }
 }

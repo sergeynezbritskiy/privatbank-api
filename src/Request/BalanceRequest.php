@@ -2,10 +2,10 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\BalanceResponse;
 
 /**
@@ -74,15 +74,14 @@ class BalanceRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        if (empty($params['cardNumber'])) {
-            throw new InvalidArgumentException('Argument cardNumber is required');
-        }
-        return array_merge(['country' => ''], $params);
+        return [
+            ['cardNumber', Validator::TYPE_REQUIRED],
+            ['country', Validator::TYPE_DEFAULT, 'value' => '']
+        ];
     }
 
     /**

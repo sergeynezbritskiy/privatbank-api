@@ -2,10 +2,10 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
 
 /**
@@ -115,29 +115,13 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function initParams(array $params): array
+    protected function getValidationRules(): array
     {
-        if (empty($params['payment'])) {
-            throw new InvalidArgumentException('Argument payment is required');
-        }
-        if (empty($params['b_card_or_acc'])) {
-            throw new InvalidArgumentException('Argument b_card_or_acc is required');
-        }
-        if (empty($params['amt'])) {
-            throw new InvalidArgumentException('Argument amt is required');
-        }
-        if (empty($params['ccy'])) {
-            throw new InvalidArgumentException('Argument ccy is required');
-        }
-        if (empty($params['b_name'])) {
-            throw new InvalidArgumentException('Argument b_name is required');
-        }
-        if (empty($params['details'])) {
-            throw new InvalidArgumentException('Argument details is required');
-        }
-        return $params;
+        $fields = ['payment', 'b_card_or_acc', 'amt', 'ccy', 'b_name', 'details'];
+        return [
+            [$fields, Validator::TYPE_REQUIRED],
+        ];
     }
 }
