@@ -62,6 +62,11 @@ abstract class AbstractRequest implements RequestInterface
     abstract protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface;
 
     /**
+     * @return array
+     */
+    abstract protected function getValidationRules(): array;
+
+    /**
      * AbstractPublicRequest constructor.
      * @param Client $client
      */
@@ -85,14 +90,6 @@ abstract class AbstractRequest implements RequestInterface
             'body' => $this->getBody($this->getBodyParams()),
         ]);
         return $this->getResponse($response);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getValidationRules(): array
-    {
-        return [];
     }
 
     /**
