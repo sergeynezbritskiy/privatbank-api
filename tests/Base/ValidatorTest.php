@@ -2,11 +2,8 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Base;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
-use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
-use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
-use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Base\Validator;
 
 /**
@@ -31,28 +28,73 @@ class ValidatorTest extends TestCase
         $this->validator = null;
     }
 
-    public function testValidResponse()
+    public function testMissingRequiredParameter1()
     {
-        $this->assertEquals([], $this->validator->validate([], []));
+        $rules = [
+            [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
+        ];
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument requiredField1 required');
+        $this->validator->validate([], $rules);
     }
 
-    /** @noinspection PhpDocMissingThrowsInspection */
-
-    /**
-     * Call protected/private method of a class.
-     *
-     * @param string $methodName Method name to call
-     * @param array $params Array of parameters to pass into method.
-     *
-     * @return mixed Method return.
-     */
-    protected function call($methodName, array $params = [])
+    public function testMissingRequiredParameter2()
     {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $reflection = new \ReflectionClass(get_class($this->validator));
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
-        return $method->invokeArgs($this->validator, $params);
+        $rules = [
+            [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
+        ];
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument requiredField2 required');
+        $this->validator->validate(['requiredField1' => ''], $rules);
     }
 
+    public function testRequiredParametersExist()
+    {
+        $rules = [
+            [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
+        ];
+        $params = ['requiredField1' => '', 'requiredField2' => ''];
+        $this->assertEquals($params, $this->validator->validate($params, $rules));
+    }
+
+    public function testDefaultValueMissingParameter()
+    {
+        $rules = [
+            ['defaultValue', Validator::TYPE_DEFAULT, 'value' => 'someDefaultValue'],
+        ];
+        $this->assertEquals(['defaultValue' => 'someDefaultValue'], $this->validator->validate([], $rules));
+        $params = ['defaultValue' => 'someNotDefaultValue'];
+        $this->assertEquals($params, $this->validator->validate($params, $rules));
+    }
+
+    public function testCallbackFilter()
+    {
+        $message = 'Argument date must conform format d.M.Y., e.g. 01.12.2018';
+        $callback = function ($params) use ($message) {
+            $dateInput = $params['date'];
+            $date = DateTime::createFromFormat('d.m.Y', $params['date']);
+            if (($date === false) || ($date->format('d.m.Y') !== $dateInput)) {
+                throw new \InvalidArgumentException($message);
+            }
+        };
+        $rules = [
+            ['date', $callback]
+        ];
+        $params = ['date' => '20.12.2018'];
+        $this->assertEquals($params, $this->validator->validate($params, $rules));
+        $this->expectExceptionMessage($message);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->validator->validate(['date' => '20-12-2018'], $rules);
+    }
+
+    public function testUndefinedValidator()
+    {
+        $rules = [
+            ['date', 'undefinedValidator']
+        ];
+        $this->expectExceptionMessage('Unknown validator undefinedValidator');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->validator->validate(['date' => '20-12-2018'], $rules);
+    }
 }
