@@ -11,6 +11,9 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
 class PaymentUkraineRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -21,16 +24,16 @@ class PaymentUkraineRequestTest extends TestCase
 
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $payment = $this->client->paymentUkraine([
-            'payment' => '1234567',
-            'b_card_or_acc' => '29244825509100',
-            'amt' => '1.50',
-            'ccy' => 'UAH',
-            'b_name' => 'BUSINESS',
-            'b_crf' => '14360570',
-            'b_bic' => '305299',
-            'details' => 'testUrk',
-        ]);
+        $payment = $this->client->paymentUkraine(
+            '1234567',
+            '29244825509100',
+            1.50,
+            'UAH',
+            'BUSINESS',
+            '14360570',
+            '305299',
+            'testUrk'
+        );
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);

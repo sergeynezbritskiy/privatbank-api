@@ -62,11 +62,4 @@ class ClientTest extends TestCase
         $this->assertEquals(10, $this->client->setWaitTimeout(10)->getWaitTimeout());
     }
 
-    public function testNotSupportedMethod()
-    {
-        $this->expectException(\ErrorException::class);
-        $this->expectExceptionMessage('Method notSupportedMethod not supported');
-        call_user_func_array([$this->client, 'notSupportedMethod'], []);
-    }
-
 }

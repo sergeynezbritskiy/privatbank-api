@@ -12,7 +12,7 @@ use SergeyNezbritskiy\PrivatBank\Response\BalanceResponse;
  * Class BalanceRequest
  *
  * Params:
- * cardNumber - required, integer
+ * cardnum - required, integer
  * country - optional, string
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/balance
@@ -63,7 +63,7 @@ class BalanceRequest extends AbstractAuthorizedRequest
             'payment' => [
                 [
                     'name' => 'cardnum',
-                    'value' => $params['cardNumber'],
+                    'value' => $params['cardnum'],
                 ],
                 [
                     'name' => 'country',
@@ -79,7 +79,7 @@ class BalanceRequest extends AbstractAuthorizedRequest
     protected function getValidationRules(): array
     {
         return [
-            ['cardNumber', Validator::TYPE_REQUIRED],
+            ['cardnum', Validator::TYPE_REQUIRED],
             ['country', Validator::TYPE_DEFAULT, 'value' => '']
         ];
     }

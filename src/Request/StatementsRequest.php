@@ -12,9 +12,9 @@ use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
  * Class StatementsRequest
  *
  * Params:
- * cardNumber - required, integer
- * startDate - required, string, date format `d.m.Y`
- * endDate - required, string, date format `d.m.Y`
+ * card - required, integer
+ * sd- required, string, date format `d.m.Y`
+ * ed - required, string, date format `d.m.Y`
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/orders
@@ -65,15 +65,15 @@ class StatementsRequest extends AbstractAuthorizedRequest
             'payment' => [
                 [
                     'name' => 'sd',
-                    'value' => $params['startDate'],
+                    'value' => $params['sd'],
                 ],
                 [
                     'name' => 'ed',
-                    'value' => $params['endDate'],
+                    'value' => $params['ed'],
                 ],
                 [
                     'name' => 'card',
-                    'value' => $params['cardNumber'],
+                    'value' => $params['card'],
                 ]
             ]
         ]);

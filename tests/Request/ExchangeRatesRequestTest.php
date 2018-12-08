@@ -11,9 +11,12 @@ use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 class ExchangeRatesRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testExchangeRatesCash()
     {
-        $data = $this->client->exchangeRates(['coursid' => ExchangeRatesRequest::NON_CASH]);
+        $data = $this->client->exchangeRates(ExchangeRatesRequest::NON_CASH);
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);
@@ -23,9 +26,12 @@ class ExchangeRatesRequestTest extends TestCase
         }
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testExchangeRatesNonCash()
     {
-        $data = $this->client->exchangeRates(['coursid' => ExchangeRatesRequest::NON_CASH]);
+        $data = $this->client->exchangeRates(ExchangeRatesRequest::NON_CASH);
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);

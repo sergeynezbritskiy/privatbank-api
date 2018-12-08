@@ -11,6 +11,9 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
 class PaymentInternalRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -21,13 +24,7 @@ class PaymentInternalRequestTest extends TestCase
 
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $payment = $this->client->paymentInternal([
-            'payment' => '1234567',
-            'b_card_or_acc' => '4627081718568608',
-            'amt' => '1.50',
-            'ccy' => 'UAH',
-            'details' => 'test%20merch%20not%20active'
-        ]);
+        $payment = $this->client->paymentInternal('1234567', '4627081718568608', 1.50, 'UAH', 'test%20merch%20not%20active');
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);

@@ -37,9 +37,6 @@ class ExchangeRatesRequest extends AbstractPublicRequest
     public function getQuery(): array
     {
         $params = $this->getParams();
-        $params = array_merge([
-            'coursid' => self::CASH,
-        ], $params);
         return [
             'exchange' => '',
             'coursid' => $params['coursid'],
@@ -62,7 +59,7 @@ class ExchangeRatesRequest extends AbstractPublicRequest
     protected function getValidationRules(): array
     {
         return [
-            ['coursid' , Validator::TYPE_DEFAULT, 'value' => self::CASH],
+            ['coursid', Validator::TYPE_DEFAULT, 'value' => self::CASH],
         ];
     }
 }

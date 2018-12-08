@@ -11,6 +11,9 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
 class PaymentMobileRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -21,11 +24,7 @@ class PaymentMobileRequestTest extends TestCase
 
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $payment = $this->client->paymentMobile([
-            'paymentId' => '1234567',
-            'amt' => '1.50',
-            'phone' => '%2B380632285977'
-        ]);
+        $payment = $this->client->paymentMobile('1234567', '%2B380632285977', 1.50);
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);

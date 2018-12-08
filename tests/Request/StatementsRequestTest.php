@@ -11,6 +11,9 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
 class StatementsRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -23,11 +26,7 @@ class StatementsRequestTest extends TestCase
         }
         $merchantId = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchantId);
-        $statements = $this->client->statements([
-            'cardNumber' => $card,
-            'startDate' => $startDate,
-            'endDate' => $endDate,
-        ]);
+        $statements = $this->client->statements($card, $startDate, $endDate);
 
         $this->assertGreaterThan(0, count($statements));
 

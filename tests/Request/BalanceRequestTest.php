@@ -11,6 +11,9 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
 class BalanceRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -22,9 +25,7 @@ class BalanceRequestTest extends TestCase
 
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $data = $this->client->balance([
-            'cardNumber' => $cardNumber
-        ]);
+        $data = $this->client->balance($cardNumber);
         $this->assertTrue(isset($data['card']));
         $card = $data['card'];
         $this->assertArrayHasKey('account', $card);

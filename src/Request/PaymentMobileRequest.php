@@ -12,7 +12,7 @@ use SergeyNezbritskiy\PrivatBank\Response\PaymentMobileResponse;
  * Class PaymentMobileRequest
  *
  * Params:
- * payment - required, integer
+ * payment_id - required, integer
  * phone - required, string, receiver phone number
  * amt - required, float, amount
  *
@@ -64,7 +64,7 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
         $params = $this->getParams();
 
         return array_merge(parent::getBodyParams(), [
-            'id' => $params['paymentId'],
+            'id' => $params['payment_id'],
             'payment' => [
                 [
                     'name' => 'phone',
@@ -102,7 +102,7 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getValidationRules(): array
     {
         return [
-            [['paymentId', 'phone', 'amt'], Validator::TYPE_REQUIRED],
+            [['payment_id', 'phone', 'amt'], Validator::TYPE_REQUIRED],
         ];
     }
 }

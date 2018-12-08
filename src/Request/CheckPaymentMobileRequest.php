@@ -12,7 +12,7 @@ use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
  * Class CheckPaymentMobileRequest
  *
  * Params:
- * id - required, integer
+ * payment_id - required, integer
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/mobile
@@ -62,7 +62,7 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
             'payment' => [
                 [
                     'name' => 'id',
-                    'value' => $params['id'],
+                    'value' => $params['payment_id'],
                 ]
             ]
         ]);
@@ -92,7 +92,7 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     protected function getValidationRules(): array
     {
         return [
-            ['id', Validator::TYPE_REQUIRED],
+            ['payment_id', Validator::TYPE_REQUIRED],
         ];
     }
 }

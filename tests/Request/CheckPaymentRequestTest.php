@@ -11,6 +11,9 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
 class CheckPaymentRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -21,10 +24,7 @@ class CheckPaymentRequestTest extends TestCase
 
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $payment = $this->client->checkPayment([
-            'id' => '1234567',
-            'ref' => 'P24A02509023364480'
-        ]);
+        $payment = $this->client->checkPayment('1234567', 'P24A02509023364480');
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('status', $payment);

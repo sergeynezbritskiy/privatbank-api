@@ -9,10 +9,13 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 class ExchangeRatesArchiveRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testExchangeRatesCash()
     {
         $month = 60 * 60 * 24 * 30;
-        $data = $this->client->exchangeRatesArchive(['date' => date('d.m.Y', time() - $month)]);
+        $data = $this->client->exchangeRatesArchive(date('d.m.Y', time() - $month));
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('baseCurrency', $item);

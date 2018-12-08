@@ -11,13 +11,12 @@ use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
 class InfrastructureRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testAtm()
     {
-        $data = $this->client->infrastructure([
-            'city' => 'Днепропетровск',
-            'address' => 'Титова',
-            'type' => InfrastructureRequest::TYPE_ATM,
-        ]);
+        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_ATM, 'Днепропетровск', 'Титова');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);
@@ -44,13 +43,12 @@ class InfrastructureRequestTest extends TestCase
         }
     }
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testTerminals()
     {
-        $data = $this->client->infrastructure([
-            'city' => 'Днепропетровск',
-            'address' => 'Титова',
-            'type' => InfrastructureRequest::TYPE_TERMINAL,
-        ]);
+        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_TERMINAL, 'Днепропетровск', 'Титова');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);

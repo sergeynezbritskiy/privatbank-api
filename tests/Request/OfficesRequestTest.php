@@ -9,12 +9,12 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 class OfficesRequestTest extends TestCase
 {
 
+    /**
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     */
     public function testOffices()
     {
-        $data = $this->client->offices([
-            'city' => 'Днепропетровск',
-            'address' => 'Титова',
-        ]);
+        $data = $this->client->offices('Днепропетровск', 'Титова');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('country', $item);

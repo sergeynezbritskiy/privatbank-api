@@ -12,7 +12,7 @@ use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
  * Class PaymentInternalRequest
  *
  * Params:
- * payment - required, integer
+ * payment_id - required, integer
  * b_card_or_acc - required, integer, receiver card number
  * amt - required, float, amount
  * ccy - required, string, currency
@@ -68,7 +68,7 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
         $params = $this->getParams();
 
         return array_merge(parent::getBodyParams(), [
-            'id' => $params['payment'],
+            'id' => $params['payment_id'],
             'payment' => [
                 [
                     'name' => 'b_card_or_acc',
@@ -114,8 +114,7 @@ class PaymentInternalRequest extends AbstractAuthorizedRequest
     protected function getValidationRules(): array
     {
         return [
-            [['payment'], Validator::TYPE_REQUIRED],
-            [['b_card_or_acc', 'amt', 'ccy', 'details'], Validator::TYPE_DEFAULT, 'value' => ''],
+            [['payment_id', 'b_card_or_acc', 'amt', 'ccy', 'details'], Validator::TYPE_REQUIRED],
         ];
     }
 }
