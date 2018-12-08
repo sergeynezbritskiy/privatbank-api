@@ -15,12 +15,7 @@ composer require sergeynezbritskiy/privatbank-api:"^2.0.0"
 ```
 
 ## Notes
-For the full list of supported requests see phpdoc for \SergeyNezbritskiy\PrivatBank\Client class.
-
-For the full list of required/supported params to some request, see description to this request.
-
-All requests classes can be found within \SergeyNezbritskiy\PrivatBank\Request namespace.
-
+For more details please visit [https://api.privatbank.ua/]
 ## Simple usage
 Using library is as easy as possible
 ```php
