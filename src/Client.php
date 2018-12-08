@@ -22,6 +22,8 @@ use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
 /**
  * Class Client
  * @package SergeyNezbritskiy\PrivatBank
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Client extends BaseClient
 {
@@ -32,11 +34,11 @@ class Client extends BaseClient
     private $merchant;
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\BalanceRequest
      * @param string $cardNumber
      * @param string $country
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\BalanceRequest
      */
     public function balance(string $cardNumber, string $country = ''): array
     {
@@ -47,6 +49,7 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\CheckPaymentRequest
      * @param string $paymentId
      * @param string $paymentRef
      * @return array
@@ -61,17 +64,14 @@ class Client extends BaseClient
     }
 
     /**
-     *
+     * @see \SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest
      * @param string $paymentId
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest
      */
     public function checkPaymentMobile(string $paymentId): array
     {
-        return $this->call(CheckPaymentMobileRequest::class, [
-            'payment_id' => $paymentId,
-        ]);
+        return $this->call(CheckPaymentMobileRequest::class, ['payment_id' => $paymentId]);
     }
 
     /**
@@ -86,10 +86,10 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest
      * @param string $date format d.m.Y, e.g. 01.12.2017
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest
      */
     public function exchangeRatesArchive(string $date): array
     {
@@ -97,12 +97,12 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest
      * @param string $type
      * @param string $city
      * @param string $address
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest
      */
     public function infrastructure(string $type, string $city, string $address): array
     {
@@ -114,11 +114,11 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\OfficesRequest
      * @param string $city
      * @param string $address
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\OfficesRequest
      */
     public function offices(string $city = '', string $address = ''): array
     {
@@ -129,6 +129,7 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest
      * @param string $paymentId
      * @param string $receiverCardNumber
      * @param float $amount
@@ -136,10 +137,14 @@ class Client extends BaseClient
      * @param string $details
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest
      */
-    public function paymentInternal(string $paymentId, string $receiverCardNumber, float $amount, string $currency, string $details): array
-    {
+    public function paymentInternal(
+        string $paymentId,
+        string $receiverCardNumber,
+        float $amount,
+        string $currency,
+        string $details
+    ): array {
         return $this->call(PaymentInternalRequest::class, [
             'payment_id' => $paymentId,
             'b_card_or_acc' => $receiverCardNumber,
@@ -150,12 +155,12 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentMobileRequest
      * @param string $paymentId
      * @param string $phone
      * @param float $amount
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentMobileRequest
      */
     public function paymentMobile(string $paymentId, string $phone, float $amount): array
     {
@@ -167,6 +172,7 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentUkraineRequest
      * @param string $paymentId
      * @param string $receiverCardNumber
      * @param float $amount
@@ -177,10 +183,17 @@ class Client extends BaseClient
      * @param string $details
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentUkraineRequest
      */
-    public function paymentUkraine(string $paymentId, string $receiverCardNumber, float $amount, string $currency, string $receiverName, string $receiverCrf, string $receiverBic, string $details): array
-    {
+    public function paymentUkraine(
+        string $paymentId,
+        string $receiverCardNumber,
+        float $amount,
+        string $currency,
+        string $receiverName,
+        string $receiverCrf,
+        string $receiverBic,
+        string $details
+    ): array {
         return $this->call(PaymentUkraineRequest::class, [
             'payment_id' => $paymentId,
             'b_card_or_acc' => $receiverCardNumber,
@@ -194,6 +207,7 @@ class Client extends BaseClient
     }
 
     /**
+     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentVisaRequest
      * @param string $paymentId
      * @param string $receiverCardNumber
      * @param float $amount
@@ -202,10 +216,15 @@ class Client extends BaseClient
      * @param string $details
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentVisaRequest
      */
-    public function paymentVisa(string $paymentId, string $receiverCardNumber, float $amount, string $currency, string $receiverName, string $details): array
-    {
+    public function paymentVisa(
+        string $paymentId,
+        string $receiverCardNumber,
+        float $amount,
+        string $currency,
+        string $receiverName,
+        string $details
+    ): array {
         return $this->call(PaymentVisaRequest::class, [
             'payment_id' => $paymentId,
             'b_card_or_acc' => $receiverCardNumber,
@@ -217,13 +236,12 @@ class Client extends BaseClient
     }
 
     /**
-     * @method array statements(array $data)
+     * @see \SergeyNezbritskiy\PrivatBank\Request\StatementsRequest
      * @param string $cardNumber
      * @param string $startDate
      * @param string $endDate
      * @return array
      * @throws PrivatBankApiException
-     * @see \SergeyNezbritskiy\PrivatBank\Request\StatementsRequest
      */
     public function statements(string $cardNumber, string $startDate = '', string $endDate = ''): array
     {

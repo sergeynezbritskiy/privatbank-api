@@ -103,7 +103,7 @@ class StatementsRequest extends AbstractAuthorizedRequest
     protected function getValidationRules(): array
     {
         return [
-            [['cardNumber', 'startDate', 'endDate'], Validator::TYPE_REQUIRED],
+            [['card', 'sd', 'ed'], Validator::TYPE_REQUIRED],
         ];
     }
 }
