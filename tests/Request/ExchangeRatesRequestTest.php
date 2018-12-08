@@ -5,7 +5,6 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
-use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
 /**
  * Class ExchangeRatesRequestTest
@@ -15,28 +14,29 @@ class ExchangeRatesRequestTest extends TestCase
 {
 
     /**
-     * @var ExchangeRatesRequest
+     * @var Client
      */
-    private $request;
+    private $client;
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
-        $this->request = new ExchangeRatesRequest(new Client());
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
+        $this->client = new Client();
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @inheritdoc
      */
+    protected function tearDown()
+    {
+        $this->client = null;
+    }
+
     public function testExchangeRatesCash()
     {
-        $result = $this->request->execute(['coursid' => ExchangeRatesRequest::CASH]);
-        $this->assertInstanceOf(ExchangeRatesResponse::class, $result);
-        $data = $result->getData();
+        $data = $this->client->exchangeRates(['coursid' => ExchangeRatesRequest::NON_CASH]);
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);
@@ -46,14 +46,9 @@ class ExchangeRatesRequestTest extends TestCase
         }
     }
 
-    /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
-     */
     public function testExchangeRatesNonCash()
     {
-        $result = $this->request->execute(['coursid' => ExchangeRatesRequest::NON_CASH]);
-        $this->assertInstanceOf(ExchangeRatesResponse::class, $result);
-        $data = $result->getData();
+        $data = $this->client->exchangeRates(['coursid' => ExchangeRatesRequest::NON_CASH]);
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);
@@ -63,5 +58,4 @@ class ExchangeRatesRequestTest extends TestCase
             break;
         }
     }
-
 }

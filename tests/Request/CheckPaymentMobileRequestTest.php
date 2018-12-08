@@ -16,30 +16,26 @@ class CheckPaymentMobileRequestTest extends TestCase
 {
 
     /**
-     * @var CheckPaymentMobileRequest
-     */
-    private $request;
-
-    /**
      * @var Client
      */
     private $client;
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
         $this->client = new Client();
-        $this->request = new CheckPaymentMobileRequest($this->client);
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-        $this->client = null;
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @inheritdoc
      */
+    protected function tearDown()
+    {
+        $this->client = null;
+    }
+
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -49,14 +45,10 @@ class CheckPaymentMobileRequestTest extends TestCase
         }
 
         $merchant = new Merchant($merchantId, $merchantSecret);
-        $this->request->setMerchant($merchant);
-        $result = $this->request->execute([
+        $this->client->setMerchant($merchant);
+        $data = $this->client->checkPaymentMobile([
             'id' => '1234567',
         ]);
-
-        $this->assertInstanceOf(CheckPaymentMobileResponse::class, $result);
-
-        $data = $result->getData();
 
         $this->assertArrayHasKey('id', $data);
         $this->assertArrayHasKey('state', $data);

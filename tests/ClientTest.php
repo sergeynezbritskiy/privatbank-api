@@ -62,66 +62,6 @@ class ClientTest extends TestCase
         $this->assertEquals(10, $this->client->setWaitTimeout(10)->getWaitTimeout());
     }
 
-    public function testGetExchangeRates()
-    {
-        $this->assertInstanceOf(Request\ExchangeRatesRequest::class, $this->client->exchangeRates());
-    }
-
-    public function testGetExchangeRatesArchive()
-    {
-        $this->assertInstanceOf(Request\ExchangeRatesArchiveRequest::class, $this->client->exchangeRatesArchive());
-    }
-
-    public function testGetOffices()
-    {
-        $this->assertInstanceOf(Request\OfficesRequest::class, $this->client->offices());
-    }
-
-    public function testTerminals()
-    {
-        $this->assertInstanceOf(Request\InfrastructureRequest::class, $this->client->infrastructure());
-    }
-
-    public function testBalance()
-    {
-        $this->assertInstanceOf(Request\BalanceRequest::class, $this->client->balance());
-    }
-
-    public function testStatements()
-    {
-        $this->assertInstanceOf(Request\StatementsRequest::class, $this->client->statements());
-    }
-
-    public function testPaymentInternal()
-    {
-        $this->assertInstanceOf(Request\PaymentInternalRequest::class, $this->client->paymentInternal());
-    }
-
-    public function testPaymentUkraine()
-    {
-        $this->assertInstanceOf(Request\PaymentUkraineRequest::class, $this->client->paymentUkraine());
-    }
-
-    public function testPaymentVisa()
-    {
-        $this->assertInstanceOf(Request\PaymentVisaRequest::class, $this->client->paymentVisa());
-    }
-
-    public function testPaymentMobile()
-    {
-        $this->assertInstanceOf(Request\PaymentMobileRequest::class, $this->client->paymentMobile());
-    }
-
-    public function testCheckPaymentMobile()
-    {
-        $this->assertInstanceOf(Request\CheckPaymentMobileRequest::class, $this->client->checkPaymentMobile());
-    }
-
-    public function testCheckPayment()
-    {
-        $this->assertInstanceOf(Request\CheckPaymentRequest::class, $this->client->checkPayment());
-    }
-
     public function testNotSupportedMethod()
     {
         $this->expectException(\ErrorException::class);

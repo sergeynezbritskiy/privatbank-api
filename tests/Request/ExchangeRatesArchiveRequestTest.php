@@ -4,9 +4,6 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
-use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
 
 /**
  * Class ExchangeRatesArchiveRequestTest
@@ -16,29 +13,30 @@ class ExchangeRatesArchiveRequestTest extends TestCase
 {
 
     /**
-     * @var ExchangeRatesRequest
+     * @var Client
      */
-    private $request;
+    private $client;
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
-        $this->request = new ExchangeRatesArchiveRequest(new Client());
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
+        $this->client = new Client();
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @inheritdoc
      */
+    protected function tearDown()
+    {
+        $this->client = null;
+    }
+
     public function testExchangeRatesCash()
     {
         $month = 60 * 60 * 24 * 30;
-        $result = $this->request->execute(['date' => date('d.m.Y', time() - $month)]);
-        $this->assertInstanceOf(ExchangeRatesArchiveResponse::class, $result);
-        $data = $result->getData();
+        $data = $this->client->exchangeRatesArchive(['date' => date('d.m.Y', time() - $month)]);
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('baseCurrency', $item);
@@ -50,5 +48,4 @@ class ExchangeRatesArchiveRequestTest extends TestCase
             break;
         }
     }
-
 }

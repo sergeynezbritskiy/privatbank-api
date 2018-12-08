@@ -5,8 +5,6 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
-use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
-use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
 
 /**
  * Class StatementsRequestTest
@@ -16,30 +14,26 @@ class StatementsRequestTest extends TestCase
 {
 
     /**
-     * @var StatementsRequest
-     */
-    private $request;
-
-    /**
      * @var Client
      */
     private $client;
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
         $this->client = new Client();
-        $this->request = new StatementsRequest($this->client);
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-        $this->client = null;
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @inheritdoc
      */
+    protected function tearDown()
+    {
+        $this->client = null;
+    }
+
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -52,16 +46,12 @@ class StatementsRequestTest extends TestCase
         }
 
         $merchantId = new Merchant($merchantId, $merchantSecret);
-        $this->request->setMerchant($merchantId);
-        $result = $this->request->execute([
+        $this->client->setMerchant($merchantId);
+        $statements = $this->client->statements([
             'cardNumber' => $card,
             'startDate' => $startDate,
             'endDate' => $endDate,
         ]);
-
-        $this->assertInstanceOf(StatementsResponse::class, $result);
-
-        $statements = $result->getData();
 
         $this->assertGreaterThan(0, count($statements));
 

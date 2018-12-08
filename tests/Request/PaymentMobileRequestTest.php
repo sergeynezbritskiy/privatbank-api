@@ -5,8 +5,6 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
-use SergeyNezbritskiy\PrivatBank\Request\PaymentMobileRequest;
-use SergeyNezbritskiy\PrivatBank\Response\PaymentMobileResponse;
 
 /**
  * Class PaymentMobileRequestTest
@@ -16,30 +14,26 @@ class PaymentMobileRequestTest extends TestCase
 {
 
     /**
-     * @var PaymentMobileRequest
-     */
-    private $request;
-
-    /**
      * @var Client
      */
     private $client;
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
         $this->client = new Client();
-        $this->request = new PaymentMobileRequest($this->client);
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-        $this->client = null;
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @inheritdoc
      */
+    protected function tearDown()
+    {
+        $this->client = null;
+    }
+
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -49,16 +43,12 @@ class PaymentMobileRequestTest extends TestCase
         }
 
         $merchant = new Merchant($merchantId, $merchantSecret);
-        $this->request->setMerchant($merchant);
-        $result = $this->request->execute([
+        $this->client->setMerchant($merchant);
+        $payment = $this->client->paymentMobile([
             'paymentId' => '1234567',
             'amt' => '1.50',
             'phone' => '%2B380632285977'
         ]);
-
-        $this->assertInstanceOf(PaymentMobileResponse::class, $result);
-
-        $payment = $result->getData();
 
         $this->assertArrayHasKey('id', $payment);
         $this->assertArrayHasKey('state', $payment);
@@ -71,5 +61,4 @@ class PaymentMobileRequestTest extends TestCase
         $this->assertArrayHasKey('code', $payment);
 
     }
-
 }

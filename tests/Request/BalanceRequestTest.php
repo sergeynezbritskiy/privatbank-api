@@ -5,8 +5,6 @@ namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Merchant;
-use SergeyNezbritskiy\PrivatBank\Request\BalanceRequest;
-use SergeyNezbritskiy\PrivatBank\Response\BalanceResponse;
 
 /**
  * Class BalanceRequestTest
@@ -16,30 +14,26 @@ class BalanceRequestTest extends TestCase
 {
 
     /**
-     * @var BalanceRequest
-     */
-    private $request;
-
-    /**
      * @var Client
      */
     private $client;
 
+    /**
+     * @inheritdoc
+     */
     protected function setUp()
     {
         $this->client = new Client();
-        $this->request = new BalanceRequest($this->client);
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-        $this->client = null;
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @inheritdoc
      */
+    protected function tearDown()
+    {
+        $this->client = null;
+    }
+
     public function testBalance()
     {
         $merchantId = getenv('merchantId');
@@ -50,12 +44,10 @@ class BalanceRequestTest extends TestCase
         }
 
         $merchant = new Merchant($merchantId, $merchantSecret);
-        $this->request->setMerchant($merchant);
-        $result = $this->request->execute([
+        $this->client->setMerchant($merchant);
+        $data = $this->client->balance([
             'cardNumber' => $cardNumber
         ]);
-        $this->assertInstanceOf(BalanceResponse::class, $result);
-        $data = $result->getData();
         $this->assertTrue(isset($data['card']));
         $card = $data['card'];
         $this->assertArrayHasKey('account', $card);
@@ -63,5 +55,4 @@ class BalanceRequestTest extends TestCase
         $this->assertArrayHasKey('acc_name', $card);
         $this->assertArrayHasKey('currency', $card);
     }
-
 }

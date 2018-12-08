@@ -2,38 +2,52 @@
 
 namespace SergeyNezbritskiy\PrivatBank;
 
+use ErrorException;
 use GuzzleHttp\Exception\GuzzleException;
+use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Api\RequestInterface;
 use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
 use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
-use SergeyNezbritskiy\PrivatBank\Request\BalanceRequest;
-use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest;
-use SergeyNezbritskiy\PrivatBank\Request\CheckPaymentRequest;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest;
-use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
-use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
-use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
-use SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest;
-use SergeyNezbritskiy\PrivatBank\Request\PaymentMobileRequest;
-use SergeyNezbritskiy\PrivatBank\Request\PaymentUkraineRequest;
-use SergeyNezbritskiy\PrivatBank\Request\PaymentVisaRequest;
-use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
 
 /**
  * Class Client
  * @package SergeyNezbritskiy\PrivatBank
- * @method ExchangeRatesRequest exchangeRates()
- * @method ExchangeRatesArchiveRequest exchangeRatesArchive()
- * @method InfrastructureRequest infrastructure()
- * @method OfficesRequest offices()
- * @method BalanceRequest balance()
- * @method StatementsRequest statements()
- * @method PaymentInternalRequest paymentInternal()
- * @method PaymentMobileRequest paymentMobile()
- * @method PaymentUkraineRequest paymentUkraine()
- * @method PaymentVisaRequest paymentVisa()
- * @method CheckPaymentMobileRequest checkPaymentMobile()
- * @method CheckPaymentRequest checkPayment()
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest
+ * @method array exchangeRates(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesArchiveRequest
+ * @method array exchangeRatesArchive(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest
+ * @method array infrastructure(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\OfficesRequest
+ * @method array offices(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\BalanceRequest
+ * @method array balance(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\StatementsRequest
+ * @method array statements(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentInternalRequest
+ * @method array paymentInternal(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentMobileRequest
+ * @method array paymentMobile(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentUkraineRequest
+ * @method array paymentUkraine(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\PaymentVisaRequest
+ * @method array paymentVisa(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\CheckPaymentMobileRequest
+ * @method array checkPaymentMobile(array $data)
+ *
+ * @see \SergeyNezbritskiy\PrivatBank\Request\CheckPaymentRequest
+ * @method array checkPayment(array $data)
  */
 class Client
 {
@@ -52,6 +66,11 @@ class Client
      * @var int
      */
     private $waitTimeout = 0;
+
+    /**
+     * @var Merchant
+     */
+    private $merchant;
 
     /**
      * @param string $request
@@ -140,15 +159,44 @@ class Client
     /**
      * @param string $name
      * @param array $arguments
-     * @return RequestInterface
-     * @throws \ErrorException
+     * @return array
+     * @throws PrivatBankApiException
+     * @throws ErrorException
      */
-    public function __call($name, $arguments): RequestInterface
+    public function __call($name, $arguments): array
     {
         $class = '\\SergeyNezbritskiy\\PrivatBank\\Request\\' . ucfirst($name) . 'Request';
         if (class_exists($class)) {
-            return new $class($this, ...$arguments);
+            /** @var RequestInterface $request */
+            $request = new $class($this);
+            $this->ensureMerchant($request);
+            return $request->execute($arguments[0])->getData();
         }
-        throw new \ErrorException('Method ' . $name . ' not supported');
+        throw new ErrorException('Method ' . $name . ' not supported');
+    }
+
+    /**
+     * @param Merchant $merchant
+     * @return Client
+     */
+    public function setMerchant(Merchant $merchant): Client
+    {
+        $this->merchant = $merchant;
+        return $this;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return void
+     * @throws ErrorException
+     */
+    private function ensureMerchant(RequestInterface $request)
+    {
+        if ($request instanceof AuthorizedRequestInterface) {
+            if (!($this->merchant instanceof Merchant)) {
+                throw new ErrorException('Merchant is required for authorized requests');
+            }
+            $request->setMerchant($this->merchant);
+        }
     }
 }
