@@ -2,44 +2,19 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
-use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
-use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
-
 /**
  * Class OfficeRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class OfficesRequestTest extends TestCase
+class OfficesRequestTest extends TestCasePublic
 {
-
-    /**
-     * @var OfficesRequest
-     */
-    private $request;
-
-    protected function setUp()
-    {
-        $this->request = new OfficesRequest(new Client());
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-    }
 
     /**
      * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     public function testOffices()
     {
-        $result = $this->request->execute([
-            'city' => 'Днепропетровск',
-            'address' => 'Титова',
-        ]);
-        $this->assertInstanceOf(OfficesResponse::class, $result);
-        $data = $result->toArray();
+        $data = $this->client->offices('Днепропетровск', 'Титова');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('country', $item);
@@ -53,5 +28,4 @@ class OfficesRequestTest extends TestCase
             break;
         }
     }
-
 }

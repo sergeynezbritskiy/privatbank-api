@@ -2,6 +2,7 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
@@ -11,7 +12,7 @@ use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentResponse;
  * Class CheckPaymentRequest
  *
  * Params:
- * payment - required, integer
+ * id - required, integer
  * ref - required|optional, string, payment reference
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
@@ -55,25 +56,23 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'payment' => '',
-            'ref' => '',
-        ], $params);
-
-        return array_merge(parent::getBodyParams($params), [
-            'id' => $params['payment'],
-            'payment' => [[
-                'name' => 'id',
-                'value' => $params['payment'],
-            ], [
-                'name' => 'ref',
-                'value' => $params['ref'],
-            ]]
+        $params = $this->getParams();
+        return array_merge(parent::getBodyParams(), [
+            'id' => $params['id'],
+            'payment' => [
+                [
+                    'name' => 'id',
+                    'value' => $params['id'],
+                ],
+                [
+                    'name' => 'ref',
+                    'value' => $params['ref'],
+                ]
+            ]
         ]);
     }
 
@@ -88,10 +87,25 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new CheckPaymentResponse($httpResponse);
     }
 
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        $callback = function ($params) {
+            if (empty($params['id']) && empty($params['ref'])) {
+                throw new InvalidArgumentException('Either id or ref should be passed');
+            }
+        };
+        return [
+            ['id', $callback],
+        ];
+    }
 }

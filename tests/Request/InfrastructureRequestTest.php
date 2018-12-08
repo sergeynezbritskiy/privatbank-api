@@ -2,45 +2,21 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest;
-use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
 /**
  * Class InfrastructureRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class InfrastructureRequestTest extends TestCase
+class InfrastructureRequestTest extends TestCasePublic
 {
-
-    /**
-     * @var InfrastructureRequest
-     */
-    private $request;
-
-    protected function setUp()
-    {
-        $this->request = new InfrastructureRequest(new Client());
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-    }
 
     /**
      * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
-    public function testATM()
+    public function testAtm()
     {
-        $result = $this->request->execute([
-            'city' => 'Днепропетровск',
-            'address' => 'Титова',
-            'type' => InfrastructureRequest::TYPE_ATM,
-        ]);
-        $this->assertInstanceOf(InfrastructureResponse::class, $result);
-        $data = $result->toArray();
+        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_ATM, 'Днепропетровск', 'Титова');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);
@@ -72,13 +48,7 @@ class InfrastructureRequestTest extends TestCase
      */
     public function testTerminals()
     {
-        $result = $this->request->execute([
-            'city' => 'Днепропетровск',
-            'address' => 'Титова',
-            'type' => InfrastructureRequest::TYPE_TERMINAL,
-        ]);
-        $this->assertInstanceOf(InfrastructureResponse::class, $result);
-        $data = $result->toArray();
+        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_TERMINAL, 'Днепропетровск', 'Титова');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);
@@ -104,5 +74,4 @@ class InfrastructureRequestTest extends TestCase
             break;
         }
     }
-
 }

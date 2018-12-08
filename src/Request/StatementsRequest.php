@@ -5,15 +5,16 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
 
 /**
  * Class StatementsRequest
  *
  * Params:
- * cardNumber - required, integer
- * startDate - required, string, date format `d.m.Y`
- * endDate - required, string, date format `d.m.Y`
+ * card - required, integer
+ * sd- required, string, date format `d.m.Y`
+ * ed - required, string, date format `d.m.Y`
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/orders
@@ -55,28 +56,26 @@ class StatementsRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'startDate' => '',
-            'endDate' => '',
-            'cardNumber' => '',
-        ], $params);
-
-        return array_merge(parent::getBodyParams($params), [
-            'payment' => [[
-                'name' => 'sd',
-                'value' => $params['startDate'],
-            ], [
-                'name' => 'ed',
-                'value' => $params['endDate'],
-            ], [
-                'name' => 'card',
-                'value' => $params['cardNumber'],
-            ]]
+        $params = $this->getParams();
+        return array_merge(parent::getBodyParams(), [
+            'payment' => [
+                [
+                    'name' => 'sd',
+                    'value' => $params['sd'],
+                ],
+                [
+                    'name' => 'ed',
+                    'value' => $params['ed'],
+                ],
+                [
+                    'name' => 'card',
+                    'value' => $params['card'],
+                ]
+            ]
         ]);
     }
 
@@ -91,10 +90,20 @@ class StatementsRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new StatementsResponse($httpResponse);
     }
 
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        return [
+            [['card', 'sd', 'ed'], Validator::TYPE_REQUIRED],
+        ];
+    }
 }

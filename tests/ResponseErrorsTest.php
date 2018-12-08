@@ -8,10 +8,10 @@ use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\PublicClient;
 
 /**
- * Class ClientErrorsTest
+ * Class ResponseErrorsTest
  * @package SergeyNezbritskiy\PrivatBank\Tests
  */
-class ClientErrorsTest extends TestCase
+class ResponseErrorsTest extends TestCase
 {
 
     /**
@@ -41,5 +41,24 @@ class ClientErrorsTest extends TestCase
             'body' => '',
             'method' => 'GET',
         ]);
+    }
+
+    /** @noinspection PhpDocMissingThrowsInspection */
+
+    /**
+     * Call protected/private method of a class.
+     *
+     * @param string $methodName Method name to call
+     * @param array $params Array of parameters to pass into method.
+     *
+     * @return mixed Method return.
+     */
+    protected function call($methodName, array $params = [])
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $reflection = new \ReflectionClass(get_class($this->client));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+        return $method->invokeArgs($this->client, $params);
     }
 }

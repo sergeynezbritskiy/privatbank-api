@@ -4,15 +4,20 @@ os:
 language: php
 
 before_script:
-  - composer install --no-dev
+- composer install
 
-script: phpunit
+jobs:
+  include:
+  - script: ./vendor/bin/phpcs --standard="./vendor/squizlabs/php_codesniffer/src/Standards/PSR12/ruleset.xml" ./src ./tests
+  - script: ./vendor/bin/phpmd ./src text ./phpmd.xml
+  - script: ./vendor/bin/phpunit
 
 php:
-  - 7.0
-  - 7.1
-  - 7.2
-  - master
+- 7.0
+- 7.1
+- 7.2
+- 7.3
+- master
 
 matrix:
   fast_finish: true

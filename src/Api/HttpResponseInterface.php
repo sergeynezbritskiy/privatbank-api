@@ -23,5 +23,4 @@ interface HttpResponseInterface
      * @return string
      */
     public function getReasonPhrase(): string;
-
 }

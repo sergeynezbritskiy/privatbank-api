@@ -10,7 +10,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class PaymentMobileResponse extends AbstractResponse
 {
-
     /**
      * Response sample
      * ```xml
@@ -22,37 +21,28 @@ class PaymentMobileResponse extends AbstractResponse
      *      </merchant>
      *      <data>
      *          <oper>cmt</oper>
-     *          <payment id="SIVN1392995003.855" state="1" auto_id="144266960" message="" ref="" amt="0.06" ccy="UAH" comis="0.0" code="" />
+     *          <payment id="SIVN1392995003.855" state="1" auto_id="144266960"
+     *                  message="" ref="" amt="0.06" ccy="UAH" comis="0.0" code="" />
      *      </data>
      *  </response>
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
+        $xml = $this->getXmlContent();
+        /** @var \DOMElement $payment */
+        $payment = $xml->getElementsByTagName('payment')[0];
         return [
-            'payment as data.payment' => [
-                'id' => '@id',
-                'state' => '@state',
-                'auto_id' => '@auto_id',
-                'message' => '@message',
-                'ref' => '@ref',
-                'amt' => '@amt',
-                'ccy' => '@ccy',
-                'comis' => '@comis',
-                'code' => '@code',
-            ],
+            'id' => $payment->getAttribute('id'),
+            'state' => $payment->getAttribute('state'),
+            'auto_id' => $payment->getAttribute('auto_id'),
+            'message' => $payment->getAttribute('message'),
+            'ref' => $payment->getAttribute('ref'),
+            'amt' => $payment->getAttribute('amt'),
+            'ccy' => $payment->getAttribute('ccy'),
+            'comis' => $payment->getAttribute('comis'),
+            'code' => $payment->getAttribute('code'),
         ];
     }
-
-    /**
-     * TODO implement it via map
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return parent::toArray()['payment'];
-    }
-
-
 }

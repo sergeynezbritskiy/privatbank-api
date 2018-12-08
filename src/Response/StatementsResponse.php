@@ -2,13 +2,15 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 
 /**
  * Class StatementsResponse
  * @package SergeyNezbritskiy\PrivatBank\Response
  */
-class StatementsResponse extends AbstractResponse
+class StatementsResponse extends AbstractResponse implements ResponseInterface
 {
 
     /**
@@ -24,9 +26,15 @@ class StatementsResponse extends AbstractResponse
      *         <oper>cmt</oper>
      *         <info>
      *             <statements status="excellent" credit="0.0" debet="0.3"  >
-     *                 <statement card="5168742060221193" appcode="591969" trandate="2013-09-02" trantime="13:29:00" amount="0.10 UAH" cardamount="-0.10 UAH" rest="0.95 UAH" terminal="Пополнение мобильного +380139917053 через «Приват24»" description="" />
-     *                 <statement card="5168742060221193" appcode="991794" trandate="2013-09-02" trantime="08:50:00" amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.05 UAH" terminal="Пополнение мобильного +380139917035 через «Приват24»" description="" />
-     *                 <statement card="5168742060221193" appcode="801111" trandate="2013-09-02" trantime="13:17:00" amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.15 UAH" terminal="Пополнение мобильного +380139910008 через «Приват24»" description="" />
+     *                 <statement card="5168742060221193" appcode="591969" trandate="2013-09-02" trantime="13:29:00"
+     *                              amount="0.10 UAH" cardamount="-0.10 UAH" rest="0.95 UAH"
+     *                              terminal="Пополнение мобильного +380139917053 через «Приват24»" description="" />
+     *                 <statement card="5168742060221193" appcode="991794" trandate="2013-09-02" trantime="08:50:00"
+     *                              amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.05 UAH"
+     *                              terminal="Пополнение мобильного +380139917035 через «Приват24»" description="" />
+     *                 <statement card="5168742060221193" appcode="801111" trandate="2013-09-02" trantime="13:17:00"
+     *                              amount="0.10 UAH" cardamount="-0.10 UAH" rest="1.15 UAH"
+     *                              terminal="Пополнение мобильного +380139910008 через «Приват24»" description="" />
      *             </statements>
      *         </info>
      *      </data>
@@ -34,20 +42,41 @@ class StatementsResponse extends AbstractResponse
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
-        return [
-            '{list} as data.info.statements.statement[]' => [
-                'card' => '@card',
-                'appcode' => '@appcode',
-                'trandate' => '@trandate',
-                'trantime' => '@trantime',
-                'amount' => '@amount',
-                'cardamount' => '@cardamount',
-                'rest' => '@rest',
-                'terminal' => '@terminal',
-                'description' => '@description',
-            ],
-        ];
+        $xml = $this->getXmlContent();
+        $statements = $xml->getElementsByTagName('statement');
+        $result = [];
+        /** @var \DOMElement $statementXml */
+        foreach ($statements as $statementXml) {
+            $result[] = [
+                'card' => $statementXml->getAttribute('card'),
+                'appcode' => $statementXml->getAttribute('appcode'),
+                'trandate' => $statementXml->getAttribute('trandate'),
+                'trantime' => $statementXml->getAttribute('trantime'),
+                'amount' => $statementXml->getAttribute('amount'),
+                'cardamount' => $statementXml->getAttribute('cardamount'),
+                'rest' => $statementXml->getAttribute('rest'),
+                'terminal' => $statementXml->getAttribute('terminal'),
+                'description' => $statementXml->getAttribute('description'),
+            ];
+        }
+        return $result;
+    }
+
+    /**
+     * @throws PrivatBankApiException
+     */
+    protected function handleErrors()
+    {
+        parent::handleErrors();
+        $xmlContent = $this->getXmlContent();
+        /** @var \DOMNodeList $info */
+        $info = $xmlContent->getElementsByTagName('info');
+        foreach ($info as $item) {
+            if (substr($item->textContent, 0, 5) === 'error') {
+                throw new PrivatBankApiException($item->textContent, 500);
+            }
+        }
     }
 }

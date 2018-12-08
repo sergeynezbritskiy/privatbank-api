@@ -35,9 +35,9 @@ class CheckPaymentResponseTest extends TestCase
     </data>
 </response>
 XML;
-        $this->setContent($this->content);
+        $this->buildResponseMock();
 
-        $result = $this->response->toArray();
+        $result = $this->response->getData();
         $this->assertEquals([
             'id' => '1234567',
             'status' => 'ok',
@@ -45,5 +45,4 @@ XML;
             'ref' => 'P24A02509023364480',
         ], $result);
     }
-
 }

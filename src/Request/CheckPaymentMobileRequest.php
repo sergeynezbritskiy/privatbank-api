@@ -5,13 +5,14 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
 
 /**
  * Class CheckPaymentMobileRequest
  *
  * Params:
- * paymentId - required, integer
+ * payment_id - required, integer
  *
  * @package SergeyNezbritskiy\PrivatBank\Request
  * @see https://api.privatbank.ua/#p24/mobile
@@ -41,7 +42,6 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
             'wait',
             'test',
             'payment' => [
-                'attributes' => ['id'],
                 'children' => [
                     'prop[]' => [
                         'dataProvider' => 'payment',
@@ -53,22 +53,18 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'payment' => '',
-            'ref' => '',
-        ], $params);
-
-        return array_merge(parent::getBodyParams($params), [
-            'id' => $params['paymentId'],
-            'payment' => [[
-                'name' => 'id',
-                'value' => $params['paymentId'],
-            ]]
+        $params = $this->getParams();
+        return array_merge(parent::getBodyParams(), [
+            'payment' => [
+                [
+                    'name' => 'id',
+                    'value' => $params['payment_id'],
+                ]
+            ]
         ]);
     }
 
@@ -83,10 +79,20 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new CheckPaymentMobileResponse($httpResponse);
     }
 
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        return [
+            ['payment_id', Validator::TYPE_REQUIRED],
+        ];
+    }
 }

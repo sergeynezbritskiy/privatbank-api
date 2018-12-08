@@ -5,13 +5,14 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\PaymentMobileResponse;
 
 /**
  * Class PaymentMobileRequest
  *
  * Params:
- * payment - required, integer
+ * payment_id - required, integer
  * phone - required, string, receiver phone number
  * amt - required, float, amount
  *
@@ -56,26 +57,24 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'paymentId' => '',
-            'phone' => '',
-            'amt' => '',
-        ], $params);
+        $params = $this->getParams();
 
-        return array_merge(parent::getBodyParams($params), [
-            'id' => $params['paymentId'],
-            'payment' => [[
-                'name' => 'phone',
-                'value' => $params['phone'],
-            ], [
-                'name' => 'amt',
-                'value' => $params['amt'],
-            ]]
+        return array_merge(parent::getBodyParams(), [
+            'id' => $params['payment_id'],
+            'payment' => [
+                [
+                    'name' => 'phone',
+                    'value' => $params['phone'],
+                ],
+                [
+                    'name' => 'amt',
+                    'value' => $params['amt'],
+                ]
+            ]
         ]);
     }
 
@@ -90,10 +89,20 @@ class PaymentMobileRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new PaymentMobileResponse($httpResponse);
     }
 
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        return [
+            [['payment_id', 'phone', 'amt'], Validator::TYPE_REQUIRED],
+        ];
+    }
 }

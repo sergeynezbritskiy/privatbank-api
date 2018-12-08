@@ -3,6 +3,7 @@
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
+use SergeyNezbritskiy\PrivatBank\Merchant;
 use SergeyNezbritskiy\XmlIo\XmlWriter;
 
 /**
@@ -12,12 +13,32 @@ use SergeyNezbritskiy\XmlIo\XmlWriter;
 abstract class AbstractAuthorizedRequest extends AbstractRequest implements AuthorizedRequestInterface
 {
 
-    use HasMerchantTrait;
+    /**
+     * @var Merchant
+     */
+    private $merchant;
 
     /**
      * @return array
      */
     abstract protected function getBodyMap(): array;
+
+    /**
+     * @return mixed
+     */
+    private function getMerchant(): Merchant
+    {
+        return $this->merchant;
+    }
+
+    /**
+     * @param mixed $merchant
+     * @return void
+     */
+    public function setMerchant(Merchant $merchant)
+    {
+        $this->merchant = $merchant;
+    }
 
     /**
      * @return string
@@ -28,10 +49,9 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
         return [
             'oper' => 'cmt',
@@ -41,10 +61,9 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getQueryParams(array $params = []): array
+    protected function getQuery(): array
     {
         return [];
     }
@@ -59,7 +78,7 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
         $dataXml = $xmlWriter->toXml($params, $this->getBodyMap());
         $dataContent = $this->getDataInnerXmlAsString($dataXml);
         $signature = $this->getMerchant()->calculateSignature($dataContent);
-        $merchantId = $this->getMerchant()->getId();
+        $merchantId = $this->getMerchant()->getMerchantId();
 
         $body = <<<XML
 <request version="1.0"> 
@@ -74,7 +93,6 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
 XML;
 
         return $body;
-
     }
 
     /**
@@ -89,5 +107,4 @@ XML;
         }
         return $innerXml;
     }
-
 }

@@ -35,9 +35,9 @@ class PaymentResponseTest extends TestCase
     </data>
 </response>
 XML;
-        $this->setContent($this->content);
+        $this->buildResponseMock();
 
-        $result = $this->response->toArray();
+        $result = $this->response->getData();
         $this->assertEquals([
             'id' => '',
             'state' => '1',
@@ -49,5 +49,4 @@ XML;
             'cardinfo' => 'personified',
         ], $result);
     }
-
 }

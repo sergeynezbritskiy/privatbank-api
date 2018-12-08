@@ -31,13 +31,14 @@ class PaymentMobileResponseTest extends TestCase
     </merchant>
     <data>
         <oper>cmt</oper>
-        <payment id="SIVN1392995003.855" state="1" auto_id="144266960" message="test message" ref="refref" amt="0.06" ccy="UAH" comis="0.0" code="somecode" />
+        <payment id="SIVN1392995003.855" state="1" auto_id="144266960" message="test message" 
+        ref="refref" amt="0.06" ccy="UAH" comis="0.0" code="somecode" />
     </data>
 </response>
 XML;
-        $this->setContent($this->content);
+        $this->buildResponseMock();
 
-        $result = $this->response->toArray();
+        $result = $this->response->getData();
         $this->assertEquals([
             'id' => 'SIVN1392995003.855',
             'state' => '1',
@@ -50,5 +51,4 @@ XML;
             'code' => 'somecode',
         ], $result);
     }
-
 }

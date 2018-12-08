@@ -2,41 +2,21 @@
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
-use PHPUnit\Framework\TestCase;
-use SergeyNezbritskiy\PrivatBank\Client;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
-use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
 /**
  * Class ExchangeRatesRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
-class ExchangeRatesRequestTest extends TestCase
+class ExchangeRatesRequestTest extends TestCasePublic
 {
-
-    /**
-     * @var ExchangeRatesRequest
-     */
-    private $request;
-
-    protected function setUp()
-    {
-        $this->request = new ExchangeRatesRequest(new Client());
-    }
-
-    protected function tearDown()
-    {
-        $this->request = null;
-    }
 
     /**
      * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     public function testExchangeRatesCash()
     {
-        $result = $this->request->execute(['coursid' => ExchangeRatesRequest::CASH]);
-        $this->assertInstanceOf(ExchangeRatesResponse::class, $result);
-        $data = $result->toArray();
+        $data = $this->client->exchangeRates(ExchangeRatesRequest::NON_CASH);
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);
@@ -51,9 +31,7 @@ class ExchangeRatesRequestTest extends TestCase
      */
     public function testExchangeRatesNonCash()
     {
-        $result = $this->request->execute(['coursid' => ExchangeRatesRequest::NON_CASH]);
-        $this->assertInstanceOf(ExchangeRatesResponse::class, $result);
-        $data = $result->toArray();
+        $data = $this->client->exchangeRates(ExchangeRatesRequest::NON_CASH);
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('ccy', $item);
@@ -63,5 +41,4 @@ class ExchangeRatesRequestTest extends TestCase
             break;
         }
     }
-
 }

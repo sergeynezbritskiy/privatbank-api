@@ -19,11 +19,19 @@ abstract class AbstractPublicRequest extends AbstractRequest
 
     /**
      * @param array $params
+     * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    protected function getBody(array $params = []): string
+    {
+        return '';
+    }
+
+    /**
      * @return array
      */
-    protected function getBodyParams(array $params = array()): array
+    protected function getBodyParams(): array
     {
         return [];
     }
-
 }

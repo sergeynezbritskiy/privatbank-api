@@ -12,7 +12,7 @@ class Merchant
     /**
      * @var string
      */
-    private $id;
+    private $merchantId;
 
     /**
      * @var string
@@ -21,21 +21,21 @@ class Merchant
 
     /**
      * Merchant constructor.
-     * @param string $id
+     * @param string $merchantId
      * @param string $signature
      */
-    public function __construct(string $id, string $signature)
+    public function __construct(string $merchantId, string $signature)
     {
-        $this->id = $id;
+        $this->merchantId = $merchantId;
         $this->signature = $signature;
     }
 
     /**
      * @return string
      */
-    public function getId(): string
+    public function getMerchantId(): string
     {
-        return $this->id;
+        return $this->merchantId;
     }
 
     /**
@@ -46,5 +46,4 @@ class Merchant
     {
         return sha1(md5($data . $this->signature));
     }
-
 }

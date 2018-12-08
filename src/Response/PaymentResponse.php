@@ -22,36 +22,27 @@ class PaymentResponse extends AbstractResponse
      *      </merchant>
      *      <data>
      *          <oper>cmt</oper>
-     *          <payment id="" state="1" message="" ref="P24PKP" amt="1.5" ccy="UAH" comis="0.00" cardinfo="personified"/>
+     *          <payment id="" state="1" message="" ref="P24PKP"
+     *                   amt="1.5" ccy="UAH" comis="0.00" cardinfo="personified"/>
      *      </data>
      *  </response>
      * ```
      * @return array
      */
-    protected function getMap(): array
+    public function getData(): array
     {
+        $xml = $this->getXmlContent();
+        /** @var \DOMElement $payment */
+        $payment = $xml->getElementsByTagName('payment')[0];
         return [
-            'payment as data.payment' => [
-                'id' => '@id',
-                'state' => '@state',
-                'message' => '@message',
-                'ref' => '@ref',
-                'amt' => '@amt',
-                'ccy' => '@ccy',
-                'comis' => '@comis',
-                'cardinfo' => '@cardinfo',
-            ],
+            'id' => $payment->getAttribute('id'),
+            'state' => $payment->getAttribute('state'),
+            'message' => $payment->getAttribute('message'),
+            'ref' => $payment->getAttribute('ref'),
+            'amt' => $payment->getAttribute('amt'),
+            'ccy' => $payment->getAttribute('ccy'),
+            'comis' => $payment->getAttribute('comis'),
+            'cardinfo' => $payment->getAttribute('cardinfo'),
         ];
     }
-
-    /**
-     * TODO implement it via map
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return parent::toArray()['payment'];
-    }
-
-
 }

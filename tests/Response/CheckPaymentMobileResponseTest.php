@@ -35,14 +35,13 @@ class CheckPaymentMobileResponseTest extends TestCase
     </data>
 </response>
 XML;
-        $this->setContent($this->content);
+        $this->buildResponseMock();
 
-        $result = $this->response->toArray();
+        $result = $this->response->getData();
         $this->assertEquals([
             'id' => '1234567',
             'state' => 'ok',
             'message' => 'Исполнен',
         ], $result);
     }
-
 }

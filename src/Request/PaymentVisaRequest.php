@@ -5,13 +5,14 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\PaymentResponse;
 
 /**
  * Class PaymentVisaRequest
  *
  * Params:
- * payment - required, integer
+ * payment_id - required, integer
  * b_card_or_acc - required, integer, receiver card number
  * amt - required, float, amount
  * ccy - required, string, currency
@@ -62,38 +63,36 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     }
 
     /**
-     * @param array $params
      * @return array
      */
-    protected function getBodyParams(array $params = []): array
+    protected function getBodyParams(): array
     {
-        $params = array_merge([
-            'payment' => '',
-            'b_card_or_acc' => '',
-            'amt' => '',
-            'ccy' => '',
-            'b_name' => '',
-            'details' => '',
-        ], $params);
+        $params = $this->getParams();
 
-        return array_merge(parent::getBodyParams($params), [
-            'id' => $params['payment'],
-            'payment' => [[
-                'name' => 'b_card_or_acc',
-                'value' => $params['b_card_or_acc'],
-            ], [
-                'name' => 'amt',
-                'value' => $params['amt'],
-            ], [
-                'name' => 'ccy',
-                'value' => $params['ccy'],
-            ], [
-                'name' => 'b_name',
-                'value' => $params['b_name'],
-            ], [
-                'name' => 'details',
-                'value' => $params['details'],
-            ]]
+        return array_merge(parent::getBodyParams(), [
+            'id' => $params['payment_id'],
+            'payment' => [
+                [
+                    'name' => 'b_card_or_acc',
+                    'value' => $params['b_card_or_acc'],
+                ],
+                [
+                    'name' => 'amt',
+                    'value' => $params['amt'],
+                ],
+                [
+                    'name' => 'ccy',
+                    'value' => $params['ccy'],
+                ],
+                [
+                    'name' => 'b_name',
+                    'value' => $params['b_name'],
+                ],
+                [
+                    'name' => 'details',
+                    'value' => $params['details'],
+                ]
+            ]
         ]);
     }
 
@@ -108,10 +107,21 @@ class PaymentVisaRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
+     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
         return new PaymentResponse($httpResponse);
     }
 
+    /**
+     * @return array
+     */
+    protected function getValidationRules(): array
+    {
+        $fields = ['payment_id', 'b_card_or_acc', 'amt', 'ccy', 'b_name', 'details'];
+        return [
+            [$fields, Validator::TYPE_REQUIRED],
+        ];
+    }
 }

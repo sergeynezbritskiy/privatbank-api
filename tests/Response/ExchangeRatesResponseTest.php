@@ -39,9 +39,9 @@ class ExchangeRatesResponseTest extends TestCase
     </row>
 </exchangerates>
 XML;
-        $this->setContent($this->content);
+        $this->buildResponseMock();
 
-        $result = $this->response->toArray();
+        $result = $this->response->getData();
         $this->assertEquals([[
             'ccy' => 'USD',
             'base_ccy' => 'UAH',
@@ -64,5 +64,4 @@ XML;
             'sale' => 9210.054,
         ]], $result);
     }
-
 }
