@@ -14,8 +14,7 @@
         "ext-dom": "*",
         "ext-libxml": "*",
         "guzzlehttp/guzzle": "~6.0",
-        "sergeynezbritskiy/xml-io": "^5.0.0",
-        "symfony/dependency-injection": "3.4.26"
+        "sergeynezbritskiy/xml-io": "^5.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable",
