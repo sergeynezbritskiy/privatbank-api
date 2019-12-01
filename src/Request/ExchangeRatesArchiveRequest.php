@@ -1,11 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
-use DateTime;
+use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
 
@@ -42,7 +45,7 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
@@ -56,9 +59,9 @@ class ExchangeRatesArchiveRequest extends AbstractPublicRequest
     {
         $callback = function ($params) {
             $dateInput = $params['date'];
-            $date = DateTime::createFromFormat('d.m.Y', $params['date']);
+            $date = date_create_from_format('d.m.Y', $params['date']);
             if (($date === false) || ($date->format('d.m.Y') !== $dateInput)) {
-                throw new \InvalidArgumentException('Argument date must conform format d.M.Y., e.g. 01.12.2018');
+                throw new InvalidArgumentException('Argument date must conform format d.M.Y., e.g. 01.12.2018');
             }
         };
         return [

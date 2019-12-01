@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
@@ -16,7 +18,7 @@ class InfrastructureRequestTest extends TestCasePublic
      */
     public function testAtm()
     {
-        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_ATM, 'Днепропетровск', 'Титова');
+        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_ATM, 'Харьков', 'Сумская');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);
@@ -48,7 +50,7 @@ class InfrastructureRequestTest extends TestCasePublic
      */
     public function testTerminals()
     {
-        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_TERMINAL, 'Днепропетровск', 'Титова');
+        $data = $this->client->infrastructure(InfrastructureRequest::TYPE_TERMINAL, 'Харьков', 'Сумская');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('type', $item);

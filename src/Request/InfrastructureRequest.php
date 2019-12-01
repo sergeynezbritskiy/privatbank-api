@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Request;
 
@@ -22,8 +24,8 @@ use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 class InfrastructureRequest extends AbstractPublicRequest
 {
 
-    const TYPE_ATM = 'atm';
-    const TYPE_TERMINAL = 'tso';
+    public const TYPE_ATM = 'atm';
+    public const TYPE_TERMINAL = 'tso';
 
     /**
      * @return string
@@ -41,8 +43,8 @@ class InfrastructureRequest extends AbstractPublicRequest
         $params = $this->getParams();
         return [
             $params['type'] => '',
-            'city' => $params['city'],
             'address' => $params['address'],
+            'city' => $params['city'],
         ];
     }
 

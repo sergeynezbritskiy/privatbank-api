@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
+use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\GuzzleException;
 use SergeyNezbritskiy\PrivatBank\Request;
 
@@ -31,17 +34,23 @@ class Client
      */
     public function request(string $request, array $params = array()): HttpResponse
     {
-        $params = array_merge([
-            'method' => 'GET',
-            'query' => [],
-            'body' => '',
-        ], $params);
+        $params = array_merge(
+            [
+                'method' => 'GET',
+                'query' => [],
+                'body' => '',
+            ],
+            $params
+        );
 
-        $request = new Request($request, ...[
+        $request = new Request(
+            $request,
+            ...[
             $params['method'],
             $params['query'],
             $params['body'],
-        ]);
+            ]
+        );
 
         return $this->send($request);
     }
@@ -53,13 +62,17 @@ class Client
      */
     public function send(Request $request): HttpResponse
     {
-        $client = new \GuzzleHttp\Client();
+        $client = new GuzzleHttpClient();
         $uri = $this->url . $request->getRequestUri();
         try {
-            $response = $client->request($request->getMethod(), $uri, [
-                'query' => $request->getQuery(),
-                'body' => $request->getBody(),
-            ]);
+            $response = $client->request(
+                $request->getMethod(),
+                $uri,
+                [
+                    'query' => $request->getQuery(),
+                    'body' => $request->getBody(),
+                ]
+            );
             $result = new HttpResponse(
                 $response->getBody()->getContents(),
                 $response->getStatusCode(),

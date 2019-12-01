@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Base;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
@@ -20,16 +23,15 @@ class AbstractResponseTest extends TestCase
      */
     private $response;
 
-    protected function setUp()
-    {
-    }
-
-    protected function tearDown()
+    /**
+     * @inheritDoc
+     */
+    protected function tearDown(): void
     {
         $this->response = null;
     }
 
-    public function testNotOkResponseCode()
+    public function testNotOkResponseCode(): void
     {
         $this->expectExceptionCode(201);
         $this->expectExceptionMessage('OK');
@@ -39,7 +41,7 @@ class AbstractResponseTest extends TestCase
         $this->call('handleErrors');
     }
 
-    public function testInvalidResponse()
+    public function testInvalidResponse(): void
     {
         $this->expectExceptionMessage('error message');
         $this->expectException(PrivatBankApiException::class);
@@ -49,7 +51,7 @@ class AbstractResponseTest extends TestCase
         $this->call('handleErrors');
     }
 
-    public function testErrorFromAuthorizedMethods()
+    public function testErrorFromAuthorizedMethods(): void
     {
         $content = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -81,7 +83,8 @@ XML;
     protected function call($methodName, array $params = [])
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        $reflection = new \ReflectionClass(get_class($this->response));
+        $reflection = new ReflectionClass(get_class($this->response));
+        /** @noinspection PhpUnhandledExceptionInspection */
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
         return $method->invokeArgs($this->response, $params);

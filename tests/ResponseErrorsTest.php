@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests;
 
@@ -19,12 +21,12 @@ class ResponseErrorsTest extends TestCase
      */
     private $client;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->client = new PublicClient();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->client = null;
     }

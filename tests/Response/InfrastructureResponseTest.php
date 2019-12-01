@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Response;
 
@@ -24,9 +26,9 @@ class InfrastructureResponseTest extends TestCase
     {
         $this->content = <<<XML
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<atm city="Днепропетровск" address="">
-    <device type="ATM" cityRU="Днепропетровск" cityUA="Днiпропетровськ" cityEN="Dnipropetrovsk" 
-        fullAddressRu="Украина,область Днепропетровская,город Днепропетровск,улица Малиновского,дом 34б"
+<atm city="Днепр" address="">
+    <device type="ATM" cityRU="Днепр" cityUA="Днiпропетровськ" cityEN="Dnipropetrovsk" 
+        fullAddressRu="Украина,область Днепропетровская,город Днепр,улица Малиновского,дом 34б"
         fullAddressUa="Украiна,область Днiпропетровська,мiсто Днiпропетровськ,вулиця Миру,будинок 34б" 
         fullAddressEn="Ukraine,area Dnipropetrovska,city Dnipropetrovsk,building 34b"
         placeRu="Магазин &quot;Мясо&quot;" 
@@ -50,10 +52,10 @@ XML;
         $this->assertEquals([
             [
                 'type' => 'ATM',
-                'cityRU' => 'Днепропетровск',
+                'cityRU' => 'Днепр',
                 'cityUA' => 'Днiпропетровськ',
                 'cityEN' => 'Dnipropetrovsk',
-                'fullAddressRu' => 'Украина,область Днепропетровская,город Днепропетровск,улица Малиновского,дом 34б',
+                'fullAddressRu' => 'Украина,область Днепропетровская,город Днепр,улица Малиновского,дом 34б',
                 'fullAddressUa' => 'Украiна,область Днiпропетровська,мiсто Днiпропетровськ,вулиця Миру,будинок 34б',
                 'fullAddressEn' => 'Ukraine,area Dnipropetrovska,city Dnipropetrovsk,building 34b',
                 'placeRu' => 'Магазин "Мясо"',
