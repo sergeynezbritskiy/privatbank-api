@@ -1,7 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use DOMDocument;
+use DOMElement;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
@@ -27,11 +31,11 @@ class ExchangeRatesArchiveResponse extends AbstractResponse implements ResponseI
     public function getData(): array
     {
         $content = $this->getContent();
-        $xml = new \DOMDocument();
+        $xml = new DOMDocument();
         $xml->loadXML($content);
         $exchangeRates = $xml->getElementsByTagName('exchangerate');
         $result = [];
-        /** @var \DOMElement $rateXml */
+        /** @var DOMElement $rateXml */
         foreach ($exchangeRates as $rateXml) {
             $result[] = [
                 'baseCurrency' => $rateXml->getAttribute('baseCurrency'),

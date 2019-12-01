@@ -1,7 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use DOMDocument;
+use DOMElement;
+use DOMNodeList;
+use DOMText;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
@@ -51,28 +57,26 @@ class BalanceResponse extends AbstractResponse
     public function getData(): array
     {
         $content = $this->getContent();
-        $xml = new \DOMDocument();
+        $xml = new DOMDocument();
         $xml->loadXML($content);
-        /** @var \DOMElement $cardBalanceXml */
+        /** @var DOMElement $cardBalanceXml */
         $cardBalanceXml = $xml->getElementsByTagName('cardbalance')[0];
         $cardBalanceNodes = $cardBalanceXml->childNodes;
         return $this->xmlNodeToArray($cardBalanceNodes);
     }
 
     /**
-     * @param \DOMNodeList $cardBalanceNodes
+     * @param DOMNodeList $cardBalanceNodes
      * @return array
-     * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    private function xmlNodeToArray(\DOMNodeList $cardBalanceNodes): array
+    private function xmlNodeToArray(DOMNodeList $cardBalanceNodes): array
     {
         $result = [];
-        /** @var \DOMElement $cardBalanceNode */
+        /** @var DOMElement $cardBalanceNode */
         foreach ($cardBalanceNodes as $cardBalanceNode) {
-            if ($cardBalanceNode instanceof \DOMText) {
-            } elseif ($cardBalanceNode->tagName === 'card') {
+            if ($cardBalanceNode->tagName === 'card') {
                 $result[$cardBalanceNode->tagName] = $this->xmlNodeToArray($cardBalanceNode->childNodes);
-            } else {
+            } elseif (!($cardBalanceNode instanceof DOMText)) {
                 $result[$cardBalanceNode->tagName] = $cardBalanceNode->textContent;
             }
         }

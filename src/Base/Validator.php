@@ -1,6 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
+
+use InvalidArgumentException;
 
 /**
  * Class Validator
@@ -9,8 +13,8 @@ namespace SergeyNezbritskiy\PrivatBank\Base;
 class Validator
 {
 
-    const TYPE_REQUIRED = 'required';
-    const TYPE_DEFAULT = 'default';
+    public const TYPE_REQUIRED = 'required';
+    public const TYPE_DEFAULT = 'default';
 
     /**
      * @param array $params
@@ -41,7 +45,7 @@ class Validator
             case self::TYPE_REQUIRED:
                 foreach ($fields as $field) {
                     if (!array_key_exists($field, $params)) {
-                        throw new \InvalidArgumentException("Argument $field required");
+                        throw new InvalidArgumentException("Argument $field required");
                     }
                 }
                 break;
@@ -58,7 +62,7 @@ class Validator
                 }
                 break;
             default:
-                throw new \InvalidArgumentException("Unknown validator $rule");
+                throw new InvalidArgumentException("Unknown validator $rule");
         }
     }
 }

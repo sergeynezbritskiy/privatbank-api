@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Base;
 
 use DateTime;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\Base\Validator;
 
@@ -18,12 +21,18 @@ class ValidatorTest extends TestCase
      */
     private $validator;
 
-    protected function setUp()
+    /**
+     * @inheritDoc
+     */
+    protected function setUp(): void
     {
         $this->validator = new Validator();
     }
 
-    protected function tearDown()
+    /**
+     * @inheritDoc
+     */
+    protected function tearDown(): void
     {
         $this->validator = null;
     }
@@ -34,7 +43,7 @@ class ValidatorTest extends TestCase
             [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
         ];
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument requiredField1 required');
         $this->validator->validate([], $rules);
     }
@@ -44,7 +53,7 @@ class ValidatorTest extends TestCase
         $rules = [
             [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
         ];
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument requiredField2 required');
         $this->validator->validate(['requiredField1' => ''], $rules);
     }
@@ -75,7 +84,7 @@ class ValidatorTest extends TestCase
             $dateInput = $params['date'];
             $date = DateTime::createFromFormat('d.m.Y', $params['date']);
             if (($date === false) || ($date->format('d.m.Y') !== $dateInput)) {
-                throw new \InvalidArgumentException($message);
+                throw new InvalidArgumentException($message);
             }
         };
         $rules = [
@@ -84,7 +93,7 @@ class ValidatorTest extends TestCase
         $params = ['date' => '20.12.2018'];
         $this->assertEquals($params, $this->validator->validate($params, $rules));
         $this->expectExceptionMessage($message);
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->validator->validate(['date' => '20-12-2018'], $rules);
     }
 
@@ -94,7 +103,7 @@ class ValidatorTest extends TestCase
             ['date', 'undefinedValidator']
         ];
         $this->expectExceptionMessage('Unknown validator undefinedValidator');
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->validator->validate(['date' => '20-12-2018'], $rules);
     }
 }

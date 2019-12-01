@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Response;
 
@@ -60,7 +62,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->response = $this->getMockForAbstractClass($class, ['httpResponse' => $httpResponse]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->response = null;
         $this->content = array();
