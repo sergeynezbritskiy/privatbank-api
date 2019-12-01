@@ -3,3 +3,4 @@ composer.phar
 /build/
 .idea
 phpunit.xml
+.phpunit.result.cache
