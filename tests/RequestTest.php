@@ -18,7 +18,7 @@ class RequestTest extends TestCase
         $request = new Request($uri);
         $this->assertEquals($uri, $request->getRequestUri());
         $this->assertEquals('GET', $request->getMethod());
-        $this->assertEquals([], $request->getQuery());
+        $this->assertEquals('', $request->getQuery());
         $this->assertEquals('', $request->getBody());
     }
 
@@ -35,7 +35,7 @@ class RequestTest extends TestCase
         $request = (new Request($uri))->setMethod($method)->setQuery($query)->setBody($body);
         $this->assertEquals($uri, $request->getRequestUri());
         $this->assertEquals($method, $request->getMethod());
-        $this->assertEquals($query, $request->getQuery());
+        $this->assertEquals('foo=bar&baz=foo', $request->getQuery());
         $this->assertEquals($body, $request->getBody());
     }
 }
