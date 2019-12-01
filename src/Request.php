@@ -71,11 +71,15 @@ class Request
     }
 
     /**
-     * @return string[]
+     * @return string
      */
-    public function getQuery(): array
+    public function getQuery(): string
     {
-        return $this->query;
+        $pieces = [];
+        foreach ($this->query as $key => $value) {
+            $pieces[] = $value === '' ? $key : $key . '=' . $value;
+        }
+        return implode('&', $pieces);
     }
 
     /**

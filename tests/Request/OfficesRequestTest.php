@@ -14,7 +14,7 @@ class OfficesRequestTest extends TestCasePublic
      */
     public function testOffices()
     {
-        $data = $this->client->offices('Днепропетровск', 'Титова');
+        $data = $this->client->offices('Днепр', 'Титова');
         $this->assertGreaterThan(0, count($data));
         foreach ($data as $item) {
             $this->assertArrayHasKey('country', $item);

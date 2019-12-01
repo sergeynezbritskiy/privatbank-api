@@ -22,7 +22,7 @@ Using library is as easy as possible
 //create public client for connecting with API
 $client = new \SergeyNezbritskiy\PrivatBank\PublicClient();
 //run the request
-$result = $request->infrastructure(\SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest::TYPE_ATM, 'Днепропетровск');
+$result = $request->infrastructure(\SergeyNezbritskiy\PrivatBank\Request\InfrastructureRequest::TYPE_ATM, 'Днепр');
 
 //create authorized client for connecting with API
 $client = new \SergeyNezbritskiy\PrivatBank\AuthorizedClient();

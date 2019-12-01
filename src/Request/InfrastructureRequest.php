@@ -41,8 +41,8 @@ class InfrastructureRequest extends AbstractPublicRequest
         $params = $this->getParams();
         return [
             $params['type'] => '',
-            'city' => $params['city'],
             'address' => $params['address'],
+            'city' => $params['city'],
         ];
     }
 
