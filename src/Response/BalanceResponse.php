@@ -68,16 +68,21 @@ class BalanceResponse extends AbstractResponse
     /**
      * @param DOMNodeList $cardBalanceNodes
      * @return array
+     * @SuppressWarninds(PHPMD.ElseExpression)
      */
     private function xmlNodeToArray(DOMNodeList $cardBalanceNodes): array
     {
         $result = [];
         /** @var DOMElement $cardBalanceNode */
         foreach ($cardBalanceNodes as $cardBalanceNode) {
-            if ($cardBalanceNode->tagName === 'card') {
-                $result[$cardBalanceNode->tagName] = $this->xmlNodeToArray($cardBalanceNode->childNodes);
-            } elseif (!($cardBalanceNode instanceof DOMText)) {
-                $result[$cardBalanceNode->tagName] = $cardBalanceNode->textContent;
+            if ($cardBalanceNode instanceof DOMText) {
+                continue;
+            }
+            $key = $cardBalanceNode->tagName;
+            if ($key === 'card') {
+                $result[$key] = $this->xmlNodeToArray($cardBalanceNode->childNodes);
+            } else {
+                $result[$key] = $cardBalanceNode->textContent;
             }
         }
         return $result;

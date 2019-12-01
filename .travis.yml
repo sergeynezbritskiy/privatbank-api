@@ -8,9 +8,9 @@ before_script:
 
 jobs:
   include:
-  - script: ./vendor/bin/phpcs --standard="./vendor/squizlabs/php_codesniffer/src/Standards/PSR12/ruleset.xml" ./src ./tests
-  - script: ./vendor/bin/phpmd ./src text ./phpmd.xml
-  - script: ./vendor/bin/phpunit
+  - script: vendor/bin/phpcs --standard=PSR12 src tests
+  - script: vendor/bin/phpmd src text phpmd.xml
+  - script: vendor/bin/phpunit
 
 php:
 - 7.0
