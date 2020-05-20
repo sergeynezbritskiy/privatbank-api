@@ -21,13 +21,13 @@ class PublicClient extends BaseClient
 
     /**
      * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest
-     * @param int $course
+     * @param int $coursid
      * @return array
      * @throws PrivatBankApiException
      */
-    public function exchangeRates(int $course = ExchangeRatesRequest::CASH): array
+    public function exchangeRates(int $coursid = ExchangeRatesRequest::CASH): array
     {
-        return $this->call(ExchangeRatesRequest::class, ['course' => $course]);
+        return $this->call(ExchangeRatesRequest::class, ['coursid' => $coursid]);
     }
 
     /**
