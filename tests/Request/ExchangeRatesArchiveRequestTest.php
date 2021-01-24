@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
+use InvalidArgumentException;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
+
 /**
  * Class ExchangeRatesArchiveRequestTest
  * @package SergeyNezbritskiy\PrivatBank\tests\Request
  */
 class ExchangeRatesArchiveRequestTest extends TestCasePublic
 {
-
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testExchangeRatesCash()
+    public function testExchangeRatesCash(): void
     {
         $month = 60 * 60 * 24 * 30;
         $data = $this->client->exchangeRatesArchive(date('d.m.Y', time() - $month));
@@ -31,11 +34,12 @@ class ExchangeRatesArchiveRequestTest extends TestCasePublic
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testExchangeRatesInvalidDateFormat()
+    public function testExchangeRatesInvalidDateFormat(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument date must conform format d.M.Y., e.g. 01.12.2018');
         $this->client->exchangeRatesArchive(date('d-m-Y'));
     }

@@ -12,7 +12,6 @@ use SergeyNezbritskiy\PrivatBank\Response\PaymentMobileResponse;
  */
 class PaymentMobileResponseTest extends TestCase
 {
-
     /**
      * @return string
      */
@@ -22,7 +21,11 @@ class PaymentMobileResponseTest extends TestCase
     }
 
     //tests
-    public function testSuccessfulResponse()
+
+    /**
+     * @return void
+     */
+    public function testSuccessfulResponse(): void
     {
         $this->content = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>

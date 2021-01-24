@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Base;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractRequest;
@@ -17,20 +18,14 @@ use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
  */
 class AbstractResponseTest extends TestCase
 {
-
     /**
-     * @var AbstractRequest
+     * @var AbstractRequest|MockObject
      */
     private $response;
 
     /**
-     * @inheritDoc
+     * @return void
      */
-    protected function tearDown(): void
-    {
-        $this->response = null;
-    }
-
     public function testNotOkResponseCode(): void
     {
         $this->expectExceptionCode(201);
@@ -41,6 +36,9 @@ class AbstractResponseTest extends TestCase
         $this->call('handleErrors');
     }
 
+    /**
+     * @return void
+     */
     public function testInvalidResponse(): void
     {
         $this->expectExceptionMessage('error message');
@@ -51,6 +49,9 @@ class AbstractResponseTest extends TestCase
         $this->call('handleErrors');
     }
 
+    /**
+     * @return void
+     */
     public function testErrorFromAuthorizedMethods(): void
     {
         $content = <<<XML
@@ -80,13 +81,14 @@ XML;
      *
      * @return mixed Method return.
      */
-    protected function call($methodName, array $params = [])
+    protected function call(string $methodName, array $params = [])
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $reflection = new ReflectionClass(get_class($this->response));
         /** @noinspection PhpUnhandledExceptionInspection */
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
+        /** @noinspection PhpUnhandledExceptionInspection */
         return $method->invokeArgs($this->response, $params);
     }
 }

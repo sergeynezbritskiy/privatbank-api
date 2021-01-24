@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use DOMElement;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
@@ -12,7 +13,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class OfficesResponse extends AbstractResponse
 {
-
     /**
      * Response Sample
      * ```xml
@@ -31,10 +31,9 @@ class OfficesResponse extends AbstractResponse
     public function getData(): array
     {
         $xml = $this->getXmlContent();
-        /** @var \DOMNodeList $offices */
         $offices = $xml->getElementsByTagName('pboffice');
         $result = [];
-        /** @var \DOMElement $office */
+        /** @var DOMElement $office */
         foreach ($offices as $office) {
             if ($office->getNodePath() === '/pboffice') {
                 continue;

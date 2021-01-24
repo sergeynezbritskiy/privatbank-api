@@ -12,7 +12,6 @@ use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
  */
 class InfrastructureResponseTest extends TestCase
 {
-
     /**
      * @return string
      */
@@ -22,7 +21,11 @@ class InfrastructureResponseTest extends TestCase
     }
 
     //tests
-    public function testSuccessfulResponse()
+
+    /**
+     * @return void
+     */
+    public function testSuccessfulResponse(): void
     {
         $this->content = <<<XML
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>

@@ -7,20 +7,15 @@ before_script:
 - composer update
 
 jobs:
+  fast_finish: true
   include:
   - script: vendor/bin/phpcs --standard=PSR12 src tests
   - script: vendor/bin/phpmd src text phpmd.xml
   - script: vendor/bin/phpunit
 
 php:
-- 7.1
-- 7.2
-- 7.3
 - 7.4
 - 8.0
-
-matrix:
-  fast_finish: true
 
 notifications:
   email: true

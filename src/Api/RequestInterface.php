@@ -12,11 +12,10 @@ use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
  */
 interface RequestInterface
 {
-
     /**
      * @param array $params
      * @return ResponseInterface
      * @throws PrivatBankApiException
      */
-    public function execute(array $params = array()): ResponseInterface;
+    public function execute(array $params = []): ResponseInterface;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
+use DOMDocument;
 use SergeyNezbritskiy\PrivatBank\Api\AuthorizedRequestInterface;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 use SergeyNezbritskiy\XmlIo\XmlWriter;
@@ -14,11 +15,10 @@ use SergeyNezbritskiy\XmlIo\XmlWriter;
  */
 abstract class AbstractAuthorizedRequest extends AbstractRequest implements AuthorizedRequestInterface
 {
-
     /**
      * @var Merchant
      */
-    private $merchant;
+    private Merchant $merchant;
 
     /**
      * @return array
@@ -26,7 +26,7 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     abstract protected function getBodyMap(): array;
 
     /**
-     * @return mixed
+     * @return Merchant
      */
     private function getMerchant(): Merchant
     {
@@ -37,7 +37,7 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
      * @param mixed $merchant
      * @return void
      */
-    public function setMerchant(Merchant $merchant)
+    public function setMerchant(Merchant $merchant): void
     {
         $this->merchant = $merchant;
     }
@@ -82,7 +82,7 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
         $signature = $this->getMerchant()->calculateSignature($dataContent);
         $merchantId = $this->getMerchant()->getMerchantId();
 
-        $body = <<<XML
+        return <<<XML
 <request version="1.0"> 
     <merchant>
         <id>$merchantId</id>
@@ -93,15 +93,13 @@ abstract class AbstractAuthorizedRequest extends AbstractRequest implements Auth
     </data>
 </request>
 XML;
-
-        return $body;
     }
 
     /**
-     * @param \DOMDocument $xml
+     * @param DOMDocument $xml
      * @return string
      */
-    private function getDataInnerXmlAsString($xml)
+    private function getDataInnerXmlAsString(DOMDocument $xml): string
     {
         $innerXml = '';
         foreach ($xml->childNodes as $node) {

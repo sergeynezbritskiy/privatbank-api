@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
 use DOMDocument;
+use DOMElement;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 
@@ -17,17 +18,17 @@ abstract class AbstractResponse implements ResponseInterface
     /**
      * @var HttpResponseInterface
      */
-    protected $httpResponse;
+    protected HttpResponseInterface $httpResponse;
 
     /**
      * @var string
      */
-    protected $content;
+    protected string $content;
 
     /**
      * @var DOMDocument
      */
-    protected $xmlContent;
+    protected DOMDocument $xmlContent;
 
     /**
      * AbstractResponse constructor.
@@ -45,16 +46,15 @@ abstract class AbstractResponse implements ResponseInterface
      * @return void
      * @throws PrivatBankApiException
      */
-    protected function handleErrors()
+    protected function handleErrors(): void
     {
         $response = $this->httpResponse;
         if ($response->getStatusCode() !== 200) {
             throw new PrivatBankApiException($response->getReasonPhrase(), $response->getStatusCode());
         }
         $xml = $this->getXmlContent();
-        /** @var \DOMNodeList $errors */
         $errors = $xml->getElementsByTagName('error');
-        /** @var \DOMElement $error */
+        /** @var DOMElement $error */
         foreach ($errors as $error) {
             $message = $error->textContent ?: $error->getAttributeNode('message')->textContent;
             throw new PrivatBankApiException($message, 500);

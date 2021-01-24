@@ -10,7 +10,6 @@ namespace SergeyNezbritskiy\PrivatBank\Api;
  */
 interface ResponseInterface
 {
-
     /**
      * @return array
      */

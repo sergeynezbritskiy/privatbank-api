@@ -16,7 +16,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class BalanceResponse extends AbstractResponse
 {
-
     /**
      * Response sample
      * ```xml
@@ -68,7 +67,7 @@ class BalanceResponse extends AbstractResponse
     /**
      * @param DOMNodeList $cardBalanceNodes
      * @return array
-     * @SuppressWarninds(PHPMD.ElseExpression)
+     * @SuppressWarnings(PHPMD.ElseExpression)
      * @noinspection PhpSingleStatementWithBracesInspection
      */
     private function xmlNodeToArray(DOMNodeList $cardBalanceNodes): array

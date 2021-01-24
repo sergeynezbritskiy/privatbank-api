@@ -7,6 +7,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
 
@@ -23,7 +24,6 @@ use SergeyNezbritskiy\PrivatBank\Response\InfrastructureResponse;
  */
 class InfrastructureRequest extends AbstractPublicRequest
 {
-
     public const TYPE_ATM = 'atm';
     public const TYPE_TERMINAL = 'tso';
 
@@ -51,7 +51,7 @@ class InfrastructureRequest extends AbstractPublicRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

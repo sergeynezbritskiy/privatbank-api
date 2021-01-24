@@ -15,11 +15,10 @@ use SergeyNezbritskiy\PrivatBank\Request;
  */
 class ClientTest extends TestCase
 {
-
     /**
      * @var Client
      */
-    private $client;
+    private Client $client;
 
     /**
      * @inheritDoc
@@ -27,14 +26,6 @@ class ClientTest extends TestCase
     protected function setUp(): void
     {
         $this->client = new Client();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function tearDown(): void
-    {
-        $this->client = null;
     }
 
     /**
@@ -49,23 +40,30 @@ class ClientTest extends TestCase
     }
 
     /**
+     * @return void
      * @throws PrivatBankApiException
      */
-    public function testSend()
+    public function testSend(): void
     {
         $request = new Request('pubinfo', 'GET', ['exchange' => '', 'coursid' => 11]);
         $response = $this->client->send($request);
         $this->assertInstanceOf(HttpResponseInterface::class, $response);
     }
 
-    public function testMode()
+    /**
+     * @return void
+     */
+    public function testMode(): void
     {
         $this->assertTrue($this->client->isTestMode());
         $this->assertFalse($this->client->setTestMode(false)->isTestMode());
         $this->assertTrue($this->client->setTestMode(true)->isTestMode());
     }
 
-    public function testTimeout()
+    /**
+     * @return void
+     */
+    public function testTimeout(): void
     {
         $this->assertEquals(0, $this->client->getWaitTimeout());
         $this->assertEquals(10, $this->client->setWaitTimeout(10)->getWaitTimeout());

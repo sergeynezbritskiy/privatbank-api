@@ -10,33 +10,32 @@ namespace SergeyNezbritskiy\PrivatBank;
  */
 class Request
 {
+    /**
+     * @var string
+     */
+    protected string $requestUri;
 
     /**
      * @var string
      */
-    protected $requestUri;
-
-    /**
-     * @var string
-     */
-    protected $method;
+    protected string $method;
 
     /**
      * @var string[]
      */
-    protected $query;
+    protected array $query;
 
     /**
      * @var string
      */
-    protected $body;
+    protected string $body;
 
     /**
      * Request constructor.
      * @param string $requestUri
-     * @param string|null $method
-     * @param array|null $query
-     * @param string|null $body
+     * @param string $method
+     * @param array $query
+     * @param string $body
      */
     public function __construct(string $requestUri, string $method = 'GET', array $query = [], string $body = '')
     {

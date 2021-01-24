@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use DOMElement;
+use DOMText;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
@@ -12,7 +14,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class InfrastructureResponse extends AbstractResponse
 {
-
     /**
      * Response Sample
      * ```xml
@@ -42,18 +43,17 @@ class InfrastructureResponse extends AbstractResponse
     public function getData(): array
     {
         $xml = $this->getXmlContent();
-        /** @var \DOMNodeList $devices */
         $devices = $xml->getElementsByTagName('device');
         $result = [];
-        /** @var \DOMElement $deviceXml */
+        /** @var DOMElement $deviceXml */
         foreach ($devices as $deviceXml) {
-            /** @var \DOMElement $workingTimeXml */
+            /** @var DOMElement $workingTimeXml */
             $workingTimeXml = $deviceXml->getElementsByTagName('tw')[0];
             $children = $workingTimeXml->childNodes;
             $workingTime = [];
-            /** @var \DOMElement $dayOfWeek */
+            /** @var DOMElement $dayOfWeek */
             foreach ($children as $dayOfWeek) {
-                if ($dayOfWeek instanceof \DOMText) {
+                if ($dayOfWeek instanceof DOMText) {
                     continue;
                 }
                 $workingTime[$dayOfWeek->tagName] = $dayOfWeek->textContent;

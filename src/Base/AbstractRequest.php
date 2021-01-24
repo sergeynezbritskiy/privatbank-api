@@ -14,16 +14,15 @@ use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
  */
 abstract class AbstractRequest implements RequestInterface
 {
-
     /**
      * @var Client
      */
-    private $client;
+    private Client $client;
 
     /**
      * @var array
      */
-    private $params;
+    private array $params;
 
     /**
      * @return string

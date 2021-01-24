@@ -18,7 +18,6 @@ use SergeyNezbritskiy\PrivatBank\Request\OfficesRequest;
  */
 class PublicClient extends BaseClient
 {
-
     /**
      * @see \SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest
      * @param int $course

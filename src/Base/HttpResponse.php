@@ -12,21 +12,20 @@ use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
  */
 class HttpResponse implements HttpResponseInterface
 {
-
     /**
      * @var string
      */
-    private $content;
+    private string $content;
 
     /**
      * @var int
      */
-    private $code;
+    private int $code;
 
     /**
      * @var string
      */
-    private $phrase;
+    private string $phrase;
 
     /**
      * HttpResponse constructor.

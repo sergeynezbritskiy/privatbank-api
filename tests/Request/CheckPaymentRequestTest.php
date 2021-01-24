@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
+use InvalidArgumentException;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 
 /**
@@ -12,11 +14,10 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  */
 class CheckPaymentRequestTest extends TestCaseAuthorized
 {
-
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
-    public function testCheckPaymentValid()
+    public function testCheckPaymentValid(): void
     {
         $merchantId = getenv('merchantId');
         $merchantSecret = getenv('merchantSecret');
@@ -35,9 +36,9 @@ class CheckPaymentRequestTest extends TestCaseAuthorized
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
-    public function testCheckPaymentInvalid()
+    public function testCheckPaymentInvalid(): void
     {
         $merchantId = getenv('merchantId');
         $merchantSecret = getenv('merchantSecret');
@@ -46,7 +47,7 @@ class CheckPaymentRequestTest extends TestCaseAuthorized
         }
         $merchant = new Merchant($merchantId, $merchantSecret);
         $this->client->setMerchant($merchant);
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Either id or ref should be passed');
         $this->client->checkPayment();
     }

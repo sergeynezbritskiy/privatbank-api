@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentResponse;
 
 /**
@@ -22,7 +23,6 @@ use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentResponse;
  */
 class CheckPaymentRequest extends AbstractAuthorizedRequest
 {
-
     /**
      * Body sample
      * ```xml
@@ -89,7 +89,7 @@ class CheckPaymentRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {
