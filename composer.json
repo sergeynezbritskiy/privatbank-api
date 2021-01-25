@@ -14,7 +14,7 @@
         "ext-dom": "*",
         "ext-libxml": "*",
         "guzzlehttp/guzzle": "~6.0",
-        "sergeynezbritskiy/xml-io": "^5.0.0"
+        "sergeynezbritskiy/xml-io": "^5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable",

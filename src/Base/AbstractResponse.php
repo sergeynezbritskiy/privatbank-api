@@ -26,9 +26,9 @@ abstract class AbstractResponse implements ResponseInterface
     protected string $content;
 
     /**
-     * @var DOMDocument
+     * @var DOMDocument|null
      */
-    protected DOMDocument $xmlContent;
+    protected ?DOMDocument $xmlContent;
 
     /**
      * AbstractResponse constructor.
