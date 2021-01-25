@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use DOMElement;
+use DOMNodeList;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
@@ -36,10 +38,10 @@ class ExchangeRatesResponse extends AbstractResponse
     public function getData(): array
     {
         $xml = $this->getXmlContent();
-        /** @var \DOMNodeList $devices */
+        /** @var DOMNodeList $devices */
         $rates = $xml->getElementsByTagName('exchangerate');
         $result = [];
-        /** @var \DOMElement $rate */
+        /** @var DOMElement $rate */
         foreach ($rates as $rate) {
             $result[] = [
                 'ccy' => $rate->getAttribute('ccy'),

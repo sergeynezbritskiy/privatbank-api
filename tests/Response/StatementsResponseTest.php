@@ -13,7 +13,6 @@ use SergeyNezbritskiy\PrivatBank\Response\StatementsResponse;
  */
 class StatementsResponseTest extends TestCase
 {
-
     /**
      * @return string
      */
@@ -23,7 +22,11 @@ class StatementsResponseTest extends TestCase
     }
 
     //tests
-    public function testSuccessfulResponse()
+
+    /**
+     * @return void
+     */
+    public function testSuccessfulResponse(): void
     {
         //phpcs:ignore
         $this->content = <<<XML
@@ -91,7 +94,10 @@ XML;
         ], $result);
     }
 
-    public function testUnknownErrorResponse()
+    /**
+     * @return void
+     */
+    public function testUnknownErrorResponse(): void
     {
         $this->expectException(PrivatBankApiException::class);
         $this->expectExceptionMessage('error:null');

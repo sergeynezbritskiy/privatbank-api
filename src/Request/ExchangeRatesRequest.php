@@ -7,6 +7,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
 
@@ -20,7 +21,6 @@ use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesResponse;
  */
 class ExchangeRatesRequest extends AbstractPublicRequest
 {
-
     public const CASH = 5;
     public const NON_CASH = 11;
     public const NATIONAL_BANK_CASH = 3;
@@ -48,7 +48,7 @@ class ExchangeRatesRequest extends AbstractPublicRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

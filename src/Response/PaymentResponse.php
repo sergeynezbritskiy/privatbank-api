@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use DOMElement;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 
 /**
@@ -12,7 +13,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class PaymentResponse extends AbstractResponse
 {
-
     /**
      * Response sample
      * ```xml
@@ -34,7 +34,7 @@ class PaymentResponse extends AbstractResponse
     public function getData(): array
     {
         $xml = $this->getXmlContent();
-        /** @var \DOMElement $payment */
+        /** @var DOMElement $payment */
         $payment = $xml->getElementsByTagName('payment')[0];
         return [
             'id' => $payment->getAttribute('id'),

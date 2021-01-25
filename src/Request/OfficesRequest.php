@@ -7,6 +7,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractPublicRequest;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
 
@@ -21,7 +22,6 @@ use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
  */
 class OfficesRequest extends AbstractPublicRequest
 {
-
     /**
      * @return string
      */
@@ -45,7 +45,7 @@ class OfficesRequest extends AbstractPublicRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
     public function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

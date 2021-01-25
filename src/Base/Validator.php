@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Base;
 
+use Closure;
 use InvalidArgumentException;
 
 /**
@@ -12,7 +13,6 @@ use InvalidArgumentException;
  */
 class Validator
 {
-
     public const TYPE_REQUIRED = 'required';
     public const TYPE_DEFAULT = 'default';
 
@@ -34,12 +34,12 @@ class Validator
 
     /**
      * @param array $params
-     * @param string|\Closure $rule
+     * @param string|Closure $rule
      * @param array $fields
      * @param array $ruleData
      * @return void
      */
-    private function validateParams(array &$params, $rule, array $fields, array $ruleData)
+    private function validateParams(array &$params, $rule, array $fields, array $ruleData): void
     {
         switch ($rule) {
             case self::TYPE_REQUIRED:
@@ -56,7 +56,7 @@ class Validator
                     }
                 }
                 break;
-            case $rule instanceof \Closure:
+            case $rule instanceof Closure:
                 foreach ($fields as $field) {
                     $rule($params, $field);
                 }

@@ -15,26 +15,24 @@ use SergeyNezbritskiy\PrivatBank\PublicClient;
  */
 class ClientErrorsTest extends TestCase
 {
-
     /**
      * @var PublicClient
      */
-    private $client;
+    private PublicClient $client;
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
         $this->client = new PublicClient();
     }
 
-    protected function tearDown(): void
-    {
-        $this->client = null;
-    }
-
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testNotExistingRoute()
+    public function testNotExistingRoute(): void
     {
         $this->expectException(PrivatBankApiException::class);
         $this->expectExceptionCode(404);

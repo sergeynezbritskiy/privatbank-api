@@ -22,11 +22,10 @@ use SergeyNezbritskiy\PrivatBank\Request\StatementsRequest;
  */
 class AuthorizedClient extends BaseClient
 {
-
     /**
      * @var Merchant
      */
-    private $merchant;
+    private Merchant $merchant;
 
     /**
      * @see \SergeyNezbritskiy\PrivatBank\Request\BalanceRequest

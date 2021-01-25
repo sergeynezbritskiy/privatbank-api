@@ -7,6 +7,7 @@ namespace SergeyNezbritskiy\PrivatBank\Request;
 use SergeyNezbritskiy\PrivatBank\Api\HttpResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractAuthorizedRequest;
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Base\Validator;
 use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
 
@@ -21,7 +22,6 @@ use SergeyNezbritskiy\PrivatBank\Response\CheckPaymentMobileResponse;
  */
 class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
 {
-
     /**
      * Body sample
      * ```xml
@@ -81,7 +81,7 @@ class CheckPaymentMobileRequest extends AbstractAuthorizedRequest
     /**
      * @param HttpResponseInterface $httpResponse
      * @return ResponseInterface
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @throws PrivatBankApiException
      */
     protected function getResponse(HttpResponseInterface $httpResponse): ResponseInterface
     {

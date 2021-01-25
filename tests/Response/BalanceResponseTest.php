@@ -12,7 +12,6 @@ use SergeyNezbritskiy\PrivatBank\Response\BalanceResponse;
  */
 class BalanceResponseTest extends TestCase
 {
-
     /**
      * @return string
      */
@@ -22,7 +21,11 @@ class BalanceResponseTest extends TestCase
     }
 
     //tests
-    public function testSuccessfulResponse()
+
+    /**
+     * @return void
+     */
+    public function testSuccessfulResponse(): void
     {
         $this->content = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>

@@ -10,7 +10,6 @@ namespace SergeyNezbritskiy\PrivatBank\Base;
  */
 abstract class AbstractPublicRequest extends AbstractRequest
 {
-
     /**
      * @return string
      */

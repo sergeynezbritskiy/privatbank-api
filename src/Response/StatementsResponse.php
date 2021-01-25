@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Response;
 
+use DOMElement;
+use DOMNodeList;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
 use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
@@ -14,7 +16,6 @@ use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
  */
 class StatementsResponse extends AbstractResponse implements ResponseInterface
 {
-
     /**
      * Response sample
      * ```xml
@@ -49,7 +50,7 @@ class StatementsResponse extends AbstractResponse implements ResponseInterface
         $xml = $this->getXmlContent();
         $statements = $xml->getElementsByTagName('statement');
         $result = [];
-        /** @var \DOMElement $statementXml */
+        /** @var DOMElement $statementXml */
         foreach ($statements as $statementXml) {
             $result[] = [
                 'card' => $statementXml->getAttribute('card'),
@@ -67,13 +68,13 @@ class StatementsResponse extends AbstractResponse implements ResponseInterface
     }
 
     /**
+     * @return void
      * @throws PrivatBankApiException
      */
-    protected function handleErrors()
+    protected function handleErrors(): void
     {
         parent::handleErrors();
         $xmlContent = $this->getXmlContent();
-        /** @var \DOMNodeList $info */
         $info = $xmlContent->getElementsByTagName('info');
         foreach ($info as $item) {
             if (substr($item->textContent, 0, 5) === 'error') {

@@ -22,7 +22,6 @@ use SergeyNezbritskiy\PrivatBank\Response\ExchangeRatesArchiveResponse;
  */
 class ExchangeRatesArchiveRequest extends AbstractPublicRequest
 {
-
     /**
      * @return string
      */

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SergeyNezbritskiy\PrivatBank\Tests\Response;
 
 use PHPUnit\Framework\MockObject\MockObject;
+use ReflectionClass;
 use SergeyNezbritskiy\PrivatBank\Api\ResponseInterface;
 use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
 
@@ -22,26 +23,32 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @var string
      */
-    protected $content = '';
+    protected string $content = '';
 
-    protected $statusCode = 200;
+    /**
+     * @var int
+     */
+    protected int $statusCode = 200;
 
-    protected $reasonPhrase = 'OK';
+    /**
+     * @var string
+     */
+    protected string $reasonPhrase = 'OK';
 
     /**
      * @return string
      */
     abstract protected function getClass(): string;
 
-    protected function buildResponseMock()
+    /**
+     * @return void
+     */
+    protected function buildResponseMock(): void
     {
         $test = $this;
 
         /** @var HttpResponse|MockObject $httpResponse */
-        $httpResponse = $this->getMockBuilder(HttpResponse::class)
-            ->setConstructorArgs([$this->content, $this->statusCode, $this->reasonPhrase])
-            ->setMethods(['getContent', 'getStatusCode', 'getReasonPhrase'])
-            ->getMock();
+        $httpResponse = $this->createMock(HttpResponse::class);
 
         $httpResponse->expects($this->any())
             ->method('getStatusCode')
@@ -62,12 +69,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->response = $this->getMockForAbstractClass($class, ['httpResponse' => $httpResponse]);
     }
 
-    public function tearDown(): void
-    {
-        $this->response = null;
-        $this->content = array();
-    }
-
     /** @noinspection PhpDocMissingThrowsInspection */
 
     /**
@@ -78,12 +79,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @return mixed Method return.
      */
-    protected function call($methodName, array $params = [])
+    protected function call(string $methodName, array $params = [])
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        $reflection = new \ReflectionClass(get_class($this->response));
+        $reflection = new ReflectionClass(get_class($this->response));
+        /** @noinspection PhpUnhandledExceptionInspection */
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
+        /** @noinspection PhpUnhandledExceptionInspection */
         return $method->invokeArgs($this->response, $params);
     }
 }

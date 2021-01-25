@@ -10,16 +10,15 @@ namespace SergeyNezbritskiy\PrivatBank;
  */
 class Merchant
 {
+    /**
+     * @var string
+     */
+    private string $merchantId;
 
     /**
      * @var string
      */
-    private $merchantId;
-
-    /**
-     * @var string
-     */
-    private $signature;
+    private string $signature;
 
     /**
      * Merchant constructor.

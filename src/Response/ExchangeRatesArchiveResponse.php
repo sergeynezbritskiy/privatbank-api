@@ -15,7 +15,6 @@ use SergeyNezbritskiy\PrivatBank\Base\AbstractResponse;
  */
 class ExchangeRatesArchiveResponse extends AbstractResponse implements ResponseInterface
 {
-
     /**
      * Response Sample
      * ```xml

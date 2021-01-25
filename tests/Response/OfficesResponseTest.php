@@ -12,7 +12,6 @@ use SergeyNezbritskiy\PrivatBank\Response\OfficesResponse;
  */
 class OfficesResponseTest extends TestCase
 {
-
     /**
      * @return string
      */
@@ -22,6 +21,10 @@ class OfficesResponseTest extends TestCase
     }
 
     //tests
+
+    /**
+     * @return void
+     */
     public function testSuccessfulResponse()
     {
         $this->content = <<<XML

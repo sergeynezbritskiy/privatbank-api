@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 
 /**
@@ -12,11 +13,11 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  */
 class StatementsRequestTest extends TestCaseAuthorized
 {
-
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testBalance()
+    public function testBalance(): void
     {
         $merchantId = getenv('merchantId');
         $merchantSecret = getenv('merchantSecret');

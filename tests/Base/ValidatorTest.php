@@ -15,11 +15,10 @@ use SergeyNezbritskiy\PrivatBank\Base\Validator;
  */
 class ValidatorTest extends TestCase
 {
-
     /**
      * @var Validator
      */
-    private $validator;
+    private Validator $validator;
 
     /**
      * @inheritDoc
@@ -30,14 +29,9 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * @inheritDoc
+     * @return void
      */
-    protected function tearDown(): void
-    {
-        $this->validator = null;
-    }
-
-    public function testMissingRequiredParameter1()
+    public function testMissingRequiredParameter1(): void
     {
         $rules = [
             [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
@@ -48,7 +42,10 @@ class ValidatorTest extends TestCase
         $this->validator->validate([], $rules);
     }
 
-    public function testMissingRequiredParameter2()
+    /**
+     * @return void
+     */
+    public function testMissingRequiredParameter2(): void
     {
         $rules = [
             [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
@@ -58,7 +55,10 @@ class ValidatorTest extends TestCase
         $this->validator->validate(['requiredField1' => ''], $rules);
     }
 
-    public function testRequiredParametersExist()
+    /**
+     * @return void
+     */
+    public function testRequiredParametersExist(): void
     {
         $rules = [
             [['requiredField1', 'requiredField2'], Validator::TYPE_REQUIRED],
@@ -67,7 +67,10 @@ class ValidatorTest extends TestCase
         $this->assertEquals($params, $this->validator->validate($params, $rules));
     }
 
-    public function testDefaultValueMissingParameter()
+    /**
+     * @return void
+     */
+    public function testDefaultValueMissingParameter(): void
     {
         $rules = [
             ['defaultValue', Validator::TYPE_DEFAULT, 'value' => 'someDefaultValue'],
@@ -77,7 +80,10 @@ class ValidatorTest extends TestCase
         $this->assertEquals($params, $this->validator->validate($params, $rules));
     }
 
-    public function testCallbackFilter()
+    /**
+     * @return void
+     */
+    public function testCallbackFilter(): void
     {
         $message = 'Argument date must conform format d.M.Y., e.g. 01.12.2018';
         $callback = function ($params) use ($message) {
@@ -97,7 +103,10 @@ class ValidatorTest extends TestCase
         $this->validator->validate(['date' => '20-12-2018'], $rules);
     }
 
-    public function testUndefinedValidator()
+    /**
+     * @return void
+     */
+    public function testUndefinedValidator(): void
     {
         $rules = [
             ['date', 'undefinedValidator']

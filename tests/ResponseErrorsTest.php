@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SergeyNezbritskiy\PrivatBank\Tests;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use SergeyNezbritskiy\PrivatBank\Base\HttpResponse;
 use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\PublicClient;
@@ -15,26 +16,21 @@ use SergeyNezbritskiy\PrivatBank\PublicClient;
  */
 class ResponseErrorsTest extends TestCase
 {
-
     /**
      * @var PublicClient
      */
-    private $client;
+    private PublicClient $client;
 
     protected function setUp(): void
     {
         $this->client = new PublicClient();
     }
 
-    protected function tearDown(): void
-    {
-        $this->client = null;
-    }
-
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testNotExistingRoute()
+    public function testNotExistingRoute(): void
     {
         $this->expectException(PrivatBankApiException::class);
         $this->expectExceptionCode(404);
@@ -55,12 +51,14 @@ class ResponseErrorsTest extends TestCase
      *
      * @return mixed Method return.
      */
-    protected function call($methodName, array $params = [])
+    protected function call(string $methodName, array $params = [])
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        $reflection = new \ReflectionClass(get_class($this->client));
+        $reflection = new ReflectionClass(get_class($this->client));
+        /** @noinspection PhpUnhandledExceptionInspection */
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
+        /** @noinspection PhpUnhandledExceptionInspection */
         return $method->invokeArgs($this->client, $params);
     }
 }

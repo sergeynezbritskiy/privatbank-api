@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
+use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\PrivatBank\AuthorizedClient;
 
 /**
  * Class TestCaseAuthorized
  * @package SergeyNezbritskiy\PrivatBank\Tests\Response
  */
-abstract class TestCaseAuthorized extends \PHPUnit\Framework\TestCase
+abstract class TestCaseAuthorized extends TestCase
 {
-
     /**
      * @var AuthorizedClient
      */
-    protected $client;
+    protected AuthorizedClient $client;
 
     /**
      * @inheritdoc
@@ -24,13 +24,5 @@ abstract class TestCaseAuthorized extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->client = new AuthorizedClient();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function tearDown(): void
-    {
-        $this->client = null;
     }
 }

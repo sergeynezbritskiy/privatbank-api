@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
 
 /**
@@ -12,11 +13,11 @@ use SergeyNezbritskiy\PrivatBank\Request\ExchangeRatesRequest;
  */
 class ExchangeRatesRequestTest extends TestCasePublic
 {
-
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testExchangeRatesCash()
+    public function testExchangeRatesCash(): void
     {
         $data = $this->client->exchangeRates(ExchangeRatesRequest::NON_CASH);
         $this->assertGreaterThan(0, count($data));
@@ -29,9 +30,10 @@ class ExchangeRatesRequestTest extends TestCasePublic
     }
 
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testExchangeRatesNonCash()
+    public function testExchangeRatesNonCash(): void
     {
         $data = $this->client->exchangeRates(ExchangeRatesRequest::NON_CASH);
         $this->assertGreaterThan(0, count($data));

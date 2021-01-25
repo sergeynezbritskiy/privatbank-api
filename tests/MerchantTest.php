@@ -13,8 +13,10 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  */
 class MerchantTest extends TestCase
 {
-
-    public function testMerchantGetter()
+    /**
+     * @return void
+     */
+    public function testMerchantGetter(): void
     {
         $merchantId = '12345';
         $signature = md5('my_custom_string');
@@ -22,7 +24,10 @@ class MerchantTest extends TestCase
         $this->assertEquals($merchantId, $merchant->getMerchantId());
     }
 
-    public function testSignatureCalculation()
+    /**
+     * @return void
+     */
+    public function testSignatureCalculation(): void
     {
         $merchantId = '12345';
         $signature = md5('my_custom_string');

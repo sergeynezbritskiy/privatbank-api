@@ -13,8 +13,10 @@ use SergeyNezbritskiy\PrivatBank\Request;
  */
 class RequestTest extends TestCase
 {
-
-    public function testConstructorDefaultParams()
+    /**
+     * @return void
+     */
+    public function testConstructorDefaultParams(): void
     {
         $uri = 'pubinfo';
         $request = new Request($uri);
@@ -24,7 +26,10 @@ class RequestTest extends TestCase
         $this->assertEquals('', $request->getBody());
     }
 
-    public function testConstructorSetters()
+    /**
+     * @return void
+     */
+    public function testConstructorSetters(): void
     {
         $uri = 'pubinfo';
         $method = 'PUT';

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\PrivatBank\Tests\Request;
 
+use SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException;
 use SergeyNezbritskiy\PrivatBank\Merchant;
 
 /**
@@ -12,11 +13,11 @@ use SergeyNezbritskiy\PrivatBank\Merchant;
  */
 class PaymentUkraineRequestTest extends TestCaseAuthorized
 {
-
     /**
-     * @throws \SergeyNezbritskiy\PrivatBank\Base\PrivatBankApiException
+     * @return void
+     * @throws PrivatBankApiException
      */
-    public function testBalance()
+    public function testBalance(): void
     {
         $merchantId = getenv('merchantId');
         $merchantSecret = getenv('merchantSecret');
@@ -38,12 +39,12 @@ class PaymentUkraineRequestTest extends TestCaseAuthorized
         );
 
         $this->assertArrayHasKey('id', $payment);
-        $this->assertArrayHasKey('state', $payment);
-        $this->assertArrayHasKey('message', $payment);
-        $this->assertArrayHasKey('ref', $payment);
         $this->assertArrayHasKey('amt', $payment);
         $this->assertArrayHasKey('ccy', $payment);
         $this->assertArrayHasKey('comis', $payment);
         $this->assertArrayHasKey('cardinfo', $payment);
+        $this->assertArrayHasKey('state', $payment);
+        $this->assertArrayHasKey('message', $payment);
+        $this->assertArrayHasKey('ref', $payment);
     }
 }

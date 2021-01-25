@@ -10,21 +10,20 @@ use SergeyNezbritskiy\PrivatBank\Request;
 
 class Client
 {
-
     /**
      * @var string
      */
-    protected $url = 'https://api.privatbank.ua/p24api/';
+    protected string $url = 'https://api.privatbank.ua/p24api/';
 
     /**
      * @var bool
      */
-    private $testMode = true;
+    private bool $testMode = true;
 
     /**
      * @var int
      */
-    private $waitTimeout = 0;
+    private int $waitTimeout = 0;
 
     /**
      * @param string $request
@@ -34,23 +33,17 @@ class Client
      */
     public function request(string $request, array $params = array()): HttpResponse
     {
-        $params = array_merge(
-            [
-                'method' => 'GET',
-                'query' => [],
-                'body' => '',
-            ],
-            $params
-        );
+        $params = array_merge([
+            'method' => 'GET',
+            'query' => [],
+            'body' => '',
+        ], $params);
 
-        $request = new Request(
-            $request,
-            ...[
+        $request = new Request($request, ...[
             $params['method'],
             $params['query'],
             $params['body'],
-            ]
-        );
+        ]);
 
         return $this->send($request);
     }
@@ -73,12 +66,11 @@ class Client
                     'body' => $request->getBody(),
                 ]
             );
-            $result = new HttpResponse(
+            return new HttpResponse(
                 $response->getBody()->getContents(),
                 $response->getStatusCode(),
                 $response->getReasonPhrase()
             );
-            return $result;
         } catch (GuzzleException $e) {
             throw new PrivatBankApiException($e->getMessage(), $e->getCode(), $e);
         }
